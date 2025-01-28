@@ -6,6 +6,8 @@
   - [Binary Tree](./trees/binary-tree.md)
 - [Code chunking](./code-chunking/intro.md)
   - [31-byte code chunking](./code-chunking/31-byte-chunker.md)
+- [BLOCKHASH state](./block-hash.md)
+  - [31-byte code chunking](./code-chunking/31-byte-chunker.md)
 - [Gas cost remodeling](./gas-costs/intro.md)
   - [EIP-4768](./gas-costs/eip-4768.md)
   - [EIP-7709](./gas-costs/eip-7709.md)

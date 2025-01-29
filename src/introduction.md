@@ -1,7 +1,7 @@
 # The Stateless Ethereum Book
 
 - [What is Stateless Ethereum?](#what-is-stateless-ethereum)
-- [Why is stateless important?](#why-is-stateless-important)
+- [Why is statelessness important?](#why-is-statelessness-important)
 - [Main benefits](#main-benefits)
 - [Purpose of this book](#purpose-of-this-book)
 
@@ -9,7 +9,7 @@
 
 Stateless Ethereum is an update to the Ethereum protocol, in which blocks become self-contained units of execution. There is no longer a need to download the entire state of the Ethereum, all the required information is packaged inside the block. 
 
-## Why is stateless important?
+## Why is statelessness important?
 
 Stateless Ethereum brings forth a lot of the scalability and usability features that the Ethereum community has been waiting for for a long time.
 
@@ -24,7 +24,7 @@ In pratical terms, this means:
 
 ## Main benefits
 
-Statelessness in Ethereum brings significant benefits by addressing critical scalability and decentralization challenges. It brings many benefits in terms of scalability, decentralization, features and ease of use.
+Statelessness in Ethereum brings significant benefits by addressing critical scalability and decentralization challenges.
 
 ### Scalability
 
@@ -47,7 +47,7 @@ By reducing the hardware requirements for validating nodes makes it feasible for
 Statelessness also opens the door to innovative features, including:
 
  * **state expiry**, which limits the growth of historical state data.
- * **rainbow staking**, which enhances flexibility in staking mechanisms by creating many niches for low-stake nodes to participate in the network’s security.
+ * [**rainbow staking**](https://ethresear.ch/t/unbundling-staking-towards-rainbow-staking/18683), which enhances flexibility in staking mechanisms by creating many niches for low-stake nodes to participate in the network’s security.
  * **secure light clients**, which is the consequence of not having to trust a centralized authority when using the blockchain.
 
 ### Ease of use
@@ -56,19 +56,19 @@ Additionally, by reducing the state proof size, statelessness facilitates more s
 
 ## Purpose of this book
 
-This book is designed to serve as a comprehensive resource for understanding and contributing to our work on stateless Ethereum.
+This book is designed to serve as a comprehensive resource for understanding and contributing to our work on Stateless Ethereum.
 
 ### Goals of This Book
 
- * **Explain the Vision**: Provide an in-depth explanation of the motivation behind stateless Ethereum, including its potential impact on scalability and decentralization.
- * **Technical Guidance**: Offer clear and detailed instructions for developers, researchers, and contributors to engage with and extend our work.
- * **Knowledge Sharing**: Educate readers about various aspects of stateless block execution, and their role in achieving stateless Ethereum.
- * **Encourage Collaboration**: Foster a community of like-minded individuals by providing resources, tools, and best practices for collaborative development.
+ * **Explain the vision**: Provide an in-depth explanation of the motivation behind Stateless Ethereum, including its potential impact on scalability and decentralization.
+ * **Technical guidance**: Offer clear and detailed instructions for developers, researchers, and contributors to engage with and extend our work.
+ * **Knowledge sharing**: Educate readers about various aspects of stateless block execution, and their role in achieving Stateless Ethereum.
+ * **Encourage collaboration**: Foster a community of like-minded individuals by providing resources, tools, and best practices for collaborative development.
 
 ### Who is this book for?
 
 This book is intended for:
 
- * **Developers**: Interested in contributing to the implementation of stateless Ethereum.
- * **Researchers**: Exploring the new designs enabled by stateless Ethereum, and learning how client architecture is impacted by these choices.
+ * **Developers**: Interested in contributing to the implementation of Stateless Ethereum.
+ * **Researchers**: Exploring the new designs enabled by Stateless Ethereum, and learning how client architecture is impacted by these choices.
  * **Learners**: Seeking to deepen their understanding of this major evolution of the Ethereum protocol.

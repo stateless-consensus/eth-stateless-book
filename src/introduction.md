@@ -15,8 +15,8 @@ Stateless Ethereum brings forth a lot of the scalability and usability features 
 
 In pratical terms, this means:
 
- * reduced hardware requirements for validators: IO, disk space, computation...
- * as a result, a higher gas limit, since the lower gas limit was imposed by these hardware requirements
+ * reduced validator hardware requirements: IO, disk space, and computation.
+ * as a result, a higher gas limit, since the lower gas limit was imposed by these hardware requirements.
  * faster sync times, as a node doesn't need more than an EL block to join the network.
  * an easy implementation of state expiry, a feature that has eluded Ethereum since before 2018.
  * trustless light clients, that directly follow the chain without needing a third party to provide the state.
@@ -28,7 +28,7 @@ Statelessness in Ethereum brings significant benefits by addressing critical sca
 
 ### Scalability
 
-By removing the need for clients to store a great amount of data, validators can process more transactions per block, increasing the throughput. By removing the need for clients to store a lot of data, we enable:
+By removing the need for clients to store a great amount of data, validators can process more transactions per block, increasing the throughput. Thus, we enable:
 
  * **higher TPS**, since the IO bottleneck is the principal hindrance to increasing the gas limit.
  * **no required synchronization**, since all the data needed to execute a block is packaged with it.
@@ -65,7 +65,7 @@ This book is designed to serve as a comprehensive resource for understanding and
  * **Knowledge Sharing**: Educate readers about various aspects of stateless block execution, and their role in achieving stateless Ethereum.
  * **Encourage Collaboration**: Foster a community of like-minded individuals by providing resources, tools, and best practices for collaborative development.
 
-### Who Is This Book For?
+### Who is this book for?
 
 This book is intended for:
 

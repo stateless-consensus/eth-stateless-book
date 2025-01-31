@@ -23,7 +23,7 @@ In sub-chapters, we dive deeper into explaining more low-level spec proposals on
 
 ## Motivation
 
-To understand why we need to care about this problem, please read the *Tree* chapter of this book. Going forward, we only need to understand that a new tree should be used, and somehow, it has to be introduced into the protocol.
+To understand why we need to care about this problem, please read the [*Tree* chapter](../trees/intro.md) of this book. Going forward, we only need to understand that a new tree should be used, and somehow, it has to be introduced into the protocol.
 
 Today's proposed strategy is converting the data with an *Overlay Tree*, which we explore in more detail in sub-chapters, but for now, let’s stick to the big picture.
 
@@ -58,7 +58,7 @@ We dive deeper into EIP-7612 in its corresponding sub-chapter.
 
 There is a required period after *Stage 1* is activated before *Stage 2* can be activated. The goal is for the RO MPT from *Stage 1* to be final (i.e., the chain reaches finalization).
 
-This is critical so no chain reorganization can mutate the RO MPT. Doing this greatly simplifies the implementation of EL clients since they know that not only is the MPT read-only but it’s completely frozen. Moreover, it simplifies the preimage generation and distribution tasks, but we expand on this later in the book.
+This is critical so no chain reorganization can mutate the RO MPT. Doing this greatly simplifies the implementation of EL clients since they know that not only is the MPT read-only but it’s completely frozen. Moreover, it simplifies the preimage generation and distribution tasks, but [we expand on this later in the book](./eip-7748.md#Preimages).
 
 ### Stage 2 - Move the existing data from the MPT to the new tree
 
@@ -84,7 +84,7 @@ The state conversion doesn’t change how transactions are created and sent to t
 
 From the perspective of EVM execution, the state is accessed through usual opcodes without knowing where this is coming from or if data is being moved between trees in the background.
 
-As explained in the EVM gas cost remodeling chapter, *Stage 1* (EIP-7612) is bundled with EIP-4762, which changes gas costs which isn’t opaque to the EVM. However, note that these gas cost changes are unrelated to the state conversion but are using the new tree, so the state conversion per se isn’t related to this effect.
+As explained in the [EVM gas cost remodeling chapter](../gas-costs/intro.md), *Stage 1* (EIP-7612) is bundled with EIP-4762, which changes gas costs which isn’t opaque to the EVM. However, note that these gas cost changes are unrelated to the state conversion but are using the new tree, so the state conversion per se isn’t related to this effect.
 
 ### State proofs
 

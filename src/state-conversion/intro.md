@@ -91,18 +91,18 @@ As explained in the [EVM gas cost remodeling chapter](../gas-costs/intro.md), *S
 Recall that we have three periods:
 
 - Before *Stage 1*
-    - This is how the chain works today — proofs can be created with the known drawbacks as usual.
+  - This is how the chain works today — proofs can be created with the known drawbacks as usual.
 - Starting from *Stage 1* and continuing until *Stage 2* is finished.
-    - During this period, the chain uses the described *Overlay Tree,* which is composed of two trees. Creating state proofs during this period is very challenging. Given a key in the state, this key active value might be in the new tree or still in the RO MPT.
-        - A proof of absence for a key requires a proof of absence in both trees.
-        - A proof of value in the RO MPT requires a proof of absence in the new tree (i.e., prove that the value isn’t stale).
-    - The root of the RO MPT isn’t planned to be part of the block since the new state root will be the one from the new tree. This adds extra complexity to proof verification.
+  - During this period, the chain uses the described *Overlay Tree,* which is composed of two trees. Creating state proofs during this period is very challenging. Given a key in the state, this key active value might be in the new tree or still in the RO MPT.
+    - A proof of absence for a key requires a proof of absence in both trees.
+    - A proof of value in the RO MPT requires a proof of absence in the new tree (i.e., prove that the value isn’t stale).
+  - The root of the RO MPT isn’t planned to be part of the block since the new state root will be the one from the new tree. This adds extra complexity to proof verification.
 - After *Stage 2* is finished (i.e., conversion is over)
-    - We can leverage all the expected benefits:
-        - Smaller proofs.
-        - Faster generation and verification.
-        - Easily SNARKifiable.
-        - Single root for proving (i.e., the state lives in a unified tree, and not account+storage tries)
+  - We can leverage all the expected benefits:
+    - Smaller proofs.
+    - Faster generation and verification.
+    - Easily SNARKifiable.
+    - Single root for proving (i.e., the state lives in a unified tree, and not account+storage tries)
 
 ### Syncing
 

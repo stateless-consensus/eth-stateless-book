@@ -19,7 +19,7 @@ The current data structure used to store Ethereum state is a Merkle Patricia Tri
 
 ## Relevant design aspects
 
-Let’s explore the most important angles on a new tree design, addressed in Verkle Trees and Binary Tree proposals.
+Let’s explore the most important angles on a new tree design, addressed in [Verkle Trees](./vkt-tree.md) and [Binary Tree](./binary-tree.md) proposals.
 
 ### Arity
 
@@ -44,7 +44,7 @@ While this decision is helpful in avoiding potentially bloating the state tree w
 
 This is the reason for the worst-case scenario of proving the state for an L1 block. You can craft a block that forces the prover to include a contract code of maximum size. A better tree design should allow for more efficient proofing of account code slices.
 
-Proving parts of an account's code is critical to efficiently allow stateless clients or block state proofs.  During a transaction execution, only a small fraction of an account’s code is typically executed. Think, for example, of an ERC-20: the sender will execute the `transfer` method but never do on-chain calls to other methods like `balanceOf`.
+Proving parts of an account's code is critical to efficiently allow [stateless clients](../use-cases/stateless-clients.md) or block state proofs.  During a transaction execution, only a small fraction of an account’s code is typically executed. Think, for example, of an ERC-20: the sender will execute the `transfer` method but never do on-chain calls to other methods like `balanceOf`.
 
 ## Proposed trees strategies
 
@@ -54,4 +54,4 @@ The new tree proposals attack those problems by proposing:
 - Including the account’s code inside the tree, allowing size-efficient partial code proving.
 - A more convenient merkelization strategy to generate and verify proofs more efficiently.
 
-Verkle and Binary trees share the same strategy for solving the first two points — we’ll dive deeper into them on the *Data encoding* page. Each proposes a different strategy for the last bullet, explained in their respective Verkle Trees and Binary Tree pages.
+Verkle and Binary trees share the same strategy for solving the first two points — we’ll dive deeper into them on the [*Data encoding*](data-encoding.md) page. Each proposes a different strategy for the last bullet, explained in their respective [Verkle Trees](vkt-tree.md) and [Binary Tree](binary-tree.md) pages.

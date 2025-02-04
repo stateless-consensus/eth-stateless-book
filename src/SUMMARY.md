@@ -2,6 +2,8 @@
 
 - [Introduction](./introduction.md)
 - [Trees](./trees/intro.md)
+  - [Data encoding](./trees/data-encoding.md)
+    - [31-byte code-chunker](./trees/31-byte-code-chunker.md)
   - [Verkle Tree](./trees/vkt-tree.md)
   - [Binary Tree](./trees/binary-tree.md)
 - [Code chunking](./code-chunking/intro.md)

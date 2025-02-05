@@ -11,7 +11,7 @@
 
 A stateless client is a client that can *trustlessly* verify a blockchain block without storing the whole Ethereum state. T*rustlessly* is the keyword here — compared with light clients, which rely on an external party to provide the required state to verify the block. Stateless clients can also be named *secure light clients*.
 
-But what are the blockers for stateless clients to be a reality? As explained in the *Trees* chapter, the Ethereum state is merkelized; thus, we can create Merkle proofs. However, the problem relies on how big these proofs are, which can become a problem for network distribution and security. All the protocol changes described in this book aim to allow efficient enough proofs to allow stateless clients to participate in the network sustainably and in the worst-case scenarios.
+But what are the blockers for stateless clients to be a reality? As explained in the [*Trees* chapter](../trees/intro.md), the Ethereum state is merkelized; thus, we can create Merkle proofs. However, the problem relies on how big these proofs are, which can become a problem for network distribution and security. All the protocol changes described in this book aim to allow efficient enough proofs to allow stateless clients to participate in the network sustainably and in the worst-case scenarios.
 
 ## Block verification and required state
 
@@ -53,7 +53,7 @@ The implications of stateless validators are an active area of research since th
 
 ## Stateless client architecture
 
-One benefit of having *stateless clients* is that they’re simpler to implement compared with a full-node.
+One benefit of having stateless clients is that they’re simpler to implement compared with a full-node.
 
 Let’s look at the following diagram:
 

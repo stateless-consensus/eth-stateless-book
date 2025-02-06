@@ -6,8 +6,6 @@
     - [31-byte code-chunker](./trees/31-byte-code-chunker.md)
   - [Verkle Tree](./trees/vkt-tree.md)
   - [Binary Tree](./trees/binary-tree.md)
-- [Code chunking](./code-chunking/intro.md)
-  - [31-byte code chunking](./code-chunking/31-byte-chunker.md)
 - [BLOCKHASH state](./block-hash.md)
 - [Gas cost remodeling](./gas-costs/intro.md)
   - [EIP-4768](./gas-costs/eip-4768.md)

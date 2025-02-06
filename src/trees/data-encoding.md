@@ -1,14 +1,19 @@
 # Data encoding
 
+- [Data encoding](#data-encoding)
+  - [Overview](#overview)
+  - [Code-chunking](#code-chunking)
+  - [Grouping](#grouping)
+
 ## Overview
 
 How the Ethereum state is encoded into the tree can significantly impact data inclusion and updating, proof generation, verification, and size. Verkle and Binary Trees share a new way of encoding the data into the tree, so we’ll explore more on this page.
 
 ## Code-chunking
 
-In the parent chapter, we mentioned that we need an efficient way of proving slices of any account code. The current proposal encodes the account code bytecode directly in the tree, compared to only storing the code hash done today.
+In the [parent chapter](intro.md), we mentioned that we need an efficient way of proving slices of any account code. The current proposal encodes the account code bytecode directly in the tree, compared to only storing the code hash done today.
 
-For key design simplicity, the tree leaves hold 32-byte blobs, which means we need a way to break down account code in 32-byte chunks. Although the most natural take is partitioning the code into 32-byte chunks and storing it in the tree under some defined tree key mapping for each code chunk, this isn’t enough.
+For key design simplicity, the tree leaves hold 32-byte blobs, which means we need a way to break down account code into 32-byte chunks. Although the most natural take is partitioning the code into 32-byte chunks and storing it in the tree under some defined tree key mapping for each code chunk, this isn’t enough.
 
 The reason is that there are EVM instructions, i.e., `JUMP` and `JUMPI`, whose arguments contain an arbitrary offset to jump.  For the jump to be valid, the target bytecode must be a `JUMPDEST` opcode (`0x5B`). Today, EL clients do a JUMPDEST analysis to detect all valid jump destinations in existing code — this analysis requires full code access to detect which bytes are `JUMPDEST` instructions.
 

@@ -13,11 +13,11 @@ How the Ethereum state is encoded into the tree can significantly impact data in
 
 In the [parent chapter](intro.md), we mentioned that we need an efficient way of proving slices of any account code. The current proposal encodes the account code bytecode directly in the tree, compared to only storing the code hash done today.
 
-For key design simplicity, the tree leaves hold 32-byte blobs, which means we need a way to break down account code into 32-byte chunks. Although the most natural take is partitioning the code into 32-byte chunks and storing it in the tree under some defined tree key mapping for each code chunk, this isn’t enough.
+For key design simplicity, the tree leaves hold 32-byte blobs, which means we need a way to break down account code in 32-byte chunks. Although the most natural take is partitioning the code into 32-byte chunks and storing it in the tree under some defined tree key mapping for each code chunk, this isn’t enough.
 
-The reason is that there are EVM instructions, i.e., `JUMP` and `JUMPI`, whose arguments contain an arbitrary offset to jump.  For the jump to be valid, the target bytecode must be a `JUMPDEST` opcode (`0x5B`). Today, EL clients do a JUMPDEST analysis to detect all valid jump destinations in existing code — this analysis requires full code access to detect which bytes are `JUMPDEST` instructions.
+The reason is that there are EVM instructions, i.e., `JUMP` and `JUMPI`, whose arguments contain an arbitrary offset to jump.  For the jump to be valid, the target location must be a `JUMPDEST` opcode (`0x5B`). Today, EL clients do a `JUMPDEST` analysis to detect all valid jump destinations in existing code — this analysis requires full code access to detect which bytes are `JUMPDEST` instructions.
 
-In a stateless world, clients only have partial access to code so they can’t do a complete JUMPDEST analysis. For example, an account code has an instruction `PUSH5 0x00115B3344`, which maps to [bytecode](https://www.evm.codes/) `0x6400115B3344`. If a `JUMP(I)` instruction jumps to the forth opcode, you might think this is valid since it’s a `0x5B`, but this byte corresponds to a `PUSH5` data, not really a valid `JUMPDEST`. A stateless client needs a way to be sure which `0x5B` bytes correspond to real `JUMPDEST` so it can perform `JUMP(I)` validations, **without** requiring all the account’s data.
+In a stateless world, clients only have partial access to code, so they can’t do a complete `JUMPDEST` analysis. For example, an account code has an instruction `PUSH5 0x00115B3344`, which maps to [bytecode](https://www.evm.codes/) `0x6400115B3344`. If a `JUMP(I)` instruction jumps to the fourth opcode, you might think this is valid since it’s a `0x5B`, but this byte corresponds to the data of `PUSH5`, not a valid `JUMPDEST`. A stateless client must be sure which `0x5B` bytes correspond to real `JUMPDEST` to perform `JUMP(I)` validations **without** requiring all the account’s code.
 
 This means that the code chunkification strategy should not only slice the account’s code in 32-byte chunks but also in a way that allows an EVM interpreter receiving these chunks to detect invalid `JUMP(I)` instructions.
 
@@ -38,10 +38,9 @@ Said differently, state access during a block execution isn’t random.
 This is an optimization opportunity since if we group states frequently accessed together in the same tree branch, proving the whole state requires fewer tree branches, making the state-proof size smaller. This grouping is also convenient for future ideas such as spreading tree state into a separate network such as the [Portal Network](https://www.portal.network/#/).
 
 The current proposal is creating groups  of 256 leaves, which can be depicted in the following diagram:
-
 ![image.png](assets/data-encoding-img-1.png)
 
-Please don’t focus on the tree arity since this will depend on the underlying tree design. The main point is that given a *stem*, we encode 256 leaves in that single branch, and we expect these values to have a high probability of being accessed together. Choosing a size of 256 is entirely arbitrary but for historical reasons rooted in Verkle Trees proving efficiency. For Binary Trees, there’s more flexibility in choosing a different size.
+Please don’t focus on the tree arity since this will depend on the underlying tree design. The main point is that given a *stem*, we encode 256 leaves in that single branch, and we expect these values to have a high probability of being accessed together. Choosing a size of 256 is entirely arbitrary, but for historical reasons rooted in Verkle Trees proving efficiency. For Binary Trees, there’s more flexibility in choosing a different size.
 
 Note that these 256 values can contain any arbitrary data. The current proposal has the following stem types:
 

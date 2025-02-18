@@ -26,7 +26,7 @@ RETURN # F#
 
 The following diagram shows how the code is chunkified:
 
-![image.png](31-byte-code-chunker-img-1.png)
+![image.png](assets/31-byte-code-chunker-img-1.png)
 
 Recall that an account code is a blob of bytes containing all the contract instructions. The goal of the code chunker is to:
 

@@ -29,4 +29,4 @@ The book will open in your default web browser at `http://localhost:3000`.
 
 ## License
 
-This work is licensed under the [Apache License 2.0](LICENSE).
+This work is licensed under [MIT](LICENSE).

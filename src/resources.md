@@ -10,12 +10,12 @@ Over the past years, many articles and talks have been made about stateless, mai
 
 ## Video presentations
 
-- [Anatomy of a stateless client - Guillaume Ballet, April 2024](https://www.youtube.com/watch?v=yFJxVSbQNcI&pp=ygUdYW5hdG9teSBvZiBhIHN0YXRlbGVzcyBjbGllbnQ%3D) : an overview of how stateless improves client maintainability
-- [Recipes for a Stateless Ethereum](https://www.youtube.com/watch?v=gfzkidjJf8g) - Guillaume Ballet, March 2024 : a good summary of the use cases of stateless Ethereum
+- [Anatomy of a stateless client - Guillaume Ballet, April 2024](https://www.youtube.com/watch?v=yFJxVSbQNcI&pp=ygUdYW5hdG9teSBvZiBhIHN0YXRlbGVzcyBjbGllbnQ%3D): an overview of how stateless improves client maintainability
+- [Recipes for a Stateless Ethereum](https://www.youtube.com/watch?v=gfzkidjJf8g) - Guillaume Ballet, March 2024: a good summary of the use cases of stateless Ethereum
 - [Verkle Trees 101 - Guillaume Ballet, Ignacio Hagopian, Josh Rudolf, April 2024](https://www.youtube.com/watch?v=H_M9bjwtMhU) - an overview of the EIPs used in Verkle Trees (a lot of it still current for Binary Tress)
 - [Verkle sync: bring a node up in minutes - Guillaume Ballet, Tanishq Jasoria, September 2023](https://www.youtube.com/watch?v=AJDJvMS8LIE) - a presentation of how stateless clients improve sync algorithms
 - [The Verge: Converting the Ethereum State to Verkle Trees - Guillaume Ballet, July 2023](https://www.youtube.com/watch?v=F1Ne19Vew6w) - a presentation of the conversion process
-- [Ava Labs Systems Seminar : Verkle trees for statelessness - Guillaume Ballet, October 2023](https://youtu.be/uGNmG3ZpWlU?si=OEFWP8Vesz-NRU9g) - a comprehensive overview of the states of stateless development as of October 2023
+- [Ava Labs Systems Seminar: Verkle trees for statelessness - Guillaume Ballet, October 2023](https://youtu.be/uGNmG3ZpWlU?si=OEFWP8Vesz-NRU9g) - a comprehensive overview of the states of stateless development as of October 2023
 - [DevCon: How Verkle Trees Make Ethereum Lean and Mean - Guillaume Ballet, Oct 2022](https://www.youtube.com/watch?v=Q7rStTKwuYs&t)
 - [Verkle Tries for Ethereum State - Dankrad Feist, Sept 2021](https://www.youtube.com/watch?v=RGJOQHzg3UQ&t) - PEEPanEIP presentation
 
@@ -36,11 +36,11 @@ Over the past years, many articles and talks have been made about stateless, mai
 
 ### EIPs
 
-- [EIP-6800](eips.ethereum.org/EIPS/eip-6800), structure of a Verkle Tree
-- [EIP-4762](eips.ethereum.org/EIPS/eip-4762), gas costs changes for Verkle Trees
-- [EIP-2935](eips.ethereum.org/EIPS/eip-2935) and [EIP-7709](eips.ethereum.org/EIPS/eip-7709), save historical block hashes in the state
-- [EIP-7612](eips.ethereum.org/EIPS/eip-7612) and [EIP-7748](eips.ethereum.org/EIPS/eip-7748), about the state tree conversion
-- [EIP-7864](eips.ethereum.org/EIPS/eip-7864), about the proposed scheme for Binary Trees
+- [EIP-6800](https://eips.ethereum.org/EIPS/eip-6800), structure of a Verkle Tree
+- [EIP-4762](https://eips.ethereum.org/EIPS/eip-4762), gas costs changes for Verkle Trees
+- [EIP-2935](https://eips.ethereum.org/EIPS/eip-2935) and [EIP-7709](https://eips.ethereum.org/EIPS/eip-7709), save historical block hashes in the state
+- [EIP-7612](https://eips.ethereum.org/EIPS/eip-7612) and [EIP-7748](https://eips.ethereum.org/EIPS/eip-7748), about the state tree conversion
+- [EIP-7864](https://eips.ethereum.org/EIPS/eip-7864), about the proposed scheme for Binary Trees
 
 ### Measurements & Metrics
 

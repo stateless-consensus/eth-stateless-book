@@ -12,7 +12,7 @@
 
 Using Binary Trees for the state tree is not a new idea. Back in 2020, this idea was explored in [EIP-3102](https://eips.ethereum.org/EIPS/eip-3102). Then, SNARKs were still in the early stages, and soon after, [Verkle Trees](vkt-tree.md) became a more promising approach, so this direction was abandoned.
 
-Many years have passed, and around mid-2024, two main motivations started to reignite the possibility of reconsidering Binary Trees compared to Verkle Trees. 
+Many years have passed, and around mid-2024, two main motivations started to reignite the possibility of reconsidering Binary Trees compared to Verkle Trees.
 
 The first one was some breakthroughs in quantum computers, which raised the concern that they could be a potential risk in 10 or 15 years. There’s no consensus around interpreting recent events, so there’s still the possibility that they will take many more years or never be a real risk for elliptic curve cryptography. Depending on how conservative core developers want to be, this might be a significant decision factor. Also note that if Verkle Trees are deployed, at least one extra [state tree conversion](../state-conversion/intro.md) is guaranteed to happen.
 

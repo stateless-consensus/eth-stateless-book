@@ -38,7 +38,7 @@ Let’s look at the following diagram to understand how the *stem* maps to the t
 
 Each byte of the *stem* defines which item from each internal node from each level is used to walk down the path. This is shown by the `0xFE...` and `0xFE00...` examples depending on which path we use to walk down the tree. The `A` and `B` are vector commitments to the corresponding pointed vectors.
 
-Given a *stem*, we always walk downstream until we reach a point where no other *stem* exists in the corresponding sub-tree. At this point, we insert the leaf node for the *stem*. 
+Given a *stem*, we always walk downstream until we reach a point where no other *stem* exists in the corresponding sub-tree. At this point, we insert the leaf node for the *stem*.
 
 Continuing with our example, we see that after the first two levels, we reached an *extension node:*
 
@@ -49,9 +49,9 @@ This construct (*extension node*) encodes the 256 values of the *stem.* As previ
 This extension node is constructed in the following way:
 
 - As usual, a 256 vector with the first 4-items encoding:
-    - The value `1` to prove this vector corresponds to an extension node.
-    - The `stem` value. Recall that the path can’t fully describe this value.
-    - `C1` and `C2`, which are commitments to two vectors
+  - The value `1` to prove this vector corresponds to an extension node.
+  - The `stem` value. Recall that the path can’t fully describe this value.
+  - `C1` and `C2`, which are commitments to two vectors
 - A 256 vector encoding the first 128 values of this *stem*. Each value is represented in two items. The commitment of this vector is the `C1` mentioned above.
 - An analogous 256-vector mentioned in the previous bullet, but for the last 128 values of this *stem*, which has commitment `C2`.
 

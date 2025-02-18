@@ -1,5 +1,10 @@
 # Development
 
+- [Development](#development)
+  - [Stateless community](#stateless-community)
+  - [Ethereum Fellowship Program (EFP)](#ethereum-fellowship-program-efp)
+  - [Grants](#grants)
+
 The future of Ethereum stateless is currently in active development, including research, protocol development, and UX impact.
 
 ## Stateless community

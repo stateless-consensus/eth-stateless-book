@@ -1,5 +1,14 @@
 # Resources
 
+- [Resources](#resources)
+  - [Introductory material](#introductory-material)
+  - [Video presentations](#video-presentations)
+  - [Advanced material](#advanced-material)
+    - [Overviews](#overviews)
+    - [Advanced technical write-ups](#advanced-technical-write-ups)
+    - [EIPs](#eips)
+    - [Measurements \& Metrics](#measurements--metrics)
+
 Over the past years, many articles and talks have been made about stateless, mainly on the topic of [Verkle Trees](./trees/vkt-tree.md). With recent updates to the roadmap, we will continue expanding this section, increasing our coverage of [Binary Trees](./trees/binary-tree.md) as well.
 
 ## Introductory material

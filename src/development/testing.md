@@ -1,5 +1,10 @@
 # Testing
 
+- [Testing](#testing)
+  - [Execution spec tests](#execution-spec-tests)
+  - [Filling \& running tests](#filling--running-tests)
+  - [CI](#ci)
+
 Ethereum stateless protocol changes cut deep into the protocol since it must simultaneously change many angles, such as the state tree, EVM gas costs, and opcodes functioning.
 
 ## Execution spec tests

@@ -2,6 +2,7 @@
 
 # SIC calls history
 
+- [**Call #31: Febuary 24, 2025**](#call-31-febuary-24-2025)
 - [**Call #30: Febuary 10, 2025**](#call-30-febuary-10-2025)
 - [**Call #28: December 2, 2024**](#call-28-december-2-2024)
 - [**Call #27: November 4, 2024**](#call-27-november-4-2024)
@@ -11,6 +12,67 @@
 - [**Call #23: August 26, 2024**](#call-23-august-26-2024)
 - [**Call #22: July 29, 2024**](#call-22-july-29-2024)
 - [**Call #21: July 15, 2024**](#call-21-july-15-2024)
+
+## [**Call #31: Febuary 24, 2025**](https://github.com/ethereum/pm/issues/1322)
+
+[Recording here](https://www.youtube.com/watch?v=Z_8pKQJwqwQ)
+
+### 1. Team updates
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth): worked on pre-image file generation and writing the Ethereum stateless book, both of which were shared later in the call.
+
+[@gballet](https://x.com/gballet) for [@go_ethereum](https://x.com/go_ethereum): stateless book reviewing and digging into how a proving system for binary trees would look like.
+
+[@jasoriatanishq](https://x.com/jasoriatanishq) for Nethermind: started rebase on Pectra for the next devnet.
+
+[@kt2am1990](https://x.com/kt2am1990) and Thomas for @HyperledgerBesu: made progress on Besu working in stateless mode around state reconstruction and proof verification. Also, starting to work on the state conversion EIP.
+
+[@GabRocheleau](https://x.com/GabRocheleau) for @EFJavaScript: merged the Binary Tree implementation with some tests from the spec and some extra ones. Now working on writing better documentation and the client state manager for this tree.
+
+### 2. Preimage file generation
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) presented the work published in [Ethresearch some days ago](https://ethresear.ch/t/state-tree-preimages-file-generation/21651).
+
+The presentation can be viewed in the video recording between timestamps [04:46](https://youtu.be/Z_8pKQJwqwQ?t=286) and [31:32](https://youtu.be/Z_8pKQJwqwQ?t=1892) (~27 min).
+
+The slides can be accessed [here](https://docs.google.com/presentation/d/1fQkoiQu7geS6un0PpD_y0W9ZJfOmzgE7GnGPRDCPchI/edit?usp=sharing).
+
+Points touched after the presentation:
+
+- Gottfried suggested we make each entry in the preimage file 32 bytes instead of [20-bytes || 32-bytes]. This could simplify cursor management in clients for reorgs since moving back only depends on the sweep stride and not specific block details. The file compression could automatically hide the extra overhead.
+- [@gballet](https://x.com/gballet) said that for geth, things might not be simplified much. Gottfried highlighted that the proposal can lead to a more straightforward implementation despite being doable.
+- Gottfried raised another point: If we don’t go with the CDN path and have to chunk the preimage information, we’d have to think about verifying each chunk independently, which can introduce more complexity. [@gballet](https://x.com/gballet) mentioned we can solve this with a two-pointer header. Depending on the distribution mechanism we decide on, we might have to dig deeper into this, or we can ignore it.
+
+### 3. Ethereum Stateless Book announcement
+
+[@gballet](https://x.com/gballet) did a quick overview of the recently published [Ethereum Stateless Book](https://stateless.fyi/). Both [@ignaciohagopian](https://x.com/ignaciohagopian) and [@gballet](https://x.com/gballet) worked on this first version.
+
+The book provides a complete picture of many angles about going stateless, such as: 
+
+- Motivations
+- Target trees
+- BLOCKHASH state
+- Gas remodeling
+- State conversion
+- Use cases
+- Resources
+- Development
+
+Ignacio mentioned that the book is [open source](https://github.com/stateless-consensus/eth-stateless-book), and anyone is invited to collaborate.
+
+### 4. Multi-client State Conversion
+
+[@gballet](https://x.com/gballet) shared that there are current discussions with the research team about the right path forward regarding statelessness to avoid potentially repeating what happened with Verkle Trees.
+
+He highlighted that getting more confidence in how fast clients can be ready for the state conversion can be decisive. He thinks it’s worth inviting more EL clients to work on it so we can show that the state conversion has a low risk.
+
+Reaching a milestone where multiple clients go through a complete conversion of state without consensus bugs might be a more important goal than a new devnet with features that we’ve discussed in previous SIC calls.
+
+[@GabRocheleau](https://x.com/GabRocheleau) asked if we should work on the conversion EIP with Verkle or Binary, and there seems to be an agreement to do it with Verkle. The target tree isn’t important for the goal since the conversion is tree-agnostic. However, doing it with Verkle is easier for clients since most of them already have the implementation ready compared to Binary Trees.
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) mentioned that he would be working on `execution-spec-tests` for the conversion so clients can test their implementations faster than launching devnets. There will be collaboration on this with Spencer from the testing team.
+
+[@gballet](https://x.com/gballet) raised a point about a potential confusion between the data migration order in the [EIP](https://eips.ethereum.org/EIPS/eip-7748) and the preimage file, but the discussion will continue offline. This point may be resumed in further SIC calls, but currently, no action is needed.
 
 ## [**Call #30: Febuary 10, 2025**](https://github.com/ethereum/pm/issues/1263)
 

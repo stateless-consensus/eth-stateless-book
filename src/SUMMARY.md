@@ -18,7 +18,6 @@
 - [Resources](./resources.md)
 - [Development](./development/intro.md)
   - [SIC calls](./development/sic-calls/intro.md)
-    - [Last call summary](./development/sic-calls/lastest.md)
     - [History summaries](./development/sic-calls/history.md)
   - [Devnets](./development/devnets.md)
   - [Testing](./development/testing.md)

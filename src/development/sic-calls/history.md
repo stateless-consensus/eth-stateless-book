@@ -2,6 +2,173 @@
 
 # SIC calls history
 
+- [**Call #31: Febuary 24, 2025**](#call-31-febuary-24-2025)
+- [**Call #30: Febuary 10, 2025**](#call-30-febuary-10-2025)
+- [**Call #28: December 2, 2024**](#call-28-december-2-2024)
+- [**Call #27: November 4, 2024**](#call-27-november-4-2024)
+- [**Call #26: October 21, 2024**](#call-26-october-21-2024)
+- [**Call #25: September 23, 2024**](#call-25-september-23-2024)
+- [**Call #24: September 9, 2024**](#call-24-september-9-2024)
+- [**Call #23: August 26, 2024**](#call-23-august-26-2024)
+- [**Call #22: July 29, 2024**](#call-22-july-29-2024)
+- [**Call #21: July 15, 2024**](#call-21-july-15-2024)
+
+## [**Call #31: Febuary 24, 2025**](https://github.com/ethereum/pm/issues/1322)
+
+[Recording here](https://www.youtube.com/watch?v=Z_8pKQJwqwQ)
+
+### 1. Team updates
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth): worked on pre-image file generation and writing the Ethereum stateless book, both of which were shared later in the call.
+
+[@gballet](https://x.com/gballet) for [@go_ethereum](https://x.com/go_ethereum): stateless book reviewing and digging into how a proving system for binary trees would look like.
+
+[@jasoriatanishq](https://x.com/jasoriatanishq) for Nethermind: started rebase on Pectra for the next devnet.
+
+[@kt2am1990](https://x.com/kt2am1990) and Thomas for @HyperledgerBesu: made progress on Besu working in stateless mode around state reconstruction and proof verification. Also, starting to work on the state conversion EIP.
+
+[@GabRocheleau](https://x.com/GabRocheleau) for @EFJavaScript: merged the Binary Tree implementation with some tests from the spec and some extra ones. Now working on writing better documentation and the client state manager for this tree.
+
+### 2. Preimage file generation
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) presented the work published in [Ethresearch some days ago](https://ethresear.ch/t/state-tree-preimages-file-generation/21651).
+
+The presentation can be viewed in the video recording between timestamps [04:46](https://youtu.be/Z_8pKQJwqwQ?t=286) and [31:32](https://youtu.be/Z_8pKQJwqwQ?t=1892) (~27 min).
+
+The slides can be accessed [here](https://docs.google.com/presentation/d/1fQkoiQu7geS6un0PpD_y0W9ZJfOmzgE7GnGPRDCPchI/edit?usp=sharing).
+
+Points touched after the presentation:
+
+- Gottfried suggested we make each entry in the preimage file 32 bytes instead of [20-bytes || 32-bytes]. This could simplify cursor management in clients for reorgs since moving back only depends on the sweep stride and not specific block details. The file compression could automatically hide the extra overhead.
+- [@gballet](https://x.com/gballet) said that for geth, things might not be simplified much. Gottfried highlighted that the proposal can lead to a more straightforward implementation despite being doable.
+- Gottfried raised another point: If we don’t go with the CDN path and have to chunk the preimage information, we’d have to think about verifying each chunk independently, which can introduce more complexity. [@gballet](https://x.com/gballet) mentioned we can solve this with a two-pointer header. Depending on the distribution mechanism we decide on, we might have to dig deeper into this, or we can ignore it.
+
+### 3. Ethereum Stateless Book announcement
+
+[@gballet](https://x.com/gballet) did a quick overview of the recently published [Ethereum Stateless Book](https://stateless.fyi/). Both [@ignaciohagopian](https://x.com/ignaciohagopian) and [@gballet](https://x.com/gballet) worked on this first version.
+
+The book provides a complete picture of many angles about going stateless, such as: 
+
+- Motivations
+- Target trees
+- BLOCKHASH state
+- Gas remodeling
+- State conversion
+- Use cases
+- Resources
+- Development
+
+Ignacio mentioned that the book is [open source](https://github.com/stateless-consensus/eth-stateless-book), and anyone is invited to collaborate.
+
+### 4. Multi-client State Conversion
+
+[@gballet](https://x.com/gballet) shared that there are current discussions with the research team about the right path forward regarding statelessness to avoid potentially repeating what happened with Verkle Trees.
+
+He highlighted that getting more confidence in how fast clients can be ready for the state conversion can be decisive. He thinks it’s worth inviting more EL clients to work on it so we can show that the state conversion has a low risk.
+
+Reaching a milestone where multiple clients go through a complete conversion of state without consensus bugs might be a more important goal than a new devnet with features that we’ve discussed in previous SIC calls.
+
+[@GabRocheleau](https://x.com/GabRocheleau) asked if we should work on the conversion EIP with Verkle or Binary, and there seems to be an agreement to do it with Verkle. The target tree isn’t important for the goal since the conversion is tree-agnostic. However, doing it with Verkle is easier for clients since most of them already have the implementation ready compared to Binary Trees.
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) mentioned that he would be working on `execution-spec-tests` for the conversion so clients can test their implementations faster than launching devnets. There will be collaboration on this with Spencer from the testing team.
+
+[@gballet](https://x.com/gballet) raised a point about a potential confusion between the data migration order in the [EIP](https://eips.ethereum.org/EIPS/eip-7748) and the preimage file, but the discussion will continue offline. This point may be resumed in further SIC calls, but currently, no action is needed.
+
+## [**Call #30: Febuary 10, 2025**](https://github.com/ethereum/pm/issues/1263)
+
+[Recording here](https://www.youtube.com/watch?v=0dMb2tecuwI)
+
+### 1. Team updates
+
+[@GabRocheleau](https://x.com/GabRocheleau) for @EFJavaScript: The Ethereum JS team has developed an early implementation of binary trees to serve as a testing ground for future developments.
+
+[@kt2am1990](https://x.com/kt2am1990) and Thomas for @HyperledgerBesu: The Besu team has been working on some code refactorings to allow stateless execution of blocks, in particular, only relying on chunkified code chunks for EVM execution. Additionally, the implementation of block-proof verification is being finished.
+
+[@jasoriatanishq](https://x.com/jasoriatanishq) for Nethermind: No updates at the moment.
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth): drafted the Binary Tree EIP, benchmarked the out-of-circuit performance of hash function candidates, and started working on some documentation projects that will be released soon.
+
+[@gballet](https://x.com/gballet) for [@go_ethereum](https://x.com/go_ethereum): have been upstreaming stateless related changes to geth and collaborating on Binary Tree spec efforts.
+
+### 2. Binary Tree EIP
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) presented an overview of the [Binary Tree EIP](https://eips.ethereum.org/EIPS/eip-7864).
+
+The underlying motivations for a Binary Tree EIP are:
+
+- Concerns about quantum computers becoming a real threat due to breakthroughs last year.
+  - Verkle Trees introduce non-quantum-safe components into the protocol, which is in contrast to new efforts, e.g., new research on signature aggregation for CL, and others.
+  - Depending on the estimation for quantum computers becoming real, the return on investment of Verkle Trees might not be worth it.
+- SNARK proving systems performance improving rapidly, making it more viable to use them for proving pre-state for blocks.
+- Jumping directly into a potential final tree: deploying Verkle Trees means we’ll have to do a tree conversion again for quantum. Doing a Binary Tree has higher changes than Verkle in becoming the final tree potentially avoiding further tree conversions.
+
+Regarding the design:
+
+- It pulls many ideas from Verkle Trees EIP
+  - Data encoding aggregates accounts data in stems.
+  - The same applies to storage slots and code chunks.
+  - Code chunkification is the same as Verkle but with minor tweaks.
+  - The implementation is much more straightforward than Verkle since it only relies on hash functions, so we don’t have to introduce new elliptic curves or similar structures.
+- [Python spec implementation](https://github.com/jsign/binary-tree-spec).
+- The hash function for Merkelization:
+  - The current proposal uses Blake3 as a first proposal since other hash functions, such as Poseidon2, aren’t considered safe today. EF research is [actively](https://www.poseidon-initiative.info/) working to assess its security more formally.
+  - Poseidon2 is probably the best candidate since it’s an arithmetic hash function that is very efficient for proving systems.
+  - Given a full implementation of a Binary Tree with Blake3, if we decide to switch to Poseidon2, it would be a simple change, so this dilemma of whether or not to use Poseidon2 shouldn’t be a blocker to starting to implement it.
+  - The current proving performance for hash functions which aren't Poseidon2 is still one order of magnitude far from what we need. Poseidon2 proof generation is already fast enough.
+
+Question regarding the current viability of Verkle Trees vs. Binary Trees:
+
+- [@ignaciohagopian](https://x.com/ignaciohagopian) claims Verkle Trees have a low chance of being used.
+- Depending on how the L1 scaling roadmap is defined, other changes, such as delayed execution payload, might even favor binary trees.
+- It’s pretty hard to know this until it’s discussed in ACD, but call participants seem to agree that Binary Trees now have higher chances of being the right state tree switch.
+
+Regarding future stateless devnets:
+
+- The next devnet will still be Verkle since we only plan to implement EIP-4762 missing features. But further devnets probably will be Binary.
+- Binary Tree devnets can start with Blake3 as the hashing function without proof. This can buy time until we decide on the security of Poseidon2 and proving systems. Since later switching the hash function shouldn’t have a significant impact, we aren’t blocked by this.
+
+### 3. Atomicity in gas charging
+
+[@gballet](https://x.com/gballet) explained a proposal from the geth team regarding how some operations in EIP-4762 should have other *atomicity* semantics.
+The motivation from the geth team is simplifing the implementation in their codebase.
+
+The current way EIP-4762 works is that some operations that expect to add more than one leaf to the access events aren’t atomic:
+
+<img src="https://hackmd.io/_uploads/B1D2cTPFkx.png" width="200"/>
+
+Received feedback:
+
+- [@jasoriatanishq](https://x.com/jasoriatanishq) for Nethermind claims this change might make their implementation more complex.
+- [@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth) raises concerns about whether this change would make the spec more complex since now *atomicity* in witness additions is something we must explain very well to avoid consensus bugs. Today isn’t required since any addition is expected to be atomic, and there’s no “group level” atomicity concept.
+
+[@gballet](https://x.com/gballet) acknowledged these opinions but thinks the spec is unclear, and might plan to implement the proposed change in geth to confirm if this concludes it might simplify geth implementation or if this was just a wrong intuition. We expect to continue to discuss this proposal in further SIC calls.
+
+### 4. Account version discussion
+
+This is a topic raised by [@gballet](https://x.com/gballet).
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) starts by giving a summary of the motivation for this discussion:
+
+- The current tree proposal has a `VERSION` field.
+- There’re motivations to encode into the account stem, information to distinguish if the account is using EIP-7702 delegations and/or is an EOF account.
+- The dilemma is between using:
+  - The `VERSION` field in the account stem to signal if it’s a usual EoA, EIP-7702 or EOF account, or
+  - Keep using `VERSION = 0` and encode this information in the reserved bytes in `BASIC_DATA`.
+
+[@gballet](https://x.com/gballet) goes through further details about potential future use cases for `VERSION` and signals that it seems pretty clear that we shouldn’t use the `VERSION` field. [@jasoriatanishq](https://x.com/jasoriatanishq) and [@ignaciohagopian](https://x.com/ignaciohagopian) agree on the conclusion.
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) gives a final summary:
+
+- `VERSION` describes tree-level semantics, i.e., how to interpret the 256 values in the stem.
+- Account level identification is independent from the tree, which justifies not using `VERSION` for this but `BASIC_DATA` reserved fields.
+
+### 5. New stateless team public page and X account
+
+[@gballet](https://x.com/gballet) shares two updates:
+
+- [stateless.fyi](http://stateless.fyi), a new website is a refreshed public explanation about Ethereum's stateless benefits.
+- A team [X account](https://x.com/StatelessEth) was created, which people can follow to get updates about Ethereum's stateless efforts.
+
 ## [**Call #28: December 2, 2024**](https://github.com/ethereum/pm/issues/1203)
 
 [Recording here](https://www.youtube.com/watch?v=5bxvSLvc9LA)
@@ -54,14 +221,13 @@ The basic idea is that with every transaction the transaction submitter will als
 
 Gajinder is currently drafting the EIP. Will have something to share soon.
 
-
 ## [**Call #27: November 4, 2024**](https://github.com/ethereum/pm/issues/1196)
 
 [Recording here](https://www.youtube.com/watch?v=1PYu4_Ac1Po)
 
 [no notes this week]
 
-### [**Call #26: October 21, 2024**](https://github.com/ethereum/pm/issues/1186)
+## [**Call #26: October 21, 2024**](https://github.com/ethereum/pm/issues/1186)
 
 [Recording here](https://youtu.be/MJA1e95cfww)
 
@@ -85,15 +251,15 @@ Guillaume shared an [updated document](https://www.notion.so/Verkle-measurement
 
 Few highlights below, and check out the doc for the full report.
 
-## **Witness size**
+#### **Witness size**
 
 ![image](https://storage.googleapis.com/ethereum-hackmd/upload_74d2e508ca3499afb6064b4af670e4cf.png)
 
-## **Database**
+#### **Database**
 
 ![image](https://storage.googleapis.com/ethereum-hackmd/upload_71000583740af6e688511c8562c48227.png)
 
-## **Tree key hashing: comparing Pedersen vs sha256**
+#### **Tree key hashing: comparing Pedersen vs sha256**
 
 ![image](https://storage.googleapis.com/ethereum-hackmd/upload_ce9bc497d137bad837dbf5f8e1661569.png)
 

@@ -13,7 +13,7 @@
 
 ## Recommended background
 
-This topic is diving into a topic that can’t be understood correctly in isolation; we recommend previous reading of:
+This topic is diving into a subject that can’t be understood correctly in isolation; we recommend previous reading of:
 
 - The [State Conversion high-level explanation](./intro.md).
 - [EIP-7612 explanation](./eip-7612.md).
@@ -49,15 +49,15 @@ Other discussed options are:
 - Having an in-protocol p2p distribution mechanism.
 - Distributing the required preimages packed inside each block.
 
-This topic is highly contentious since these options have different tradeoffs regarding complexity, required bandwidth in protocol hotpaths, and compression opportunities. If you’re interested there’s an [older document](https://hackmd.io/@jsign/vkt-preimage-generation-and-distribution) summarizing many discussions around the topic.
+This topic is highly contentious since these options have different tradeoffs regarding complexity, required bandwidth in protocol hotpaths, and compression opportunities. If you’re interested, there’s an [older document](https://hackmd.io/@jsign/vkt-preimage-generation-and-distribution) summarizing many discussions around the topic.
 
 ### Verifiability
 
 As mentioned above, full nodes will receive this file from somewhere that can be a potentially untrusted party or a hacked supply chain. If the file is corrupt or invalid, the full node will be blocked at some point in the conversion process.
 
-The file is easily verifiable by doing the described tree walk, reading the expected preimage, calculating the keccak hash, and verifying that it matches the client's expectations. After this file is verified, it can be safely used whenever the conversion starts, with the guarantee that the client can’t be blocked by resolving preimages — having this guarantee is critical for the stability of the network during the conversion period. This verification time must be accounted for in the time delay between EIP-7612 activation and EIP-7748 *CONVERSION_START_TIMESTAMP* timestamp*.*
+The file is easily verifiable by doing the described tree walk, reading the expected preimage, calculating the keccak hash, and verifying that it matches the client's expectations. After this file is verified, it can be safely used whenever the conversion starts, with the guarantee that the client can’t be blocked by resolving preimages — having this guarantee is critical for the stability of the network during the conversion period. This verification time must be accounted for in the time delay between EIP-7612 activation and EIP-7748 *CONVERSION_START_TIMESTAMP*.
 
-Of course, other ways to verify this file are faster but require more assumptions. For example, since anyone generating the file would get the same output, client teams could generate themselves and hardcode the file's hash/checksum. When the file is downloaded/imported, the verification can compare the hash of the file with the hardcoded one.
+Of course, other ways to verify this file are faster but require more assumptions. For example, since anyone generating the file would get the same output, client teams could generate it themselves and hardcode the file's hash/checksum. When the file is downloaded/imported, the verification can compare the hash of the file with the hardcoded one.
 
 ### Generation and encoding
 

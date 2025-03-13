@@ -15,7 +15,7 @@
 
 ## Introduction
 
-*State conversion* is an important and complex topic for a stateless Ethereum. As mentioned in the *Trees* chapter, one required protocol change is changing the tree used to store the Ethereum state. Although it is easy to spin up a new blockchain with a new shiny tree, life is more complicated when you need to do it with an existing tree storing of state ~300GiB.
+*State conversion* is an important and complex topic for a stateless Ethereum. As mentioned in the *Trees* chapter, one required protocol change is changing the tree used to store the Ethereum state. Although it is easy to spin up a new blockchain with a new shiny tree, life is more complicated when you need to do it with an existing tree storing a state of ~300GiB.
 
 This chapter explains how the protocol will switch the state tree to the new target tree while attempting to run seamlessly, flawlessly, and safely with minimal user impact.
 
@@ -45,8 +45,8 @@ Note that these two phases will happen while the chain runs as usual, so we’re
 
 In *Stage 1,* a protocol change is activated (EIP-7612), which:
 
-- It makes the MPT read-only (i.e., RO MPT).
-- The new (empty) state tree is introduced.
+- Makes the MPT read-only (i.e., RO MPT).
+- Introduces the new (empty) state tree.
 - Any new write produced by executing transactions in a block is done in the new tree.
 - Any read is first done in the new tree; if the key isn’t found, it is done in the RO MPT.
 

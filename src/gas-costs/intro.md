@@ -3,7 +3,7 @@
 - [Gas cost remodeling](#gas-cost-remodeling)
   - [Recommended reading](#recommended-reading)
   - [How are costs related to stateless Ethereum?](#how-are-costs-related-to-stateless-ethereum)
-  - [Which are the main drivers for gas cost changes?](#which-are-the-main-drivers-for-gas-cost-changes)
+  - [What are the main drivers for gas cost changes?](#what-are-the-main-drivers-for-gas-cost-changes)
 
 ## Recommended reading
 
@@ -15,11 +15,11 @@ As discussed in other chapters, multiple protocol changes are needed to achieve 
 
 Changing gas costs is always a complex problem since the gas cost model is part of the blockchain's public API. Although the protocol can’t promise fixed gas costs forever, it’s usually something that we must think carefully about since it can break existing contracts that have baked-in assumptions. Not all gas cost changes are negative, but the overall impact (positive or negative) depends on each case.
 
-## Which are the main drivers for gas cost changes?
+## What are the main drivers for gas cost changes?
 
 The following are reasons that motivate doing a gas cost remodeling:
 
-- The block will contain an *execution witness* that includes new information—at a minimum, it will contain proof. The block size is affected by EVM instruction, which depends on the state.
+- The block will contain an *execution witness* that includes new information—at a minimum, it will contain proof. The block size is affected by EVM instructions, which depend on the state.
 - The new trees have a new grouping strategy for storage slots, which attempts to lower the gas cost access.
 - Code is also included in the tree, so gas must be charged to access it when contracts are executed.
 

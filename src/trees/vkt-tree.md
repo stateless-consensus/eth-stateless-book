@@ -8,15 +8,15 @@
 
 ## Overview
 
-Verkle Trees was the first tree design considered a viable solution for stateless Ethereum. The roots live in a [paper](https://math.mit.edu/research/highschool/primes/materials/2018/Kuszmaul.pdf) published by [John Kuszmaul](https://sites.google.com/view/johnkuszmaul). This idea superseded older Binary Trees approaches from years ago when SNARK proofs were still sci-fi technology.
+Verkle Trees were the first tree design considered a viable solution for stateless Ethereum. The roots of this idea are in a [paper](https://math.mit.edu/research/highschool/primes/materials/2018/Kuszmaul.pdf) published by [John Kuszmaul](https://sites.google.com/view/johnkuszmaul). This idea superseded older Binary Tree approaches from years ago when SNARK proofs were still sci-fi technology.
 
 Due to advancements in SNARK proving systems performance and concerns about quantum risks, Verkle Trees might be superseded by [Binary Trees](binary-tree.md). This is still under discussion; stay tuned!
 
 ## Role of vector commitments in the design
 
-At the core of Verkle Trees’ design is using a cryptographic component named *vector commitment.*
+At the core of Verkle Trees’ design is the use of a cryptographic component named *vector commitment.*
 
-Without getting into formal definitions, this construct allows us to fill a vector with fixed size `N` and:
+Without getting into formal definitions, this construct allows us to fill a vector with a fixed size `N` and:
 
 - Compute a *commitment* to the vector, a succinct fingerprint of its contents.
 - Given the *commitment*, we can efficiently generate a small proof to prove that a particular entry in the vector has a defined value.
@@ -30,7 +30,7 @@ The cryptography around the vector commitments is based on [Inner Product Argume
 
 ## Tree design
 
-A tree key is still a 32-byte blob. The first 31-bytes define what’s called a *stem*. A *stem* decides the main branch from which all 256 values for that *stem* will reside. Note that the last byte of the tree key defines exactly 256 values; thus, we can conclude that the first 31-bytes define the tree key path, and the last byte defines which bucket from the 256 items contains the value.
+A tree key is still a 32-byte blob. The first 31 bytes define what’s called a *stem*. A *stem* decides the main branch from which all 256 values for that *stem* will reside. Note that the last byte of the tree key defines exactly 256 values; thus, we can conclude that the first 31 bytes define the tree key path, and the last byte defines which bucket from the 256 items contains the value.
 
 Let’s look at the following diagram to understand how the *stem* maps to the tree path:
 
@@ -51,7 +51,7 @@ This extension node is constructed in the following way:
 - As usual, a 256 vector with the first 4-items encoding:
   - The value `1` to prove this vector corresponds to an extension node.
   - The `stem` value. Recall that the path can’t fully describe this value.
-  - `C1` and `C2`, which are commitments to two vectors
+  - `C1` and `C2`, which are commitments to two vectors.
 - A 256 vector encoding the first 128 values of this *stem*. Each value is represented in two items. The commitment of this vector is the `C1` mentioned above.
 - An analogous 256-vector mentioned in the previous bullet, but for the last 128 values of this *stem*, which has commitment `C2`.
 
@@ -69,14 +69,14 @@ The proof needs to do each corresponding vector opening from the *extension node
 
 - For `C1` at position 2 proving has value `v1_low`.
 - For `C1` at position 3 proving has value `v1_high`.
-- For `B` at position 0 proving has value `1`
+- For `B` at position 0 proving has value `1`.
 - For `B` at position 1 proving has value `stem`.
 - For `B` at position 2 proving has value `C1` (note that opening `C2` is not needed!).
 - For `A` at position 0 proving has value `B`.
-- For `R` at position 254 proving has value `B`
+- For `R` at position 254 proving has value `B`.
 
 Given the list of key values to prove, many might share openings that are only done once. The proof contains extra information to decide how the verifier should expect each stem to map to tree branches.
 
 Note that the prover does not provide `R` since it’s known to the verifier, i.e., it is the state root of the tree. As mentioned before, all these vector openings are batched in a single proof, which compresses all the openings in a single short proof.
 
- We recommend reading [this article](https://ihagopian.com/posts/anatomy-of-a-verkle-proof) if you want a more in-depth explanation of proof construction.
+We recommend reading [this article](https://ihagopian.com/posts/anatomy-of-a-verkle-proof) if you want a more in-depth explanation of proof construction.

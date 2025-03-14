@@ -5,7 +5,7 @@
   - [Filling \& running tests](#filling--running-tests)
   - [CI](#ci)
 
-Ethereum stateless protocol changes cut deep into the protocol since it must simultaneously change many angles, such as the state tree, EVM gas costs, and opcodes functioning.
+Ethereum stateless protocol changes cut deep into the protocol since it must simultaneously change many angles, such as the state tree, EVM gas costs, and opcode functioning.
 
 ## Execution spec tests
 
@@ -32,7 +32,7 @@ The [execution spec test documentation](https://ethereum.github.io/execution-spe
 2. [Pull the main branch from this repo](https://github.com/gballet/go-ethereum).
     1. Run `go build -o evm ./cmd/evm`
     2. Save the generated binary in `PATH_A`
-3. [Pull the `verkle/main` branch from execution-spec-tests repo](https://github.com/ethereum/execution-spec-tests/tree/verkle/main)
+3. [Pull the `verkle/main` branch from the execution-spec-tests repo](https://github.com/ethereum/execution-spec-tests/tree/verkle/main)
     1. Run `uv run fill --fork Verkle -v -m blockchain_test -n auto --evm-bin=<PATH_A>` to fill the tests. You can use whatever extra flags are described in the testing framework documentation to filter fillings.
 4. In the `fixtures` folder, you’ll find the generated fixtures.
 
@@ -40,7 +40,7 @@ The command for running the test depends on your EL client. For example, in Geth
 
 ## CI
 
-In the geth branch used for stateless development, there are GitHub Actions workflows:
+In the Geth branch used for stateless development, there are GitHub Actions workflows:
 
 - [Fill & consume tests](https://github.com/gballet/go-ethereum/blob/kaustinen-with-shapella/.github/workflows/spec-tests-branch.yml)
 - [Consume stable fixtures](https://github.com/gballet/go-ethereum/blob/kaustinen-with-shapella/.github/workflows/stable-spec-tests.yml)

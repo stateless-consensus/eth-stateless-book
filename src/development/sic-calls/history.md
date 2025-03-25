@@ -2,6 +2,7 @@
 
 # SIC calls history
 
+- [**Call #32: March 24, 2025**](#call-32-march-24-2025)
 - [**Call #31: Febuary 24, 2025**](#call-31-febuary-24-2025)
 - [**Call #30: Febuary 10, 2025**](#call-30-febuary-10-2025)
 - [**Call #28: December 2, 2024**](#call-28-december-2-2024)
@@ -12,6 +13,93 @@
 - [**Call #23: August 26, 2024**](#call-23-august-26-2024)
 - [**Call #22: July 29, 2024**](#call-22-july-29-2024)
 - [**Call #21: July 15, 2024**](#call-21-july-15-2024)
+
+## [**Call #32: March 24, 2025**](https://github.com/ethereum/pm/issues/1369)
+
+[Recording video](https://www.youtube.com/watch?v=w9dTNwNq2uU)
+
+### 1. Team updates
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth): has been working on EIP-7748 execution spec tests in the context of the previous decision on focusing stateless efforts in gaining confidence on EL clients implementations for the tree conversion.
+
+[@jasoriatanishq](https://x.com/jasoriatanishq) for Nethermind: is finalizing the tree conversion implementation in Nethermind and planning to run the execution spec tests next week.
+
+[@kt2am1990](https://x.com/kt2am1990) for @HyperledgerBesu: made progress on general stateless implementation tasks. In particular, he has a preliminary version of the tree conversion, which passed preliminary execution spec tests and uncovered some bugs.
+
+[@GabRocheleau](https://x.com/GabRocheleau) for @EFJavaScript: he started the tree conversion implementation and will probably be able to execute the provided tests in one or two weeks.
+
+### 2. Tree conversion (EIP-7748) testing planning document
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) presented [a new document](https://hackmd.io/@jsign/tree-conversion-tests) describing the strategy and test cases for tree conversion testing.
+
+At the top of the document, a set of bullets quickly describe the main reasons we need to plan test cases to cover in the tests and different stages of testing, including execution spec tests, running devnets with synthetic or testnet/mainnet data, and finally shadow forks of testnets/mainnet.
+
+He continued to present at a high level the different buckets of designed tests, which include testing:
+
+- Non-partial account conversion
+- Partial account conversion
+- Code-chunk stride accounting
+- Special accounts
+- Conversion ending
+- Modified accounts
+- Blocks txs execution with writes overlapping conversion units
+- Access partially converted contracts
+- Reorgs
+
+The document uses emojis to signal which tests are already created, pending, or require testing-framework changes to be supported. For more details, refer to the [document](https://hackmd.io/@jsign/tree-conversion-tests).
+
+The new fixtures will be shared in the matrix group for EL clients. EL clients should remember that failing tests can have a decent probability of getting bugs in EIP-4762, so it makes sense to share as early as possible if that’s the case for further inspection. After at least one client passes all the tests, failing tests probably signal a bug in your EL client.
+
+Regarding potential geth bugs, [@gballet](https://x.com/gballet) shared that geth has a known bug affecting the Holesky shadow fork run but probably not the testing filling mentioned. The bug is known and can be worked around, but if anyone is trying to build a devnet or shadow fork using the current version, please wait until the bug is fixed.
+
+### 3. Indirect account header conversion when writing storage-slots
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) raised a subtle point on how geth works by describing the following scenario:
+
+- The overlay tree EIP is activated.
+- A tx writes to a storage slot in a contract.
+
+Under this scenario, as described in EIP-7612, the write done in the storage slot should happen in the new tree (i.e., overlay tree). But there’s an extra write also done in the new tree: the contract account header.
+
+At first sight, this might be surprising since no actual write happens in the account header, but it is coherent. Currently, under **only** Merkle Patricia Trie's (MPT) assumptions, a write in any storage slot means the *storage root* of the account *would* be updated. This marks the account header as dirty, which has also been converted to the new tree. The subtlety is that the account header didn’t have any real data update since the storage root isn’t part of the new tree design, and it also doesn’t make entire sense since the MPT is frozen.
+
+The bottom line question is if this makes sense for all EL clients or if we might want to change the behavior, since another reasonable option is not doing this indirect conversion.
+
+The consensus from [@gballet](https://x.com/gballet), [@g11tech](https://x.com/g11tech), and [@kt2am1990](https://x.com/kt2am1990) seems to be that keeping the current behavior is OK. [@ignaciohagopian](https://x.com/ignaciohagopian) mentioned if EL clients are unsure of how their clients behave, this will be apparent when they run the execution-spec-tests since they’ll disagree with geth, at which point we can re-discuss the topic if needed.
+
+### 4. Testing framework: Preimages
+
+Some days ago, when [@kt2am1990](https://x.com/kt2am1990) was testing some of the first available tests, it was considered that the fixtures could contain a separate field with the MPT preimages required for EIP-4762 logic.
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) explains that geth works today by automatically recording the MPT preimages when it ingests the provided fixtures pre-state. He believes we shouldn’t blow up the testing framework with extra fields if EL clients can derive it from existing data.
+
+[@techbro_ccoli](https://twitter.com/techbro_ccoli) from the testing team made it even clearer that you can interpret the preimages from the pre-state, which should be enough compared to a more explicit field of preimages. In summary, we won’t add the preimages as a new field in fixtures, and clients should continue to record them as they ingest the provided fixture pre-state.
+
+### 5. State Expiry discussion
+
+[@g11tech](https://x.com/g11tech) raised a topic outside the agenda that is still related to the tree conversion topics. Can we reuse the code of the transition to implement state expiry?
+
+[@sophia](https://x.com/_sophiagold_) provided more historical context and confirmed that trying to achieve expiry by using one tree per epoch was very complex since it requires introducing address space extensions and has high UX friction. She provided the following links, which dive deeper into this topic: a potentially [underexplored idea](https://ethereum-magicians.org/t/types-of-resurrection-metadata-in-state-expiry/6607) that could be a viable solution and a [summary from Vitalik from some time ago about state expiry](https://hackmd.io/@vbuterin/state_expiry_paths).
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) mentioned that we should try allocating this topic to a future SIC agenda so we have time to continue the discussion if needed.
+
+### 6. Post-quantum Verkle Trees variants
+
+[@CPerezz19](https://x.com/CPerezz19) [wrote a document](https://hackmd.io/qeEJsgjVSDeMjiR8d3-UvQ?both) that summarizes the main benefits of the current Verkle Tree design and how it compares with other presented alternatives. In particular, it explores potential variants that address the post-quantum weakness of the current design.
+
+He has been talking with many experts in the field and found out there’s active interest in the topic. This might signal an underexplored topic, meaning there might be viable PQ variants for a Verkle Tree design.
+
+The next step is to get more cryptography experts involved in the presented document to have feedback and potentially do some benchmarks to confirm if any of these variants could be a feasible contender to be proposed.
+
+Future SIC calls will continue to discuss this topic since we need to give time for more people to chime into Carlos's work and provide feedback.
+
+### 7. EXTCODECOPY behavior when targeting system contracts
+
+[@gballet](https://x.com/gballet) raised whether doing an `EXTCODECOPY` of a system contract should include system contract code chunks in the witness.
+
+This creates tension with the current EIP spec, which mentions not adding system contract bytecode with few exceptions. The argument behind the current spec is that stateless clients have all system contract code baked into their implementation, so adding this information in the witness is wasteful. This definition would force geth (and potentially other clients) into extra complexity in detecting which cases executed code should be included in the execution witnesses, which can lead to bugs (compared with clients doing direct storage access for system contract implementations).
+
+Both [@g11tech](https://x.com/g11tech) and [@kt2am1990](https://x.com/kt2am1990) agreed that adding the system contract bytecode to the witness for these cases would be fine. The remaining task is opening a PR and changing the spec to clarify this newly decided behavior.
 
 ## [**Call #31: Febuary 24, 2025**](https://github.com/ethereum/pm/issues/1322)
 
@@ -47,7 +135,7 @@ Points touched after the presentation:
 
 [@gballet](https://x.com/gballet) did a quick overview of the recently published [Ethereum Stateless Book](https://stateless.fyi/). Both [@ignaciohagopian](https://x.com/ignaciohagopian) and [@gballet](https://x.com/gballet) worked on this first version.
 
-The book provides a complete picture of many angles about going stateless, such as: 
+The book provides a complete picture of many angles about going stateless, such as:
 
 - Motivations
 - Target trees

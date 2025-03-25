@@ -73,7 +73,7 @@ Some days ago, when [@kt2am1990](https://x.com/kt2am1990) was testing some of th
 
 [@ignaciohagopian](https://x.com/ignaciohagopian) explains that geth works today by automatically recording the MPT preimages when it ingests the provided fixtures pre-state. He believes we shouldn’t blow up the testing framework with extra fields if EL clients can derive it from existing data.
 
-@spencer from the testing team made it even clearer that you can interpret the preimages from the pre-state, which should be enough compared to a more explicit field of preimages. In summary, we won’t add the preimages as a new field in fixtures, and clients should continue to record them as they ingest the provided fixture pre-state.
+[@techbro_ccoli](https://twitter.com/techbro_ccoli) from the testing team made it even clearer that you can interpret the preimages from the pre-state, which should be enough compared to a more explicit field of preimages. In summary, we won’t add the preimages as a new field in fixtures, and clients should continue to record them as they ingest the provided fixture pre-state.
 
 ### 5. State Expiry discussion
 
@@ -95,7 +95,7 @@ Future SIC calls will continue to discuss this topic since we need to give time 
 
 ### 7. EXTCODECOPY behavior when targeting system contracts
 
-[@gballet](https://x.com/gballet) raised whether doing an EXTCODECOPY of a system contract should include system contract code chunks in the witness.
+[@gballet](https://x.com/gballet) raised whether doing an `EXTCODECOPY` of a system contract should include system contract code chunks in the witness.
 
 This creates tension with the current EIP spec, which mentions not adding system contract bytecode with few exceptions. The argument behind the current spec is that stateless clients have all system contract code baked into their implementation, so adding this information in the witness is wasteful. This definition would force geth (and potentially other clients) into extra complexity in detecting which cases executed code should be included in the execution witnesses, which can lead to bugs (compared with clients doing direct storage access for system contract implementations).
 

@@ -2,19 +2,21 @@
 
 # SIC calls history
 
-- [**Call #32: March 24, 2025**](#call-32-march-24-2025)
-- [**Call #31: Febuary 24, 2025**](#call-31-febuary-24-2025)
-- [**Call #30: Febuary 10, 2025**](#call-30-febuary-10-2025)
-- [**Call #28: December 2, 2024**](#call-28-december-2-2024)
-- [**Call #27: November 4, 2024**](#call-27-november-4-2024)
-- [**Call #26: October 21, 2024**](#call-26-october-21-2024)
-- [**Call #25: September 23, 2024**](#call-25-september-23-2024)
-- [**Call #24: September 9, 2024**](#call-24-september-9-2024)
-- [**Call #23: August 26, 2024**](#call-23-august-26-2024)
-- [**Call #22: July 29, 2024**](#call-22-july-29-2024)
-- [**Call #21: July 15, 2024**](#call-21-july-15-2024)
+- [Call #32: March 24, 2025](#call-32-march-24-2025)
+- [Call #31: Febuary 24, 2025](#call-31-febuary-24-2025)
+- [Call #30: Febuary 10, 2025](#call-30-febuary-10-2025)
+- [Call #28: December 2, 2024](#call-28-december-2-2024)
+- [Call #27: November 4, 2024](#call-27-november-4-2024)
+- [Call #26: October 21, 2024](#call-26-october-21-2024)
+- [Call #25: September 23, 2024](#call-25-september-23-2024)
+- [Call #24: September 9, 2024](#call-24-september-9-2024)
+- [Call #23: August 26, 2024](#call-23-august-26-2024)
+- [Call #22: July 29, 2024](#call-22-july-29-2024)
+- [Call #21: July 15, 2024](#call-21-july-15-2024)
 
-## [**Call #32: March 24, 2025**](https://github.com/ethereum/pm/issues/1369)
+## Call #32: March 24, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1369)
 
 [Recording video](https://www.youtube.com/watch?v=w9dTNwNq2uU)
 
@@ -101,7 +103,9 @@ This creates tension with the current EIP spec, which mentions not adding system
 
 Both [@g11tech](https://x.com/g11tech) and [@kt2am1990](https://x.com/kt2am1990) agreed that adding the system contract bytecode to the witness for these cases would be fine. The remaining task is opening a PR and changing the spec to clarify this newly decided behavior.
 
-## [**Call #31: Febuary 24, 2025**](https://github.com/ethereum/pm/issues/1322)
+## Call #31: Febuary 24, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1322)
 
 [Recording here](https://www.youtube.com/watch?v=Z_8pKQJwqwQ)
 
@@ -162,7 +166,9 @@ Reaching a milestone where multiple clients go through a complete conversion of 
 
 [@gballet](https://x.com/gballet) raised a point about a potential confusion between the data migration order in the [EIP](https://eips.ethereum.org/EIPS/eip-7748) and the preimage file, but the discussion will continue offline. This point may be resumed in further SIC calls, but currently, no action is needed.
 
-## [**Call #30: Febuary 10, 2025**](https://github.com/ethereum/pm/issues/1263)
+## Call #30: Febuary 10, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1263)
 
 [Recording here](https://www.youtube.com/watch?v=0dMb2tecuwI)
 
@@ -257,7 +263,9 @@ This is a topic raised by [@gballet](https://x.com/gballet).
 - [stateless.fyi](http://stateless.fyi), a new website is a refreshed public explanation about Ethereum's stateless benefits.
 - A team [X account](https://x.com/StatelessEth) was created, which people can follow to get updates about Ethereum's stateless efforts.
 
-## [**Call #28: December 2, 2024**](https://github.com/ethereum/pm/issues/1203)
+## Call #28: December 2, 2024
+
+[Agenda](https://github.com/ethereum/pm/issues/1203)
 
 [Recording here](https://www.youtube.com/watch?v=5bxvSLvc9LA)
 
@@ -309,13 +317,17 @@ The basic idea is that with every transaction the transaction submitter will als
 
 Gajinder is currently drafting the EIP. Will have something to share soon.
 
-## [**Call #27: November 4, 2024**](https://github.com/ethereum/pm/issues/1196)
+## Call #27: November 4, 2024
+
+[Agenda](https://github.com/ethereum/pm/issues/1196)
 
 [Recording here](https://www.youtube.com/watch?v=1PYu4_Ac1Po)
 
 [no notes this week]
 
-## [**Call #26: October 21, 2024**](https://github.com/ethereum/pm/issues/1186)
+## Call #26: October 21, 2024
+
+[Agenda](https://github.com/ethereum/pm/issues/1186)
 
 [Recording here](https://youtu.be/MJA1e95cfww)
 
@@ -360,7 +372,9 @@ Last up on this week’s call, a few quick points related to gas cost spec:
 - How much to charge when doing account creation (e.g. when doing a call and the address does not exist yet). And similar question for `SELFDESTRUCT`
   - Decision: open a convo with research team for further discussion
 
-## [**Call #25: September 23, 2024**](https://github.com/ethereum/pm/issues/1149)
+## Call #25: September 23, 2024
+
+[Agenda](https://github.com/ethereum/pm/issues/1149)
 
 [Recording here](https://youtu.be/pfORU9ngjzI)
 
@@ -394,7 +408,9 @@ TLDR: only add things to the witness if you have the available gas for it
 
 Ending things with a quick check on testnet readiness. Pari said DevOps should have time to assist later this week. Recommended doing it locally first in case bugs are found, and then once it works locally switch to a public testnet 🥳
 
-## [**Call #24: September 9, 2024**](https://github.com/ethereum/pm/issues/1149)
+## Call #24: September 9, 2024
+
+[Agenda](https://github.com/ethereum/pm/issues/1149)
 
 [Recording here](https://youtu.be/TTqikpo4R7g)
 
@@ -468,7 +484,9 @@ Geth team recently had a discussion on the topic of sync, and came away with a f
 
 (3) how long to save the witness on disk: if we save it for something like a month or so, then it makes it a bit simpler for nodes who have been offline for a short period of time (e.g. 2-3 weeks) to rejoin the network. The tradeoff is it would add around 60GB.
 
-## [**Call #23: August 26, 2024**](https://github.com/ethereum/pm/issues/1121)
+## Call #23: August 26, 2024
+
+[Agenda](https://github.com/ethereum/pm/issues/1121)
 
 [Recording here](https://youtu.be/VD0P3RkhIjY)
 
@@ -516,7 +534,9 @@ The good news is: in either case, much of the work we’ve already done with Ver
 
 What would change with binary trees though include: (1) the proof system, and (2) the cryptography (replacing polynomial commitments/pedersen with hashes)
 
-## [**Call #22: July 29, 2024**](https://github.com/ethereum/pm/issues/1119)
+## Call #22: July 29, 2024
+
+[Agenda](https://github.com/ethereum/pm/issues/1119)
 
 [Recording here](https://youtu.be/W1SLIEQ3a5o)
 
@@ -544,7 +564,9 @@ Last up, [@ignaciohagopian](https://x.com/ignaciohagopian) walked us through a
 
 The main goal of this new EIP is to formalize the state conversion algorithm that is being implemented by clients. (This is the same design that we have discussed for several months, but simply hadn’t been formalized into an EIP). Check out the linked PR for a more detailed explanation, but the short summary is that the state migration involves converting a fixed number of key-values each block (e.g. 10k values) over an extended period of time (e.g. 4 weeks). The number of key-values converted each block can be adjusted up or down, but is currently set to a conservative number to ensure that even modest hardware is able to keep up with the transition. This has already been successfully implemented in Geth, and more clients are following soon behind.
 
-## [**Call #21: July 15, 2024**](https://github.com/ethereum/pm/issues/1092)
+## Call #21: July 15, 2024
+
+[Agenda](https://github.com/ethereum/pm/issues/1092)
 
 ### **1. Team updates**
 

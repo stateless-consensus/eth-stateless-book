@@ -1,39 +1,16 @@
-# Metrics
+# Verkle replay
 
-This page gather all the measurement metrics, so that we can easily refer to them in the future. It is broken into four parts:
-
- - The measurements that are common to both verkle and binary trees
- - The measurements that are specific to verkle trees
- - The measurements that are specific to binary trees
- - The measurements that are specific to state expiry
-
-This is a living document, that we will fill as questions arise and we gather more data.
-
-##  Common measurements
-
-### Execution performance
-
-#### Impact of key hashing
-
-For Verkle Trees, in order to estimate the performance impact of Pedersen hashing impact on performance, this is a comparison of how long it takes to replay 200k blocks against SHA256:
-
-![image.png](./assets/hash_speed_diff.png)
-
-At the end of the sha256 run, so >200k blocks later, the chain was 75072 blocks ahead. This represents a loss of 3 hours per day against sha256. That’s ~12% faster.
-
-Coupled to the fact that Pedersen hashes aren’t quantum resistant, it seems like a good idea to reconsider using Pedersen hashes to compute trees.
-
-## Verkle-specific measurements
-
-### Context
+## Context
 
 This data is gathered replaying ~200k historical blocks around the Shanghai fork. While they do not give a perfect view of how execution will behave once EIP-4762 is active, it still gives a good indication of what to expect, and how the spec should evolve.
 
-### Witnesses
+## Witnesses
 
-#### Size
+This section explores multiple dimensions of the execution witness design.
 
-Research has been conducted, in order to determine the best structure for a witness. We tried three methods:
+### Size
+
+Research has been conducted, in order to determine the best structure for a witness. We tried four methods:
 
  * The first one, as specified in the [current version of the consensus spec](https://github.com/ethereum/consensus-specs/blob/dev/specs/_features/eip6800/beacon-chain.md#executionwitness), referred to as **type 0**. This approach uses the SSZ type `Optional[T]` , that is yet to be officially included in the spec.
  * A first variation of the spec, in which prestate values are grouped together in their own list, and poststate values are grouped in their own list as well. This is referred to as **type 1**.
@@ -90,7 +67,6 @@ class StemStateDiff(Container):
     updates: List[UpdateDiff]
     reads: List[ReadStateDiff]
     insert: List[InsertDiff]
-    # TODO: check if this encodes as well as bytes
     missing: List[MissingStateDiff]
 ```
 Type 3 serialization container
@@ -101,11 +77,11 @@ Here are our findings after replaying data:
 
 One can see that the spec is much less efficient than the other types. This is due to the inefficiency of storing `Optional[T]`. As a result, we didn’t include this method in the rest of the analysis.
 
-When only considering the post-transition witnesses, this is what is found:
+When only considering witnesses that were produced after the whole state was [converted to verkle](../state-conversion/intro.md), this is what is found:
 
 ![image.png](./assets/compare_post_transition.png)
 
-The maximum and minimum sizes for each type, are summarized in the following table:
+The maximum and minimum observed sizes for each type, are summarized in the following table:
 
 |Name|Min (KB)|Max (KB)|
 |-|-|-|
@@ -115,7 +91,7 @@ The maximum and minimum sizes for each type, are summarized in the following tab
 
 While type 2 and type 3 are quite close, one can see that type 3 has better average and minimum sizes.
 
-#### Witness size breakdown (type 3)
+### Witness size breakdown (type 3)
 
 Replaying past blocks, we generated the witnesses and could provide the following size breakdown for type 3 witnesses. This is averaged over ~134k blocks, as the conversion blocks were skipped.
 
@@ -126,14 +102,14 @@ Replaying past blocks, we generated the witnesses and could provide the followin
 |post-values|0.1|0|47|
 |verkle proof|12|8|77|
 
-#### Takeaways
+### Takeaways
 
 The key takeaways are:
 
  * Type 3 witnesses offer a great compression.
- * post-values are of dubious use, and can not be verified without block execution. Although they don’t take much space on average, we suggest dropping them from the witness.
+ * Although post-state values don't take much time on average, but can take up almost half of it in the worst case. It would make sense to remove them, as validating them requires block execution.
 
-### Database
+## Database
 
 Looking at a fully converted database (conversion + ~134k blocks replayed), we found that the leaf depths could be broken into :
 
@@ -145,8 +121,20 @@ Looking at a fully converted database (conversion + ~134k blocks replayed), we f
 |7|2880|0|
 |8|10|0|
 
-### Gas usage
+<!-- ## Gas usage -->
 
-## Binary-specific measurements
+## Execution performance
 
-## State expiry-specific measurements
+This section looks at what part of verkle causes a performance hit and what part improves performance.
+
+### Impact of key hashing
+
+In order to estimate the performance impact of Pedersen key hashing, this is a comparison of how long it takes to replay 200k blocks using Pedersen hashes, vs. sha256:
+
+![image.png](./assets/hash_speed_diff.png)
+
+At the end of the sha256 run, so >200k blocks later, the chain was 75072 blocks ahead. This represents a loss of 3 hours per day against sha256. That’s ~12% faster.
+
+Coupled to the fact that Pedersen hashes aren’t quantum resistant, it seems like a good idea to reconsider using Pedersen hashes to compute trees.
+
+On the other hand, adding a new hash function could increase the complexity of future chain SNARKification effort. Chosing Poseidon as a hash function might be an exception, although its overall performance would have to be evaluated once it's deemed secure.

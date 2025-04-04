@@ -19,7 +19,7 @@ In order to estimate the performance impact of Pedersen key hashing, this is a c
 
 ![image.png](./assets/hash_speed_diff.png)
 
-At the end of the sha256 run, so >200k blocks later, the chain was 75072 blocks ahead. This represents a loss of 3 hours per day against sha256. That’s >12% faster.
+At the end of the sha256 run, so >200k blocks later, the chain was 75072 blocks ahead. This represents a loss of 3 hours per day against sha256. That’s ~12% faster.
 
 Coupled to the fact that Pedersen hashes aren’t quantum resistant, it seems like a good idea to reconsider using Pedersen hashes to compute trees.
 
@@ -83,20 +83,19 @@ class InsertDiff(Container):
     new: Bytes32
 
 class MissingDiff(Container):
-    suffix byte
-
+    suffix: byte
 class StemStateDiff(Container):
     stem: Bytes31
 
     updates: List[UpdateDiff]
     reads: List[ReadStateDiff]
-    insert: List[InsertStateDiff]
+    insert: List[InsertDiff]
     # TODO: check if this encodes as well as bytes
     missing: List[MissingStateDiff]
 ```
 Type 3 serialization container
 
-Here are our findings after replaying data for 200k blocks:
+Here are our findings after replaying data:
 
 ![image.png](./assets/total.png)
 
@@ -131,7 +130,7 @@ Replaying past blocks, we generated the witnesses and could provide the followin
 
 The key takeaways are:
 
- * Type 3 witnesses offer a great compression
+ * Type 3 witnesses offer a great compression.
  * post-values are of dubious use, and can not be verified without block execution. Although they don’t take much space on average, we suggest dropping them from the witness.
 
 ### Database

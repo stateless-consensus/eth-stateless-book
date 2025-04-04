@@ -17,6 +17,7 @@
   - [Stateless clients](./use-cases/stateless-clients.md)
 - [Resources](./resources.md)
 - [Development](./development/intro.md)
+  - [Metrics](./development/metrics.md)
   - [SIC calls](./development/sic-calls/intro.md)
     - [History summaries](./development/sic-calls/history.md)
   - [Devnets](./development/devnets.md)

@@ -15,7 +15,7 @@ This is a living document, that we will fill as questions arise and we gather mo
 
 #### Impact of key hashing
 
-In order to estimate the performance impact of Pedersen key hashing, this is a comparison of how long it takes to replay 200k blocks using Pedersen hashes, vs. sha256:
+For Verkle Trees, in order to estimate the performance impact of Pedersen hashing impact on performance, this is a comparison of how long it takes to replay 200k blocks against SHA256:
 
 ![image.png](./assets/hash_speed_diff.png)
 

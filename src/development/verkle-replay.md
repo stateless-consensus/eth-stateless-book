@@ -23,7 +23,6 @@ class SuffixStateDiffs(Container):
     # None means value not updated
     new_values:     List[bytes]
 ```
-Type 1 serialization container
 
  * A second variation of the spec, in which updates, insertions and reads are grouped in their own separate lists. The suffixes for each of these lists are also grouped as their own byte lists. This is referred to as **type 2**.
 
@@ -41,7 +40,6 @@ class SuffixStateDiffs(Container):
 
     missing_suffixes: bytes
 ```
-Type 2 serialization container
 
  * A final variation, where update, reads, inserts and proof-of-absences are grouped, along with their suffixes, into their own lists. This is referred to as **type 3**.
 
@@ -69,7 +67,6 @@ class StemStateDiff(Container):
     insert: List[InsertDiff]
     missing: List[MissingStateDiff]
 ```
-Type 3 serialization container
 
 Here are our findings after replaying data:
 
@@ -129,7 +126,7 @@ This section looks at what part of verkle causes a performance hit and what part
 
 ### Impact of key hashing
 
-In order to estimate the performance impact of Pedersen key hashing, this is a comparison of how long it takes to replay 200k blocks using Pedersen hashes, vs. sha256:
+In order to estimate the performance impact of Pedersen key hashing, this is a comparison of how long it takes to replay 200k mainnet blocks using Pedersen hashes, vs. sha256:
 
 ![image.png](./assets/hash_speed_diff.png)
 

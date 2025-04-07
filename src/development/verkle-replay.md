@@ -107,7 +107,7 @@ Replaying past blocks, we generated the witnesses and could provide the followin
 The key takeaways are:
 
  * Type 3 witnesses offer a great compression.
- * Although post-state values don't take much time on average, but can take up almost half of it in the worst case. It would make sense to remove them, as validating them requires block execution.
+ * Although post-state values don't take much size on average, they can take up almost half of it in the worst case. It would make sense to remove them, as validating them requires block execution.
 
 ## Database
 

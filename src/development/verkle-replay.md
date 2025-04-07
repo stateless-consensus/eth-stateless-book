@@ -78,15 +78,15 @@ When only considering witnesses that were produced after the whole state was [co
 
 ![image.png](./assets/compare_post_transition.png)
 
-The maximum and minimum observed sizes for each type, are summarized in the following table:
+The maximum and median observed sizes for each type, are summarized in the following table:
 
-|Name|Min (KB)|Max (KB)|
+|Name|Median (KB)|Max (KB)|
 |-|-|-|
 |type 1|425|1285|
 |type 2|383|928|
 |type3|380|928|
 
-While type 2 and type 3 are quite close, one can see that type 3 has better average and minimum sizes.
+While type 2 and type 3 are quite close, one can see that type 3 has better average and maximum sizes.
 
 ### Witness size breakdown (type 3)
 

@@ -17,6 +17,7 @@
   - [Stateless clients](./use-cases/stateless-clients.md)
 - [Resources](./resources.md)
 - [Development](./development/intro.md)
+  - [Verkle replay](./development/verkle-replay.md)
   - [SIC calls](./development/sic-calls/intro.md)
     - [History summaries](./development/sic-calls/history.md)
   - [Devnets](./development/devnets.md)

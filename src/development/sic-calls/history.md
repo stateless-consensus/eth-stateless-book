@@ -2,6 +2,7 @@
 
 # SIC calls history
 
+- [Call #33: April 7, 2025](#call-33-april-7-2025)
 - [Call #32: March 24, 2025](#call-32-march-24-2025)
 - [Call #31: Febuary 24, 2025](#call-31-febuary-24-2025)
 - [Call #30: Febuary 10, 2025](#call-30-febuary-10-2025)
@@ -13,6 +14,65 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #33: April 7, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1418)
+
+[Recording video](https://www.youtube.com/watch?v=EwsUDLSj_1w)
+
+### 1. Team updates
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth): worked on new execution-spec-tests conversion tests, a document shared with [@techbro_ccoli](https://twitter.com/techbro_ccoli) regarding tech debt in the testing framework, and also shared a [document about EIP-4762 worst-case blocks](https://hackmd.io/@jsign/4762-worst-case).
+
+[@gballet](https://x.com/gballet) from Geth/[@StatelessEth](https://x.com/StatelessEth): has been working on a Binary Tree implementation for geth, where the next steps are running the official test vectors to check correctness. He also has been working on merging the tree conversion logic into mainnet Geth.
+
+[@CPerezz19](https://x.com/CPerezz19) from [@StatelessEth](https://x.com/StatelessEth): has been working on a document to be shared soon on the relationship between stateless and FOCIL, investigating potential incompatibilities/challenges and symbiosis between them. Some findings might be discussed in future SIC calls.
+
+[@kt2am1990](https://x.com/kt2am1990) for @HyperledgerBesu: has been working on the tree conversion, fixing some problems found while running the tests shared by [@ignaciohagopian](https://x.com/ignaciohagopian). All tests are passing now.
+
+[@jasoriatanishq](https://x.com/jasoriatanishq) for Nethermind: has also been working on tree conversion, with most tests passing. It is also working on rebasing Nethermind Verkle implementation on top of Pectra.
+
+[@GabRocheleau](https://x.com/GabRocheleau) for @EFJavaScript: he couldn’t make much progress on the tree conversion logic, but he’s planning to resume that work in the upcoming weeks.
+
+[@techbro_ccoli](https://twitter.com/techbro_ccoli) from STEEL: has finished the long overdue pending rebase of execution-spec-tests branch for stateless and is planning to start working on the items mentioned in [@ignaciohagopian](https://x.com/ignaciohagopian) testing-framework tech-debt document.
+
+### 2. “A Protocol Design View on Statelessness” presentation
+
+[@_julianma](https://x.com/_julianma) from the EF RIG team presented a recent [Ethresearch post](https://ethresear.ch/t/a-protocol-design-view-on-statelessness/22060) about a general view of statelessness from a protocol design perspective. Both this research post and presentations are highly recommended. The slides are available [here](https://docs.google.com/presentation/d/1dC68cxy6vfnqEjDcBlUb7EycM0_l5wqJL5RYjnIVo3U/edit?usp=sharing).
+
+Summary of the Q&A after the presentation:
+
+- [@gballet](https://x.com/gballet) questioned whether dapps or wallets would be willing to host the state. [@_julianma](https://x.com/_julianma) expressed uncertainty about applications taking that responsibility as the optimal solution. [@gballet](https://x.com/gballet) mentioned it would be a good line of work to continue exploring further by contacting dapps and wallet providers.
+- [@MorphNetrunner](https://x.com/MorphNetrunner) from the Portal Network team asked if the Portal network was considered for witness creation. [@gballet](https://x.com/gballet) mentioned that Piper might prefer to wait before promising the network could provide this capability.
+- [@_sophiagold_](https://x.com/_sophiagold_) asked if the mentioned out-of-protocol state-expiry rules can help with the state growth problem or any of the drawbacks of known state-expiry solutions, such as address space expansion. [@_julianma](https://x.com/_julianma) said that probably not, but maybe through this optimization problem, framing new avenues could be discovered.
+- [@ignaciohagopian](https://x.com/ignaciohagopian) shared a point from [@soispoke](https://x.com/soispoke) (not present in the call) about how transaction witnesses could be resolved in private mempools by actors other than the transaction sender. The challenge remains for high CR guarantees using the public mempool.
+
+### 3. EIP-7612: Contract’s code conversion
+
+The current EIP-7612 proposes that an existing contract code will never be converted to the overlay tree outside the tree sweep. [@kt2am1990](https://x.com/kt2am1990) mentioned this could complicate Besu implementation, thus raising the point if we can reconsider this choice.
+
+[@gballet](https://x.com/gballet) raised the point that this can complicate the implementation but also raised the concern about witness blowup if the existing contract code is to be converted, which can be inconvenient.
+
+[@jasoriatanishq](https://x.com/jasoriatanishq) mentioned that before, we had considered not including execution witnesses in blocks before the full tree conversion is done, which implies execution clients might need to full sync from the snap sync syncing point up to that moment. [@gballet](https://x.com/gballet) mentioned that including partial execution witnesses might be preferred by the geth team to assist in having a better syncing strategy than full sync. Since there’s no consensus around this topic, we might touch on this again in future SIC calls.
+
+Apart from this potential concern, [@ignaciohagopian](https://x.com/ignaciohagopian) noticed a similar drawback which is independent of that decision: execution clients still need to do Overlay Tree writes even without partial execution witnesses, so a malicious block builder can build a block that (indirectly) converts as many 24KiB contracts as possible resulting in a very high load for clients since they need to do a lot of insertions. [@gballet](https://x.com/gballet) shared some quick math on this topic, saying this might not be a concern, but [@ignaciohagopian](https://x.com/ignaciohagopian) mentioned it doesn’t seem to match his intuition.
+
+After checking his assumption offline, it was confirmed by [@gballet](https://x.com/gballet) that the extra leaves would amount to  ~1.8M for a 36M block, which is a good reason not to do that. To be continued in the next SIC
+
+### 4. EIP-7612: Account Header
+
+In the last call, we previously discussed whether, during the Overlay Tree phase before the tree conversion, a transaction only writing to a storage slot triggers the conversion of the account. Considering how geth works, this is the case since the change in storage root is understood as an account basic data change that triggers the mentioned conversion.
+
+In the previous call, there was some slight consensus to keep this behavior, but now that more EL clients have run the tests, this topic has been re-discussed.
+
+[@jasoriatanishq](https://x.com/jasoriatanishq) mentioned he prefers only to move the storage slot without the account data. [@kt2am1990](https://x.com/kt2am1990) mentioned migrating the account isn’t a big problem compared to the previously discussed code conversion rule. [@gballet](https://x.com/gballet) dived into the technicalities of doing it in geth, which could be challenging, and he will be in contact with [@jasoriatanishq](https://x.com/jasoriatanishq) to understand better how this is done in Nethermind.
+
+This topic is closely related to the previous contract code discussion, so we will continue discussing both in the next SIC call, considering any other off-topic talks during the next two weeks.
+
+### 5. Next call agenda
+
+The call ran out of time to discuss the last two agenda items, which will be rolled over to the next SIC call.
 
 ## Call #32: March 24, 2025
 

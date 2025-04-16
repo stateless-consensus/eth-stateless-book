@@ -25,5 +25,5 @@
   - [Devnets](./development/devnets.md)
   - [Testing](./development/testing.md)
   - [Contributing!](./development/contributing.md)
-  - [Avanced topics](./development/advanced/intro.md)
+  - [Advanced topics](./development/advanced/intro.md)
     - [Holesky shadowfork](./development/advanced/holesky-shadowfork.md)

@@ -25,3 +25,9 @@ Note that:
  * `--override.cancun=1900000000` is meant to set Cancun far out in the future, as this branch doesn't support Cancun. When Pectra ships, `--override.pectra=` will also need to be specified far out in the future (unless the rebase finally completes).
  * `--override.verkle=(date "+%s")` is meant to set the Verkle fork to happen at the current time, so that the next block will trigger the Verkle conversion.
  * `--override.overlay-stride=10000` sets how many leaves get converted per block. The recommended value is 10k but higher numbers mean the conversion will complete faster.
+
+  - Check the conversion status by RPC:
+
+```
+> curl -s -X POST -H "Content-Type: application/json"  -d '{ "id": 7, "jsonrpc": "2.0", "method": "debug_conversionStatus", "params": ["latest"]}' http://localhost:8545 | jq '.result.ended'
+```

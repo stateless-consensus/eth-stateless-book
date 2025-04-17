@@ -3,14 +3,13 @@
 - [32-byte code-chunker](#32-byte-code-chunker)
   - [Background reading](#background-reading)
   - [How does it work?](#how-does-it-work)
-  - [Usage](#usage)
+  - [Runtime usage](#runtime-usage)
   - [Efficiency](#efficiency)
   - [Implementations](#implementations)
 
 ## Background reading
 
 To get a proper background on where this code chunker fits into stateless Ethereum, read the [*Trees*](intro.md) introductory chapter and the [*Code chunking*](data-encoding.md#code-chunking) section of *Data encoding*.
-
 
 ## How does it work?
 
@@ -29,12 +28,12 @@ Instead of adding metadata to every chunk, the "Dense Encoding" variant method f
 - This map is then encoded very efficiently using a Variable Length Quantity (VLQ) scheme (specifically, [LEB128](https://en.wikipedia.org/wiki/LEB128)) applied to a combined value representing the distance between invalid chunks and the first_instruction_offset.
 - This densely encoded metadata is stored separately, potentially in an EOF header or prepended as a custom table for legacy contracts, i.e., not within the code chunks themselves.
 
-## Usage
+## Runtime usage
 
 When a `JUMP(I)` occurs:
 
 - The EVM checks if the target byte offset contains the `JUMPDEST` (`0x5b`) opcode.
-- If the chunk index is not in the `invalid_jumpdests` map, the jump is valid (assuming step 1 passed). If it is present in the map, the EVM must perform a quick analysis of that specific chunk, using the associated first_instruction_offset from the map, to parse the instructions within the chunk and confirm the target 0x5b is indeed a `JUMPDEST` opcode and not part of PUSHDATA.
+- If the chunk index is not in the `invalid_jumpdests` map, the jump is valid (assuming step 1 passed). If it is present in the map, the EVM must perform a quick analysis of that specific chunk, using the associated `first_instruction_offset` from the map, to parse the instructions within the chunk and confirm the target 0x5b is indeed a `JUMPDEST` opcode and not part of PUSHDATA.
 
 ## Efficiency
 

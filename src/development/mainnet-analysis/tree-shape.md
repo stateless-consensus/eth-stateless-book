@@ -6,7 +6,7 @@
   - [Stems filling stats](#stems-filling-stats)
   - [Final words](#final-words)
 
-The following tables are the result of a static analysis of current mainnet data to understand better what the shape of the new proposed trees would look like. This data can be reproduced by using the `analysis` tool in the [eth-stateless](https://github.com/jsign/eth-stateless) repository. All data presented here corresponds to mainnet data at block number 22181932 (~2025-04-02).
+The following tables are the result of a static analysis of current mainnet data to understand better what the shape of the new proposed trees would look like. This data can be reproduced by using the `analysis` tool in the [eth-stateless](https://github.com/jsign/eth-stateless) repository. All data presented here corresponds to mainnet data at block number 22284325 (~2025-04-16).
 
 ## Accounts and code-length stats
 
@@ -17,7 +17,7 @@ The following tables are the result of a static analysis of current mainnet data
 +-----------+-----------+-----------+
 | eoas      | contracts | total     |
 +-----------+-----------+-----------+
-| 239157739 | 46990900  | 286148639 |
+| 240876329 | 47994700  | 288871029 |
 +-----------+-----------+-----------+
 
 +-------------+---------+--------+-------+-------+
@@ -25,8 +25,16 @@ The following tables are the result of a static analysis of current mainnet data
 +-------------+---------+--------+-------+-------+
 | sum         | average | median | p99   | max   |
 +-------------+---------+--------+-------+-------+
-| 32303445535 | 687     | 45     | 11293 | 24576 |
+| 32485731750 | 676     | 45     | 11293 | 24576 |
 +-------------+---------+--------+-------+-------+
+
++------------+---------+--------+-----+----------+
+| Contract storage slots count                   |
++------------+---------+--------+-----+----------+
+| sum        | average | median | p99 | max      |
++------------+---------+--------+-----+----------+
+| 1287949062 | 26      | 0      | 47  | 68794129 |
++------------+---------+--------+-----+----------+
 
 ```
 
@@ -48,13 +56,13 @@ It is helpful to understand the distribution of these kinds of stems in the curr
 +-----------------------+-----------+--------+
 | name                  | total     | %      |
 +-----------------------+-----------+--------+
-| Accounts header stems | 286148639 | 23.31% |
+| Accounts header stems | 288871029 | 23.40% |
 +-----------------------+-----------+--------+
-| Storage-slots stems   | 939462320 | 76.51% |
+| Storage-slots stems   | 943597409 | 76.42% |
 +-----------------------+-----------+--------+
-| Code-chunks stems     | 2209323   | 0.18%  |
+| Code-chunks stems     | 2223319   | 0.18%  |
 +-----------------------+-----------+--------+
-| Total = 1227820282                         |
+| Total = 1234691757                         |
 +-----------------------+-----------+--------+
 
 ```
@@ -91,12 +99,11 @@ An interesting question is to understand how “filled” these 256-groups are. 
 | Storage slots stems   | 1       | 1      | 5   | 256 |
 +-----------------------+---------+--------+-----+-----+
 
-+-------------------------------------------------+
-| Storage-slots stems with single non-zero values |
-+-------------------------------------------------+
-| 868061562                                       |
-+-------------------------------------------------+
-
++------------------------------------------------+
+| Storage-slot stems with single non-zero values |
++------------------------------------------------+
+| 871033634                                      |
++------------------------------------------------+
 ```
 
 The first table shows stats on how filled stem groups are for different kinds of stems. For example, account header stems always have two non-zero value items (BASIC_DATA and CODE_HASH), but optionally, they can have more items in the case of contracts (64 storage slots and 128 code-chunks).

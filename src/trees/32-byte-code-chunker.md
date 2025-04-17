@@ -13,7 +13,7 @@ To get a proper background on where this code chunker fits into stateless Ethere
 
 ## How does it work?
 
-This approach aims to store code in full 32-byte chunks while efficiently encoding the necessary metadata to validate jump destinations. It contrasts with the [31-byte chunker](31-byte-code-chunker.md) by storing metadata separately rather than prepending it to each chunk.
+This approach aims to store code in full 32-byte chunks while efficiently encoding the necessary metadata to validate jump destinations. [This proposal](https://github.com/ipsilon/eof/blob/eof0-dense/spec/eofv0_verkle.md#encode-only-invalid-jumpdests-dense-encoding) contrast with the [31-byte chunker](31-byte-code-chunker.md) by storing metadata separately rather than prepending it to each chunk.
 
 The goals remain similar:
 
@@ -41,4 +41,4 @@ This method leverages the observation that invalid jumpdests are rare in typical
 
 ## Implementations
 
-For a Python implementation, you can refer to [the spec](https://github.com/ipsilon/eof/blob/eof0-dense/spec/eofv0_verkle.md#reference-encoding-implementation). There is also a [Go implementation](https://github.com/jsign/verkle-chunking-analysis/blob/f819b28c7efaee1d0b630a722bbac494ddf0cd1d/analysis/z32bytechunker/z32bytechunker.go#L107-L190).
+For a Python implementation, you can refer to [the spec](https://github.com/ipsilon/eof/blob/eof0-dense/spec/eofv0_verkle.md#reference-encoding-implementation). There is also a [Go implementation](https://github.com/jsign/chunking-analysis/blob/f819b28c7efaee1d0b630a722bbac494ddf0cd1d/analysis/z32bytechunker/z32bytechunker.go#L107-L190).

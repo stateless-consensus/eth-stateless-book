@@ -4,6 +4,7 @@
 - [Trees](./trees/intro.md)
   - [Data encoding](./trees/data-encoding.md)
     - [31-byte code-chunker](./trees/31-byte-code-chunker.md)
+    - [32-byte code-chunker](./trees/32-byte-code-chunker.md)
   - [Verkle Tree](./trees/vkt-tree.md)
   - [Binary Tree](./trees/binary-tree.md)
 - [BLOCKHASH state](./block-hash.md)

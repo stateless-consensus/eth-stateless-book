@@ -13,7 +13,7 @@ To get a proper background on where this code chunker fits into stateless Ethere
 
 ## How does it work?
 
-This approach aims to store code in full 32-byte chunks while efficiently encoding the necessary metadata to validate jump destinations. [This proposal](https://github.com/ipsilon/eof/blob/eof0-dense/spec/eofv0_verkle.md#encode-only-invalid-jumpdests-dense-encoding) contrast with the [31-byte chunker](31-byte-code-chunker.md) by storing metadata separately rather than prepending it to each chunk.
+This approach aims to store code in full 32-byte chunks while efficiently encoding the necessary metadata to validate jump destinations. [This proposal](https://github.com/ipsilon/eof/blob/eof0-dense/spec/eofv0_verkle.md#encode-only-invalid-jumpdests-dense-encoding) contrasts with the [31-byte chunker](31-byte-code-chunker.md) by storing metadata separately rather than prepending it to each chunk.
 
 The goals remain similar:
 
@@ -33,7 +33,7 @@ Instead of adding metadata to every chunk, the "Dense Encoding" variant method f
 When a `JUMP(I)` occurs:
 
 - The EVM checks if the target byte offset contains the `JUMPDEST` (`0x5b`) opcode.
-- If the chunk index is not in the `invalid_jumpdests` map, the jump is valid (assuming step 1 passed). If it is present in the map, the EVM must perform a quick analysis of that specific chunk, using the associated `first_instruction_offset` from the map, to parse the instructions within the chunk and confirm the target 0x5b is indeed a `JUMPDEST` opcode and not part of PUSHDATA.
+- If the chunk index is not in the `invalid_jumpdests` map, the jump is valid (assuming step 1 passed). If it is present in the map, the EVM must perform a quick analysis of that specific chunk, using the associated `first_instruction_offset` from the map, to parse the instructions within the chunk and confirm whether the target 0x5b is indeed a `JUMPDEST` opcode and not part of PUSHDATA.
 
 ## Efficiency
 

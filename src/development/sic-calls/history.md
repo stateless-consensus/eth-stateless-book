@@ -123,7 +123,7 @@ Regarding potential geth bugs, [@gballet](https://x.com/gballet) shared that get
 
 Under this scenario, as described in EIP-7612, the write done in the storage slot should happen in the new tree (i.e., overlay tree). But there’s an extra write also done in the new tree: the contract account header.
 
-At first sight, this might be surprising since no actual write happens in the account header, but it is coherent. Currently, under **only** Merkle Patricia Trie's (MPT) assumptions, a write in any storage slot means the *storage root* of the account *would* be updated. This marks the account header as dirty, which has also been converted to the new tree. The subtlety is that the account header didn’t have any real data update since the storage root isn’t part of the new tree design, and it also doesn’t make entire sense since the MPT is frozen.
+At first sight, this might be surprising since no actual write happens in the account header, but it is coherent. Currently, under **only** Merkle Patricia Trie's (MPT) assumptions, a write in any storage slot means the _storage root_ of the account _would_ be updated. This marks the account header as dirty, which has also been converted to the new tree. The subtlety is that the account header didn’t have any real data update since the storage root isn’t part of the new tree design, and it also doesn’t make entire sense since the MPT is frozen.
 
 The bottom line question is if this makes sense for all EL clients or if we might want to change the behavior, since another reasonable option is not doing this indirect conversion.
 
@@ -283,7 +283,7 @@ Regarding future stateless devnets:
 
 ### 3. Atomicity in gas charging
 
-[@gballet](https://x.com/gballet) explained a proposal from the geth team regarding how some operations in EIP-4762 should have other *atomicity* semantics.
+[@gballet](https://x.com/gballet) explained a proposal from the geth team regarding how some operations in EIP-4762 should have other _atomicity_ semantics.
 The motivation from the geth team is simplifing the implementation in their codebase.
 
 The current way EIP-4762 works is that some operations that expect to add more than one leaf to the access events aren’t atomic:
@@ -293,7 +293,7 @@ The current way EIP-4762 works is that some operations that expect to add more t
 Received feedback:
 
 - [@jasoriatanishq](https://x.com/jasoriatanishq) for Nethermind claims this change might make their implementation more complex.
-- [@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth) raises concerns about whether this change would make the spec more complex since now *atomicity* in witness additions is something we must explain very well to avoid consensus bugs. Today isn’t required since any addition is expected to be atomic, and there’s no “group level” atomicity concept.
+- [@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth) raises concerns about whether this change would make the spec more complex since now _atomicity_ in witness additions is something we must explain very well to avoid consensus bugs. Today isn’t required since any addition is expected to be atomic, and there’s no “group level” atomicity concept.
 
 [@gballet](https://x.com/gballet) acknowledged these opinions but thinks the spec is unclear, and might plan to implement the proposed change in geth to confirm if this concludes it might simplify geth implementation or if this was just a wrong intuition. We expect to continue to discuss this proposal in further SIC calls.
 
@@ -528,7 +528,7 @@ If you are excited about making progress on statelessness and scaling the L1, yo
 
 ### **4. Deletions in Verkle**
 
-Discussion around whether *not* having deletions in Verkle will bloat the state. There are also downsides to deletions though, as it may make the conversion process a bit more complicated. TBD on final decision, but no strong objections raised to supporting deletions in Verkle. Recommend watching the recording for anyone interested in better understanding the full picture on this topic.
+Discussion around whether _not_ having deletions in Verkle will bloat the state. There are also downsides to deletions though, as it may make the conversion process a bit more complicated. TBD on final decision, but no strong objections raised to supporting deletions in Verkle. Recommend watching the recording for anyone interested in better understanding the full picture on this topic.
 
 ### **5. Pectra Impact (7702, EOF, etc.)**
 

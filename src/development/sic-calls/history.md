@@ -36,7 +36,7 @@
 
 The discussion focused on EIP-7612's behavior in specific scenarios, namely:
 
-- When a storage slot of an address is written to.
+- When the storage slot of a contract is written to.
 - Whether code should be converted to the new tree when account data (e.g., balance) is written.
 
 In the first issue, [@gballet](https://x.com/gballet) initially had concerns about the difficulty of implementing the change for geth. However, upon further investigation, he concluded that the change was not as problematic as initially thought. Given the support from other EL client core developers, the decision was made to convert only the written storage slot and not the account data.

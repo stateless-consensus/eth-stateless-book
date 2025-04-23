@@ -2,6 +2,7 @@
 
 # SIC calls history
 
+- [Call #34: April 21, 2025](#call-34-april-21-2025)
 - [Call #33: April 7, 2025](#call-33-april-7-2025)
 - [Call #32: March 24, 2025](#call-32-march-24-2025)
 - [Call #31: Febuary 24, 2025](#call-31-febuary-24-2025)
@@ -14,6 +15,63 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #34: April 21, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1452)
+
+[Recording video](https://www.youtube.com/watch?v=lhw3KBBQkLo)
+
+### 1. Team updates
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth): worked on a newly published [Tree Shape page](https://stateless.fyi/development/mainnet-analysis/tree-shape.html) in the book, progressed on a new tool to analyze 4762 mainnet impacts ([gathering metrics](https://jsign.github.io/eth-state-access-charts/) while doing that), and is finishing some research doc on bytecode chunking and a book page for the 32-byte code chunker.
+
+[@GabRocheleau](https://x.com/GabRocheleau) for @EFJavaScript: I made progress on the tree conversion code and plan to start running existing execution-spec-tests to check the correctness of the implementation.
+
+[@gballet](https://x.com/gballet) from geth/[@StatelessEth](https://x.com/StatelessEth): continued working on merging tree conversion logic into geth master. He also published a [Holesky shadowfork](https://stateless.fyi/development/advanced/holesky-shadowfork.html) page in the stateless book, which explains how to easily run geth in devnet mode using Holesky state.
+
+[@jasoriatanishq](https://x.com/jasoriatanishq) for Nethermind: has been wrapping the tree conversion implementation, now passing all tests. He is also working on rebasing the working branch on Pectra.
+
+### 2. EIP-7612: follow up on code conversion when touching an account
+
+The discussion focused on EIP-7612's behavior in specific scenarios, namely:
+
+- When the storage slot of a contract is written to.
+- Whether code should be converted to the new tree when account data (e.g., balance) is written.
+
+In the first issue, [@gballet](https://x.com/gballet) initially had concerns about the difficulty of implementing the change for geth. However, upon further investigation, he concluded that the change was not as problematic as initially thought. Given the support from other EL client core developers, the decision was made to convert only the written storage slot and not the account data.
+
+In the second issue, the group had previously decided that careful calculations regarding the worst-case write load were necessary if code conversion was also implemented. [@gballet](https://x.com/gballet) [presented the calculations](https://notes.ethereum.org/@gballet/rJqTrRXyex#/), and it was confirmed that the change was unsafe and therefore could not be made. This conclusion aligns with EIP-7612, so no changes to the specification are required.
+
+### 3. EIP-7612: EIP-7702 code-mutation implications
+
+During discussions, [@ignaciohagopian](https://x.com/ignaciohagopian) mentioned how EIP-7702 introduces a new scenario where an account's code might need to be converted as part of EIP-7612 before tree conversion is activated.
+
+When EIP-7612 is active and a transaction with a 7702-delegation is executed, an an EOA's code is considered modified, i.e., the bytecode is modified. Since the Merkle Patricia Trie is considered read-only, the delegation bytecode should be written in the new tree. Participants agreed that this is the correct behavior for EIP-7612.
+
+[@gballet](https://x.com/gballet) also raised the scenario where an EOA with an existing delegation decides to remove it. Currently, the new tree API doesn't support deletions. The conclusion reached was that the corresponding code-chunk of the delegation would be written with 0x00 bytecodes. The removal of the delegation would be signaled by `codeSize` and `codeHash` having values zero and empty-hash, respectively (although the code-chunk would still exist in the tree since leaf deletions aren’t supported).
+
+These conclusions will be included as part of EIP-7702 impact on stateless EIPs.
+
+### 4. EIP-7748: empty accounts conversion rule
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) proposed simplifying EIP-7748 by removing the current rule of not migrating empty accounts with storage data. The original intention of this rule in the EIP is to finish cleaning up existing accounts during the tree conversion. However, considering that [EIP-7523](https://eips.ethereum.org/EIPS/eip-7523) claims no existing instances are present in mainnet, this rule could potentially be removed, lowering the complexity of the tree conversion logic..
+
+[@gballet](https://x.com/gballet) noted that while [EIP-7610](https://eips.ethereum.org/EIPS/eip-7610) claims there are accounts with zero nonce, zero code length, and non-empty storage, it isn’t clear if these cases include any account with zero balance.
+
+The decision was made to verify with a synced full node whether any empty accounts with non-empty storage still exist in the mainnet, after which removing the rule from EIP-7748 could be considered.
+
+### 5. EIP-7748: tree conversion logic position in block execution pipeline
+
+During tree conversion test writing, [@ignaciohagopian](https://x.com/ignaciohagopian) noticed that geth's tree conversion logic was triggered after block transaction execution, contrary to EIP-7748, which describes it occurring beforehand. He explained this shouldn't be an issue theoretically, as any tree conversion writes can be overridden by block execution writes, and tree conversion writes are independent of transaction execution effects.
+
+An open question was posed to participants about potential relevance of both orderings. No compelling reason favouring one order over the other was identified — the exact positioning is not considered relevant at the specification level, allowing EL clients to determine the placement as an implementation detail.
+
+### 6. EIP-4762: CALL new account cost and FILL_COSTs
+
+During the meeting, [@ignaciohagopian](https://x.com/ignaciohagopian) presented a potential mispricing issue with `FILL_COST`s in EIP-4762. The presentation, supported by slides, explained that after packing account fields into `BASIC_DATA`, the `FILL_COST` might be too low. This allows creating a new account with a value-bearing `CALL` costing approximately half the gas compared to the current mainnet cost of 25,000. Additionally, creating a new storage slot under EIP-4762 would also be approximately half the cost compared to mainnet.
+
+The meeting concluded without a decision on how to adjust the current `FILL_COST` gas cost of 6,200. Further discussions are necessary to understand the potential implications of repricing on other aspects of writing new state.
 
 ## Call #33: April 7, 2025
 
@@ -123,7 +181,7 @@ Regarding potential geth bugs, [@gballet](https://x.com/gballet) shared that get
 
 Under this scenario, as described in EIP-7612, the write done in the storage slot should happen in the new tree (i.e., overlay tree). But there’s an extra write also done in the new tree: the contract account header.
 
-At first sight, this might be surprising since no actual write happens in the account header, but it is coherent. Currently, under **only** Merkle Patricia Trie's (MPT) assumptions, a write in any storage slot means the *storage root* of the account *would* be updated. This marks the account header as dirty, which has also been converted to the new tree. The subtlety is that the account header didn’t have any real data update since the storage root isn’t part of the new tree design, and it also doesn’t make entire sense since the MPT is frozen.
+At first sight, this might be surprising since no actual write happens in the account header, but it is coherent. Currently, under **only** Merkle Patricia Trie's (MPT) assumptions, a write in any storage slot means the _storage root_ of the account _would_ be updated. This marks the account header as dirty, which has also been converted to the new tree. The subtlety is that the account header didn’t have any real data update since the storage root isn’t part of the new tree design, and it also doesn’t make entire sense since the MPT is frozen.
 
 The bottom line question is if this makes sense for all EL clients or if we might want to change the behavior, since another reasonable option is not doing this indirect conversion.
 
@@ -283,7 +341,7 @@ Regarding future stateless devnets:
 
 ### 3. Atomicity in gas charging
 
-[@gballet](https://x.com/gballet) explained a proposal from the geth team regarding how some operations in EIP-4762 should have other *atomicity* semantics.
+[@gballet](https://x.com/gballet) explained a proposal from the geth team regarding how some operations in EIP-4762 should have other _atomicity_ semantics.
 The motivation from the geth team is simplifing the implementation in their codebase.
 
 The current way EIP-4762 works is that some operations that expect to add more than one leaf to the access events aren’t atomic:
@@ -293,7 +351,7 @@ The current way EIP-4762 works is that some operations that expect to add more t
 Received feedback:
 
 - [@jasoriatanishq](https://x.com/jasoriatanishq) for Nethermind claims this change might make their implementation more complex.
-- [@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth) raises concerns about whether this change would make the spec more complex since now *atomicity* in witness additions is something we must explain very well to avoid consensus bugs. Today isn’t required since any addition is expected to be atomic, and there’s no “group level” atomicity concept.
+- [@ignaciohagopian](https://x.com/ignaciohagopian) from [@StatelessEth](https://x.com/StatelessEth) raises concerns about whether this change would make the spec more complex since now _atomicity_ in witness additions is something we must explain very well to avoid consensus bugs. Today isn’t required since any addition is expected to be atomic, and there’s no “group level” atomicity concept.
 
 [@gballet](https://x.com/gballet) acknowledged these opinions but thinks the spec is unclear, and might plan to implement the proposed change in geth to confirm if this concludes it might simplify geth implementation or if this was just a wrong intuition. We expect to continue to discuss this proposal in further SIC calls.
 
@@ -528,7 +586,7 @@ If you are excited about making progress on statelessness and scaling the L1, yo
 
 ### **4. Deletions in Verkle**
 
-Discussion around whether *not* having deletions in Verkle will bloat the state. There are also downsides to deletions though, as it may make the conversion process a bit more complicated. TBD on final decision, but no strong objections raised to supporting deletions in Verkle. Recommend watching the recording for anyone interested in better understanding the full picture on this topic.
+Discussion around whether _not_ having deletions in Verkle will bloat the state. There are also downsides to deletions though, as it may make the conversion process a bit more complicated. TBD on final decision, but no strong objections raised to supporting deletions in Verkle. Recommend watching the recording for anyone interested in better understanding the full picture on this topic.
 
 ### **5. Pectra Impact (7702, EOF, etc.)**
 

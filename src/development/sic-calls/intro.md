@@ -10,4 +10,4 @@ The calls are open, so anyone is welcome to join!
 
 ## Previous calls
 
-You can see summaries and call recordings in the [lastest](./lastest.md) and [history](./history.md) pages.
+You can see summaries and call recordings in the [history](./history.md) page.

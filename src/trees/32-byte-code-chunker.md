@@ -26,7 +26,7 @@ Instead of adding metadata to every chunk, the "Dense Encoding" variant method f
 - We identify only the chunks that contain invalid jump destinations. An invalid jump destination is a `0x5b` byte that occurs within the data part of a PUSH instruction.
 - A map `invalid_jumpdests[chunk_index] = first_instruction_offset` is created. first_instruction_offset indicates the offset within the chunk where the first actual instruction begins.
 - This map is then encoded very efficiently using a Variable Length Quantity (VLQ) scheme (specifically, [LEB128](https://en.wikipedia.org/wiki/LEB128)) applied to a combined value representing the distance between invalid chunks and the first_instruction_offset.
-- This densely encoded metadata is stored separately, potentially prepended as a custom table for legacy contracts, i.e., not within the code chunks themselves. EOF contracts can't have invalid jumps since this is validated at deployment time.
+- This densely encoded metadata is stored probably prepended as a custom table for legacy contracts, i.e., before the actual originalbytecodes. EOF contracts can't have invalid jumps since this is validated at deployment time.
 
 ## Runtime usage
 

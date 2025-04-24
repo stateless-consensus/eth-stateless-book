@@ -37,7 +37,7 @@ When a `JUMP(I)` occurs:
 
 ## Efficiency
 
-This method leverages the observation that invalid jumpdests are rare in typical contracts. The code itself is stored in full 32-byte chunks (`ceil(N/32)` chunks for code length N). The metadata overhead is very low on average (~0.1%) and has a worst-case overhead of 3.1% (if every chunk contained an invalid `JUMPDEST`). For example, for contract size limits of 24KiB, 64KiB and 256KiB the maximum table overhead would require 24, 64 and 256 code-chunks respectively - assuming a best case table encoding of 1 byte per entry. Note that after 128KiB the table won't fit into the 128 code-chunks reserved in the account header.
+This method leverages the observation that invalid jumpdests are rare in typical contracts. The code itself is stored in full 32-byte chunks (`ceil(N/32)` chunks for code length N). The metadata overhead is very low on average (~0.1%) and has a worst-case overhead of 3.1% (if every chunk contained an invalid `JUMPDEST`). For example, for contract size limits of 24KiB, 64KiB and 256KiB the maximum table overhead would require 24, 64 and 256 code-chunks respectively, assuming a best case table encoding of 1 byte per entry. Note that after 128KiB the table won't fit into the 128 code-chunks reserved in the account header.
 
 ## Implementations
 

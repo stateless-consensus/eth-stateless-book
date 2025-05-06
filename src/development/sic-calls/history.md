@@ -1,7 +1,9 @@
 <!-- markdownlint-disable MD024 -->
+<!-- markdownlint-disable MD049 -->
 
 # SIC calls history
 
+- [Call #35: May 6, 2025](#call-35-may-5-2025)
 - [Call #34: April 21, 2025](#call-34-april-21-2025)
 - [Call #33: April 7, 2025](#call-33-april-7-2025)
 - [Call #32: March 24, 2025](#call-32-march-24-2025)
@@ -15,6 +17,67 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #35: May 5, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1497)
+
+[Recording video](https://www.youtube.com/watch?v=Oo8PcGqmLQ4&feature=youtu.be)
+
+### 1. Team updates
+
+- [@ignaciohagopian](https://x.com/ignaciohagopian) ([@StatelessEth](https://x.com/StatelessEth)): published an [article](https://www.notion.so/DEPRECATED-Merkelizing-Bytecode-Options-Tradeoffs-1d6d9895554180fd9b58f807cf05315e?pvs=21) revisiting bytecode chunking solution space and started helping on zkVM benchmarks.
+- [@gballet](https://x.com/gballet) ([@StatelessEth](https://x.com/StatelessEth)/Geth): worked on many upstream PRs into Geth, began rebasing the stateless branch on top of Pectra, and is preparing for a rewrite of EIP-4762 with a more Python-like style, which will also include EIP-7702 updates.
+- [@CPerezz19](https://x.com/CPerezz19) ([@StatelessEth](https://x.com/StatelessEth)): is [preparing](https://hackmd.io/@CPerezz/ryATkZIelx) to launch a devnet focused on aggressive state-growth; scripted spam scenarios that maximise “gas-per-byte” expansion and started prototyping a mainnet replay strategy to reach 2-4× state size.
+- [@jasoriatanishq](https://x.com/jasoriatanishq) (Nethermind): finished the Pectra rebase and will then work on integrating the tree conversion. He also plans to work on the implementation of the Binary Tree EIP.
+- [@kt2am1990](https://x.com/kt2am1990) (Besu): rebased Verkle on Pectra and tested the conversion on Hoodi. While doing so, he identified some bugs and performance issues that are being fixed. Thomas keeps working on stateless verification.
+- [@GabRocheleau](https://x.com/GabRocheleau) for @EFJavaScript: working on passing all the tree conversion test vectors, generalizing the conversion to any target tree, and doing other architectural adjustments.
+
+### 2. *BloatNet* state-growth testnet
+
+_Note: the call recording refers to this devnet as FatNet but it was later renamed to BloatNet._
+
+[@CPerezz19](https://x.com/CPerezz19) explained the goal of *BloatNet*: replicate Nethermind’s idea with *PerfNet* but focus on state size growth and its implications for EL clients. He shared a [collaborative document](https://hackmd.io/@CPerezz/ryATkZIelx) to identify valuable metrics to gather.
+
+[@_sophiagold_](https://x.com/_sophiagold_) suggested including snap-sync metrics, and [@CPerezz19](https://x.com/CPerezz19) mentioned it is useful but requires chatting with Pari to figure out how to do this correctly, since it might have some networking assumptions.
+
+[@gballet](https://x.com/gballet) mentioned that EL clients already have a cap on the number of connected nodes, so we might be able to simulate this realistically. Additionally, he mentioned that some transaction load (and proper access patterns) should be happening on the chain to test the healing phase correctly.
+
+### 3. EIP-7748 – special-account conversion rule
+
+A follow-up discussion clarified some confusion in the last SIC regarding custom rules in EIP-7748 regarding not converting some data.
+
+[@gballet](https://x.com/gballet) confirmed that the accounts previously described in EIP-7748 don’t exist on mainnet. The new proposed action targets accounts described in [EIP-7610](https://eips.ethereum.org/EIPS/eip-7610): accounts with zero nonce, empty code, non-zero balance, and non-empty storage. There are accounts satisfying this condition on mainnet, and it will be helpful if we can clean them up during the conversion. The intention is to keep the invariant that if an account has non-empty storage, the nonce is greater than zero.
+
+It was pointed out that this rule doesn’t conflict with EIP-7702, since any activated delegation implies an increase of the nonce, thus stopping the `nonce==0` condition of the rule.
+
+EIP-7748 was already updated with this new rule, so EL clients are expected to update their implementation. This also means that execution-spec-tests should cover this new rule.
+
+### 4. EIP-7702 – delegation removal semantics
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) wanted to discuss more precisely a topic tangentially touched on in the previous SIC call: which is the proper action in the new tree when an EIP-7702 delegation is removed?
+
+He proposes that, apart from updating the code-size and code-hash to zero and empty, we must also clear the delegation indicator. He argues that, although a removed delegation can be indirectly detected by checking the code size or code hash, it would leave the tree in an inconsistent state. If someone only looks at the first code chunk, they might see a delegation without effect since it is also forced to check the code-size/code-hash.
+
+After discussing the increased gas cost, [@gballet](https://x.com/gballet) and [@kt2am1990](https://x.com/kt2am1990) agreed that clearing the delegation indicator is correct. Nobody else opposed the decision. This decision will be materialized in the upcoming EIP-7702 updates in all stateless-related EIPs.
+
+### 5. EIP-4762 – atomic witness charging
+
+Some SIC calls ago, [@gballet](https://x.com/gballet) proposed a change for EIP-4762 where additions to the witness corresponding to a single operation have atomic gas charging, which means they don’t generate partial witnesses.
+
+He [implemented this](https://github.com/gballet/go-ethereum/pull/541/files) for Geth and feels that this is a change worth confirming. [@jasoriatanishq](https://x.com/jasoriatanishq) was initially doubtful about this change, but now has a neutral opinion. [@gballet](https://x.com/gballet) also mentioned that most tests pass, but only 99 fail. This is likely expected since it is a spec change. [@ignaciohagopian](https://x.com/ignaciohagopian) confirmed that some tests are expected to fail, and he can help identify which ones should, so we know which is a good stopping point for tests to pass.
+
+Additionally, [@ignaciohagopian](https://x.com/ignaciohagopian) said this proposal should be written in the EIP — the plan is to include it as part of the more general EIP-4762 rewrite that will happen soon.
+
+### 6. Access-lists interaction with 4762
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) noticed that the current EIP-4762 spec doesn’t mention any effect on currently available access lists. In particular, he mentioned an example where a currently warmed-up storage slot via access lists would have a more expensive gas cost after EIP-4762. This means it will probably break contracts that rely on access lists for proper functioning.
+
+[@gballet](https://x.com/gballet) did some history exploration on the previous versions of the EIP and found that an old version [mentioned](https://github.com/ethereum/EIPs/blob/bff015462ed74da68759dbc0aebce5ffe2d53bf3/EIPS/eip-4762.md#replacement-for-access-lists) access lists but was only related to their serialization format and not gas cost impacts.
+
+[@ignaciohagopian](https://x.com/ignaciohagopian) proposed two options. The naive one is processing the access list and including the accounts/storage-slots as part of the witness, which can cause witness bloat if those aren’t accessed. The other variant is EL clients must always consider access lists before doing any branch/chunk cold charging, which avoids the witness bloat if elements in the access list are never accessed.
+
+[@gballet](https://x.com/gballet) said that something around those lines could work, and suggested doing an EIP-4762 PR concrete proposal to clarify this topic and discuss it again in a future SIC to make a decision.
 
 ## Call #34: April 21, 2025
 

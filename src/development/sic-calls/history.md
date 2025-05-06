@@ -3,7 +3,7 @@
 
 # SIC calls history
 
-- [Call #35: May 6, 2025](#call-35-may-5-2025)
+- [Call #35: May 5, 2025](#call-35-may-5-2025)
 - [Call #34: April 21, 2025](#call-34-april-21-2025)
 - [Call #33: April 7, 2025](#call-33-april-7-2025)
 - [Call #32: March 24, 2025](#call-32-march-24-2025)

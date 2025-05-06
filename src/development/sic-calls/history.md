@@ -33,9 +33,11 @@
 - [@kt2am1990](https://x.com/kt2am1990) (Besu): rebased Verkle on Pectra and tested the conversion on Hoodi. While doing so, he identified some bugs and performance issues that are being fixed. Thomas keeps working on stateless verification.
 - [@GabRocheleau](https://x.com/GabRocheleau) for @EFJavaScript: working on passing all the tree conversion test vectors, generalizing the conversion to any target tree, and doing other architectural adjustments.
 
-### 2. *FatNet* state-growth testnet
+### 2. *BloatNet* state-growth testnet
 
-[@CPerezz19](https://x.com/CPerezz19) explained the goal of *FatNet*: replicate Nethermind’s idea with *PerfNet* but focus on state size growth and its implications for EL clients. He shared a [collaborative document](https://hackmd.io/@CPerezz/ryATkZIelx) to identify valuable metrics to gather.
+_Note: the call recording refers to this devnet as FatNet but it was later renamed to BloatNet._
+
+[@CPerezz19](https://x.com/CPerezz19) explained the goal of *BloatNet*: replicate Nethermind’s idea with *PerfNet* but focus on state size growth and its implications for EL clients. He shared a [collaborative document](https://hackmd.io/@CPerezz/ryATkZIelx) to identify valuable metrics to gather.
 
 [@_sophiagold_](https://x.com/_sophiagold_) suggested including snap-sync metrics, and [@CPerezz19](https://x.com/CPerezz19) mentioned it is useful but requires chatting with Pari to figure out how to do this correctly, since it might have some networking assumptions.
 

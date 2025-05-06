@@ -53,7 +53,7 @@ EIP-7748 was already updated with this new rule, so EL clients are expected to u
 
 ### 4. EIP-7702 – delegation removal semantics
 
-[@ignaciohagopian](https://x.com/ignaciohagopian) wanted to discuss more precisely a topic tangentially touched on in the previous SIC call: which is the proper action in the Overlay Tree when an EIP-7702 delegation is removed?
+[@ignaciohagopian](https://x.com/ignaciohagopian) wanted to discuss more precisely a topic tangentially touched on in the previous SIC call: which is the proper action in the new tree when an EIP-7702 delegation is removed?
 
 He proposes that, apart from updating the code-size and code-hash to zero and empty, we must also clear the delegation indicator. He argues that, although a removed delegation can be indirectly detected by checking the code size or code hash, it would leave the tree in an inconsistent state. If someone only looks at the first code chunk, they might see a delegation without effect since it is also forced to check the code-size/code-hash.
 

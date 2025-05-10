@@ -28,3 +28,5 @@
   - [Contributing!](./development/contributing.md)
   - [Advanced topics](./development/advanced/intro.md)
     - [Holesky shadowfork](./development/advanced/holesky-shadowfork.md)
+- [Research](./research/intro.md)
+  - [PQ-Verkle Trees](./research/pq-verkle.md)

@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #36: May 19, 2025](#call-36-may-19-2025)
 - [Call #35: May 5, 2025](#call-35-may-5-2025)
 - [Call #34: April 21, 2025](#call-34-april-21-2025)
 - [Call #33: April 7, 2025](#call-33-april-7-2025)
@@ -17,6 +18,64 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #36: May 19, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1538)
+
+[Recording video](https://www.youtube.com/watch?v=bNa7SaCgnIc)
+
+### 1. Team updates
+
+- [@ignaciohagopian](https://x.com/ignaciohagopian) ([@StatelessEth](https://x.com/StatelessEth)): has worked on the zkEVM benchmark suite to assess the performance on zkVMs for L1 block proving. He will present this work in a future SIC to explain it further.
+- [@gballet](https://x.com/gballet) ([@StatelessEth](https://x.com/StatelessEth)/[@go_ethereum](https://x.com/go_ethereum)): has been working on merging more pending PRs into geth, rebasing the current default stateless branch on top of Pectra, phant compilation to RISCV32,  remaining spec differences with Geth Binary Trees implementation, and an EIP-4762 spec rewrite that was presented later in the call.
+- [@GabRocheleau](https://x.com/GabRocheleau) for @EFJavaScript: has made progress in passing the conversion tree execution spec tests and helped review the rewrite of EIP-4762 draft PR.
+- [@kt2am1990](https://x.com/kt2am1990) (Besu): has worked in a Hoodi state tree conversion that was later presented in more detail in the call. Thomas from his team will also start working on a Binary Tree implementation for Besu.
+- [@lfmpinto](https://x.com/lfmpinto) (Besu): worked on enhancing tx/block tracing to include the witness state at each opcode execution event — this is the [related PR](https://github.com/hyperledger/besu/pull/8336).
+- [@jasoriatanishq](https://x.com/jasoriatanishq) (Nethermind): has been progressing in passing all existing tests in the rebased version on top of Pectra. He plans to reproduce Karim's work in the Hoodi testnet and work on a Binary Tree implementation.
+- [@CPerezz19](https://x.com/CPerezz19) ([@StatelessEth](https://x.com/StatelessEth)): has been working on including [more scenarios](https://hackmd.io/D12VBHdMSU6y_vcqWcJV_g) into the [spamoor](https://github.com/ethpandaops/spamoor) tool and coordinating with the Nethermind team on how to prepare the launch of BloatNet. He has also been contacting wallets and dapps to understand their thoughts on strong statelessness and share new ideas to see if users providing witnesses can be incentivized at the protocol level.
+
+### 2. Hoodi state tree conversion
+
+[@kt2am1990](https://x.com/kt2am1990) presented his work migrating the Hoodi state tree in the live testnet using the current [Overlay Tree](https://eips.ethereum.org/EIPS/eip-7612) + [block-by-block state conversion](https://eips.ethereum.org/EIPS/eip-7748) EIPs. 
+
+The presentation can be found [here](https://docs.google.com/presentation/d/14-a5z4aBQP0r2sNjtpl-jXzMaJSsUy6NuAxGqP1QJM4/edit) and can provide a nice summary of the talk, but as some general remarks:
+
+- It used a Nimbus client as the CL to connect to Hoodi and two Besu nodes for the task.
+- Two Besu nodes were used as a quick way to have preimage resolving for the tree conversion.
+- The timestamp where the conversion starts is hardcoded today, but other ways of providing this value can be evaluated in the future when more clients join a similar setup.
+- The total conversion progress took 13 hours, according to Hoodi’s slot time duration.
+- Previous run attempts allowed for detecting problems, including performance, chain reorgs, and state rollbacks. After the fixes, a successful run was possible.
+- Future steps could cover performing the same work in bigger networks like Sepolia or Mainnet.
+
+After the presentation, there were follow-up discussions:
+
+- [@gballet](https://x.com/gballet) agreed it would be helpful to have more clients join the same effort so the resulting state roots can be further verified. He also mentioned it would be helpful to see if it would be possible to try other code paths, such as block building.
+- [@gballet](https://x.com/gballet) asked if there were available metrics regarding the pre- and post-state size, which could be interesting. [@kt2am1990](https://x.com/kt2am1990) mentioned that he will take a look and share offline.
+- [@gballet](https://x.com/gballet) asked if there was more insight into the conversion speed, and [@kt2am1990](https://x.com/kt2am1990) mentioned the extra RPC influenced these calls for preimage resolving. The node will have the preimages in future versions, and these extra RPC calls can be removed.
+- [@ignaciohagopian](https://x.com/ignaciohagopian) mentioned that reorg-like tests don’t exist yet since it is pending that the testing framework can support them, but it is planned to do it eventually.
+- A variant strategy for checking state roots between EL clients is to export an existing chain, agree on the conversion timestamp, and let clients run the migration “locally” and compare results. This could be easier than shadow-forking a live testnet.
+
+More EL clients will be jumping into running these scenarios to gain more confidence about state root calculations (and thus, the correctness of the EIP implementation).
+
+### 3. EIP-4762 revamp
+
+[@gballet](https://x.com/gballet) presented a rewrite of EIP-4762 with a more Pythonic style, aligned with the more modern styles of protocol changes specs. This rewrite is the first draft that [@GabRocheleau](https://x.com/GabRocheleau) and [@lfmpinto](https://x.com/lfmpinto) reviewed.
+
+The EIP rewrite helped identify implementation bugs in Geth, such as accessing bytecode outside the defined bytecode for a contract (i.e., a `PC` greater than the contract size without accessing valid bytecodes in that code-chunk). Other clients will double-check how they have implemented this particular border case to see if there is already a consensus bug issue.
+
+Apart from rewriting the original EIP, this new version also aims to cover the atomicity changes discussed in previous SIC calls and EIP-7702 considerations pending in the current specs. The draft must still resolve how warm costs are charged correctly, checking `CALLCODE` witness rules, and other quirks. Still, there will be further iterations after getting feedback from reviews.
+
+After the presentation, there were further discussions:
+
+- [@GabRocheleau](https://x.com/GabRocheleau) asked about the plans for Binary Trees and the current EIP. [@gballet](https://x.com/gballet) said that at this point, it seems clear that the current plan is going with Binary Trees, but we will still use Verkle for short-term efforts on Hoodi state tree conversion. Whenever the next stateless devnet happens, it will use Binary Trees (probably around Q2/Q3). EIP-4762 will be used as is for Binary Trees since it should be compatible with the EIP assumptions about the underlying tree. There might be pushbacks and potential changes, but it should make sense overall.
+- [@jasoriatanishq](https://x.com/jasoriatanishq) asked how fast we’ll start using Binary Trees in the upcoming work, since in the next steps, EL clients will try reproducing [@kt2am1990](https://x.com/kt2am1990) work on Hoodi. [@gballet](https://x.com/gballet) confirmed that this is the plan (i.e., keep testing the conversion with Verkle) and Binary Trees will be used first in a less complex context, such as a fresh devnet.
+
+### 4. Forking rules for state tree conversion
+
+[@GabRocheleau](https://x.com/GabRocheleau) raised a point on how the forks would work for the state transition, particularly regarding how EL clients decide on expectations on witness in the block and/or the Overlay Tree functioning. 
+
+[@gballet](https://x.com/gballet) mentioned that Geth works by only expecting a single fork, and keeping track of the state conversion logic initialization and finalization events to decide on those particular points. [@GabRocheleau](https://x.com/GabRocheleau) found this clarification helpful and suggested that it be explained better in the specs. [@gballet](https://x.com/gballet) agreed we can do that.
 
 ## Call #35: May 5, 2025
 

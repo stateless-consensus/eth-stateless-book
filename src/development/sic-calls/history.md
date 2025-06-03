@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #37: June 02, 2025](#call-37-june-02-2025)
 - [Call #36: May 19, 2025](#call-36-may-19-2025)
 - [Call #35: May 5, 2025](#call-35-may-5-2025)
 - [Call #34: April 21, 2025](#call-34-april-21-2025)
@@ -18,6 +19,35 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #37: June 02, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1555)
+
+[Recording video](https://youtu.be/iclp0s_f-68)
+
+### 1. Team updates
+
+- [@ignaciohagopian](https://x.com/ignaciohagopian) ([@StatelessEth](https://x.com/StatelessEth)): has kept working on adding more zkEVM coverage in `execution-spec-tests`. He mentioned that these tests are not only trying to trigger worst-case scenarios but also build a foundation to reevaluate potential gas cost changes for zkEVMs.
+- [@gballet](https://x.com/gballet) ([@StatelessEth](https://x.com/StatelessEth)/[@go_ethereum](https://x.com/go_ethereum)): has finished the Binary Tree implementation with spec tests passing, and has been working on filling existing `execution-spec-tests` with this new tree so other clients can have a larger set of tests to compare implementation correctness. It has also continued working on the Python-ification of EIP-4762 using received feedback.
+- [@CPerezz19](https://x.com/CPerezz19) ([@StatelessEth](https://x.com/StatelessEth)): has been working on spamoor use-cases for state bloating, and preparation work for BloatNet, which was presented later in the call.
+- [@kt2am1990](https://x.com/kt2am1990) (Besu): has been refactoring the Besu’s codebase to support shadow forks in general, not only for Hoodi. Also, he has been working on adding support for block creation, which surfaced some performance problems related to Verkle Trees. Since this tree was designed as abandoned, it has decided to ignore them and prepare for the next shadow fork to use Binary Trees.
+
+### 2. Leaf-level state expiry (EIP-7736) effectiveness
+
+[@ngweihan_eth](https://x.com/ngweihan_eth) presented his work on the effectiveness of Leaf-Level state expiry. The presentation slides provide an excellent summary of findings, which can be found [here](https://docs.google.com/presentation/d/14O9yIDAKMeOW-EAEeAvdyfyy12jwheqT51xWmsYp6jI/edit?slide=id.g2fc552e0e46_1_692#slide=id.g2fc552e0e46_1_692).
+
+After the presentation, there were some discussions:
+
+- [@gballet](https://x.com/gballet) asked if there is any intuition on how raising the gas limit would affect the total active state of the network, or its relationship with worst-case scenarios. [@ngweihan_eth](https://x.com/ngweihan_eth) mentioned that theoretically, the worst case is that all gas is used to touch as much state as possible within the state expiry epoch, so the active state is very big. On a more practical note, it is helpful to keep an eye on how raising the gas limit might change the data access patterns for many use-cases, for example, ERC20 contracts. Also, the state expiry period could be adjusted to 6 months instead of the usually assumed 1-year period.
+- [@CPerezz19](https://x.com/CPerezz19) asked if it is possible to distinguish what kind of data is being expired, such as account vs storage data. [@ngweihan_eth](https://x.com/ngweihan_eth) mentioned this isn’t possible. This is because unified tree designs don’t have extra information to provide semantics on leaf-level data. He noted that adding a marker could also help fix some revival transaction validation challenges, or consider not expiring account data, but only contract storage. More thought should be put into this since there might be some tradeoffs.
+- [@ignaciohagopian](https://x.com/ignaciohagopian) mentioned that in his previous research, he found that heavy mainnet usage of Solidity hashmaps in a unified tree was pretty unfriendly with state expiry. Hashmaps spread data over the tree space, creating many stems with only one value. [@ngweihan_eth](https://x.com/ngweihan_eth) shared that he has also been thinking about this and found that many of these single values should expire, so at least at the value level, we can still make a big number of deletions. Still, it would be useful to dig deeper into checking how many of the unexpired stems only contain one value.
+
+### 3. BloatNet initiative website
+
+[@CPerezz19](https://x.com/CPerezz19) presented the release of the [BloatNet website](https://cperezz.github.io/bloatnet-website/), which contains full details about the initiative's motivation and goals. Additionally, it contains the metrics to be gathered and the potential attack vectors to try bloating the Ethereum state size as much as possible.  After the first version of this devnet runs, this website will contain all the findings that can help motivate any protocol changes to prevent excessive state growth and understand the implications of gas limit increases on network robustness.
+
+He mentioned that feedback has already been received from Geth, Besu, and Erigon, which is helpful since they’re the main network actors who will benefit from the findings. Any other core developer or community member is welcome to collaborate — the three main sections of the website (Metrics, Attack Vectors, and State Bloat) contain forms you can fill out to suggest more metrics, bloating strategies, or any useful idea.
 
 ## Call #36: May 19, 2025
 

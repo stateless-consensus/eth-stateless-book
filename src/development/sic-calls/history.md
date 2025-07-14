@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #38: July 14, 2025](#call-38-july-14-2025)
 - [Call #37: June 02, 2025](#call-37-june-02-2025)
 - [Call #36: May 19, 2025](#call-36-may-19-2025)
 - [Call #35: May 5, 2025](#call-35-may-5-2025)
@@ -19,6 +20,35 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #38: July 14, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1566)
+
+[Recording video](https://youtu.be/xxxxxxxxxxx)
+
+### 1. Team updates
+
+- [@gballet](https://x.com/gballet) [@gabrocheleau](https://x.com/GabRocheleau) ([@StatelessEth](https://x.com/StatelessEth)/[@go_ethereum](https://x.com/go_ethereum)) is working on filling test fixtures for Binary Trees, starting with binary-tree genesis and will then proceed with conversion testing.
+- [@kt2am1990](https://x.com/kt2am1990) ([Besu](https://x.com/HyperledgerBesu)) is close to finalizing a working in-memory binary tree, while Geth faces delays due to a complete state layer rewrite. Should have an implementation ready to consume tests within a few days of work. 
+- [@ngweihan_eth](https://x.com/ngweihan_eth) ([@StatelessEth](https://x.com/StatelessEth)) is building a State Indexer project and presented code chunking analysis. 
+- [@CPerezz19](https://x.com/CPerezz19) ([@StatelessEth](https://x.com/StatelessEth)) is working on witness updating and bloatnet progression.
+
+### 2. EIP-4762: Witness addition rules
+
+- Felix Lange raised concerns about the definition of system contracts in EIP-4762. The group agreed to revise the EIP to base witness rules on system calls (from specific addresses) instead of system contracts, reducing maintenance burden. Felix will update the EIP accordingly.
+
+### 3. New testnet
+
+- [Besu](https://x.com/HyperledgerBesu) team expects readiness for a binary tree testnet in about a month, while Geth is delayed due to a state rewrite. Agreement to proceed with a Besu & Nethermind-only testnet, breaking with the usual Geth-first approach. Timeline for Nethermind is uncertain, to be confirmed in the next call.
+
+### 4. Bloatnet update
+
+- Bloatnet has reached 1.5x the mainnet state after resolving RPC issues. All clients completed a first round of syncing tests. This round might have uncovered a pruning bug in [Erigon](https://x.com/erigoneth), to be confirmed. Next phase will target 2x mainnet state, focusing on compaction and worst-case scenario testing.
+
+### 5. Code chunking analysis presentation and EIP proposal
+
+- [@ngweihan_eth](https://x.com/ngweihan_eth) ([@StatelessEth](https://x.com/StatelessEth)) presented analysis of 32-byte code chunking, showing a 30% average byte access ratio. Code access instructions significantly improve access ratios. The group discussed experimenting with different chunk sizes (e.g., 16 bytes) for efficiency. Wei Han will update the analysis and publish a dashboard. 
 
 ## Call #37: June 02, 2025
 

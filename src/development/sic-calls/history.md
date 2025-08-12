@@ -48,7 +48,7 @@
 
 - [EIP-2926](https://eips.ethereum.org/EIPS/eip-2926) is being resurrected as a smaller, low-risk step toward fuller statelessness.
 - Benefits: removes the effective code-size ceiling, enables chunk-level witnesses/caching, and mitigates prover-killer patterns (e.g., pathological `EXT*CODE*` access).
-- Plan: target an early rollout (e.g., Glamsterdam); perform an overlay-tree transition for code (~10 GB scale, ~1 day) to demonstrate feasibility; experiment with chunk sizes (baseline 32 B; consider 16 B per the analysis).
+- Plan: target an early rollout (e.g., Glamsterdam); perform a tree transition for code (~10 GB scale, ~1 day) to demonstrate feasibility, and ship a first, smaller package of the stateless stack.
 - Next: present the proposal, circulate the draft and gather client feedback. 
 
 ### 4. Stateless Summit

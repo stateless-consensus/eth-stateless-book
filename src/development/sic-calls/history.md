@@ -68,7 +68,7 @@
 
 [Recording video](N/A)
 
-Call was skipped because of overlap with another protocol call. Below are the async updates.
+Call was skipped because of low attendance. Below are the async updates.
 
 ### 1. Team updates
 

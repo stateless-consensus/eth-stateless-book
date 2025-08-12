@@ -3,6 +3,8 @@
 
 # SIC calls history
 
+- [Call #40: Aug 11, 2025](#call-40-august-11-2025)
+- [Call #39: July 28, 2025](#call-39-july-28-2025)
 - [Call #38: July 14, 2025](#call-38-july-14-2025)
 - [Call #37: June 02, 2025](#call-37-june-02-2025)
 - [Call #36: May 19, 2025](#call-36-may-19-2025)
@@ -20,6 +22,70 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #40: August 11, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1672)
+
+[Recording video](https://youtu.be/xxxxxxxxxxx)
+
+### 1. Team updates
+
+- [@gballet](https://x.com/gballet) [@gabrocheleau](https://x.com/GabRocheleau) ([@StatelessEth](https://x.com/StatelessEth)/[@go_ethereum](https://x.com/go_ethereum)): several stateless PRs merged in Geth; next up is transition logic and binary-tree integration. 
+- [@CPerezz19](https://x.com/CPerezz19) ([@StatelessEth](https://x.com/StatelessEth)). Async update done by Guillaume: Bloatnet now ~2× mainnet & started a testing doc and are keeping a [registry of bloatnet cases](https://hackmd.io/9icZeLN7R0Sk5mIjKlZAHQ?view). 
+- [@kt2am1990](https://x.com/kt2am1990) ([Besu](https://x.com/HyperledgerBesu)): in-memory binary tree integrated; node can compute binary-tree state roots (non-validating) and follow a local fork; simple Geth vectors validate; shadowfork transition experiments ongoing; perf work reduced transition overhead. Besu has validated simple Geth vectors and will consume more as they land.
+- [@jasoriatanishq](https://x.com/jasoriatanishq) ([Nethermind](https://x.com/NethermindEth)): wrapped Verkle transition work; addressing perf/refactors; binary-tree work to begin after leave (in 2 weeks), timeline TBD.
+- [@ngweihan_eth](https://x.com/ngweihan_eth) ([@StatelessEth](https://x.com/StatelessEth)): code-chunking analysis shows ~30% average byte access for 32-byte chunks; code-access opcodes boost locality. Findings: ~half of EOAs active for only 4–5 days; most storage slots touched once within a block. [Analysis](https://hackmd.io/RfHgXDnBSW2CZkWhANjeHw?view)
+
+### 2. New testnet
+
+- [Besu](https://x.com/HyperledgerBesu) will lead the binary-tree testnet; aim is before month-end. A Docker image enabling testnet bring-up should be shareable in ~1 week (includes recent EIP hooks and gas adjustments).
+- [Geth](https://x.com/go_ethereum) is delayed by a state-layer rewrite; unlikely to lead this month but will follow once ready.
+- [Nethermind](https://x.com/NethermindEth) timeline to be confirmed on the next call.
+- Cross-client note: align handling of system-address calls for witness behavior; verbal agreement exists, spec/doc edits pending, and Besu will wire this once finalized.
+
+### 3. EIP-2926 (Chunk-Based Code Merkleization)
+
+- [EIP-2926](https://eips.ethereum.org/EIPS/eip-2926) is being resurrected as a smaller, low-risk step toward fuller statelessness.
+- Benefits: removes the effective code-size ceiling, enables chunk-level witnesses/caching, and mitigates prover-killer patterns (e.g., pathological `EXT*CODE*` access).
+- Plan: target an early rollout (e.g., Glamsterdam); perform a tree transition for code (~10 GB scale, ~1 day) to demonstrate feasibility, and ship a first, smaller package of the stateless stack.
+- Next: present the proposal, circulate the draft and gather client feedback. 
+
+### 4. Stateless Summit
+
+- [@gabrocheleau](https://x.com/GabRocheleau) preparing a survey to tooling teams, RPC providers, wallets, and client teams to gauge interest, proposed contributions, and topics; also to collect speaker nominations.
+- Devconnect Buenos Aires may skew app-focused; if core-protocol attendance looks light, we’ll consider alternate timing (e.g., ETCC Cannes in March).
+- Action: finalize and distribute the survey; consolidate responses and propose an agenda window.
+
+### 5. Testing documentation
+
+- [@gballet](https://x.com/gballet) ([@StatelessEth](https://x.com/StatelessEth)/[@go_ethereum](https://x.com/go_ethereum)): Binary-tree testing doc started: input/output examples and root-hash verification. Expand beyond basic leaf insertions to account+storage scenarios.
+- [Test registry](https://notes.ethereum.org/@gballet/binary_tree_test_vectors) maintaining a running catalog of cases.
+
+## Call #39: July 28, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1627)
+
+[Recording video](N/A)
+
+Call was skipped because of low attendance. Below are the async updates.
+
+### 1. Team updates
+
+- [@gballet](https://x.com/gballet)[@gabrocheleau](https://x.com/GabRocheleau) ([@StatelessEth](https://x.com/StatelessEth)/[@go_ethereum](https://x.com/go_ethereum)) are still working on filling test fixtures, running into issues with the Binary tree filling that remain to be addressed.
+- [@CPerezz19](https://x.com/CPerezz19) ([@StatelessEth](https://x.com/StatelessEth)) created metric proposals for Sync & Compaction (https://hackmd.io/@CPerezz/SkzDZmngT) and created scenarios & questionnaire (https://hackmd.io/@CPerezz/ryoMhzaLel, https://hackmd.io/@CPerezz/HkZlj_jIgg) - Planning to review with teams (ETA Aug 1st 2025). 
+
+
+### 2. Upcoming testnet
+
+- Postponed to next meeting.
+
+### 3. Bloatnet update
+
+- Ran into potential issues with Erigon and Besu. Erigon has identified the write amplification bug and are working on a fix. 
+- Besu suffered from bad peering, but this seems to have been solved. 
+- After a 1k block reorg caused by a wrong version of Besu, we are bloating again.
+- Potential upcoming Bloatnet name change.
 
 ## Call #38: July 14, 2025
 

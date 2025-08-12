@@ -54,7 +54,7 @@
 ### 4. Stateless Summit
 
 - [@gabrocheleau](https://x.com/GabRocheleau) preparing a survey to tooling teams, RPC providers, wallets, and client teams to gauge interest, proposed contributions, and topics; also to collect speaker nominations.
-- Devconnect Buenos Aires may skew app-focused; if core-protocol attendance looks light, we’ll consider alternate timing (e.g., HCC Cannes in March).
+- Devconnect Buenos Aires may skew app-focused; if core-protocol attendance looks light, we’ll consider alternate timing (e.g., ETCC Cannes in March).
 - Action: finalize and distribute the survey; consolidate responses and propose an agenda window.
 
 ### 5. Testing documentation

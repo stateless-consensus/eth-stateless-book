@@ -621,7 +621,7 @@ Regarding future stateless devnets:
 ### 3. Atomicity in gas charging
 
 [@gballet](https://x.com/gballet) explained a proposal from the geth team regarding how some operations in EIP-4762 should have other _atomicity_ semantics.
-The motivation from the geth team is simplifing the implementation in their codebase.
+The motivation from the geth team is simplifying the implementation in their codebase.
 
 The current way EIP-4762 works is that some operations that expect to add more than one leaf to the access events aren’t atomic:
 
@@ -744,7 +744,7 @@ Gajinder is currently drafting the EIP. Will have something to share soon.
 
 ### **3. Verkle Metrics**
 
-Guillaume shared an [updated document](https://www.notion.so/Verkle-measurements-123d9895554180e6ac17eddf76c692b6?pvs=21) which provides a helpful overview of latest Verkle metrics. This is data collected by replaying ~200k historical blocks (around the time of the Shanghai fork). While they don’t provide a perfect predicition for how things will look in the future, it does help give a solid approximation of what to expect.
+Guillaume shared an [updated document](https://www.notion.so/Verkle-measurements-123d9895554180e6ac17eddf76c692b6?pvs=21) which provides a helpful overview of latest Verkle metrics. This is data collected by replaying ~200k historical blocks (around the time of the Shanghai fork). While they don’t provide a perfect prediction for how things will look in the future, it does help give a solid approximation of what to expect.
 
 Few highlights below, and check out the doc for the full report.
 
@@ -785,7 +785,7 @@ Last up on this week’s call, a few quick points related to gas cost spec:
 
 ### **2. EIP-7702 in Verkle**
 
-We quickly went through a [PR from Guillaume](https://github.com/ethereum/EIPs/pull/8896) to update the stateless gas costs EIP in order to support changes coming in [7702](https://eips.ethereum.org/EIPS/eip-7702). (Current plan is for 7702 to be included in Pectra, & 7702 containts a new type of tx: `authorization_list`. Info that is used to update some accounts)
+We quickly went through a [PR from Guillaume](https://github.com/ethereum/EIPs/pull/8896) to update the stateless gas costs EIP in order to support changes coming in [7702](https://eips.ethereum.org/EIPS/eip-7702). (Current plan is for 7702 to be included in Pectra, & 7702 contains a new type of tx: `authorization_list`. Info that is used to update some accounts)
 
 TLDR is this updates the gas costs EIP so if you call these functions (`EXTCODESIZE`, `EXTCODEHASH` etc), then you also need to touch the `CODEHASH_LEAF_KEY`. Ping Guillaume with any comments/questions.
 

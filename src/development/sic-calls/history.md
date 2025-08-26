@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #41: Aug 25, 2025](#call-41-august-25-2025)
 - [Call #40: Aug 11, 2025](#call-40-august-11-2025)
 - [Call #39: July 28, 2025](#call-39-july-28-2025)
 - [Call #38: July 14, 2025](#call-38-july-14-2025)
@@ -22,6 +23,36 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #41: August 25, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1684)
+
+[Recording video](https://youtu.be/xxxxxxxxxxx)
+
+### 1. Team updates
+
+- [@kt2am1990](https://x.com/kt2am1990) ([@HyperledgerBesu](https://x.com/HyperledgerBesu)) successfully completed the tests on Hoodi, allowing for transitions without crashes or memory issues.
+
+- [@jasoriatanishq](https://x.com/jasoriatanishq) ([@NethermindEth](https://x.com/NethermindEth)) is starting to work on Binary Tree implementation.
+
+- [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)) is working on merging more code into Geth, aiming to perform more tests and replays for the testnet
+
+### 2. EIP4762 Updates
+
+- [@gballet](https://x.com/gballet) presented an update on EIP4762, explaining a proposed change to how system calls interact with witnesses. If a call is a system call, nothing should be recorded into the witness, simplifying the behavior.
+
+### 3. BloatNet Updates
+
+- [@CPerezz19](https://x.com/CPerezz19) shared that syncing at 2x mainnet size for state were conducted. There were some issues primarily due to peering. Only Besu and Geth were able to sync as of now. Future goals include incorporating more syncing metrics and launching compute-based benchmarks.
+
+### 4. Blake3 vs. SHA256 in Geth
+
+- [@gballet](https://x.com/gballet) discussed a pushback from Gary in the Geth team regarding merging Blake3 in Geth as there isn’t a reliable release in Golang. The teams have concluded that SHA256 would be used for the initial testnets until a formal decision is made at the EIP level.
+
+### 5. State Expiry Pruning Benchmarks
+
+- [@ngweihan_eth](https://x.com/ngweihan_eth) presented benchmarking results for “naive pruning” in Geth, focusing on the snapshot layer to evaluate the effectiveness of state expiry. The results showed significant reductions in snapshot size (81.3%) and decent performance gfains in state read and DB compaction time.
 
 ## Call #40: August 11, 2025
 

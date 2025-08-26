@@ -52,7 +52,7 @@
 
 ### 5. State Expiry Pruning Benchmarks
 
-- [@ngweihan_eth](https://x.com/ngweihan_eth) presented benchmarking results for “naive pruning” in Geth, focusing on the snapshot layer to evaluate the effectiveness of state expiry. The results showed significant reductions in snapshot size (81.3%) and decent performance gfains in state read and DB compaction time.
+- [@ngweihan_eth](https://x.com/ngweihan_eth) presented benchmarking results for “naive pruning” in Geth, focusing on the snapshot layer to evaluate the effectiveness of state expiry. The results showed significant reductions in snapshot size (81.3%) and decent performance gains in state read and DB compaction time.
 
 ## Call #40: August 11, 2025
 

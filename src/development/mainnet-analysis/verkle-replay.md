@@ -144,4 +144,4 @@ At the end of the sha256 run, so >200k blocks later, the chain was 75072 blocks 
 
 Coupled to the fact that Pedersen hashes aren’t quantum resistant, it seems like a good idea to reconsider using Pedersen hashes to compute trees.
 
-On the other hand, adding a new hash function could increase the complexity of future chain SNARKification effort. Chosing Poseidon as a hash function might be an exception, although its overall performance would have to be evaluated once it's deemed secure.
+On the other hand, adding a new hash function could increase the complexity of future chain SNARKification effort. Choosing Poseidon as a hash function might be an exception, although its overall performance would have to be evaluated once it's deemed secure.

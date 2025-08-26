@@ -13,8 +13,8 @@
 - [Call #34: April 21, 2025](#call-34-april-21-2025)
 - [Call #33: April 7, 2025](#call-33-april-7-2025)
 - [Call #32: March 24, 2025](#call-32-march-24-2025)
-- [Call #31: Febuary 24, 2025](#call-31-febuary-24-2025)
-- [Call #30: Febuary 10, 2025](#call-30-febuary-10-2025)
+- [Call #31: February 24, 2025](#call-31-february-24-2025)
+- [Call #30: February 10, 2025](#call-30-february-10-2025)
 - [Call #28: December 2, 2024](#call-28-december-2-2024)
 - [Call #27: November 4, 2024](#call-27-november-4-2024)
 - [Call #26: October 21, 2024](#call-26-october-21-2024)
@@ -85,7 +85,7 @@
 ### 4. Stateless Summit
 
 - [@gabrocheleau](https://x.com/GabRocheleau) preparing a survey to tooling teams, RPC providers, wallets, and client teams to gauge interest, proposed contributions, and topics; also to collect speaker nominations.
-- Devconnect Buenos Aires may skew app-focused; if core-protocol attendance looks light, we’ll consider alternate timing (e.g., ETCC Cannes in March).
+- Devconnect Buenos Aires may skew app-focused; if core-protocol attendance looks light, we’ll consider alternate timing (e.g., ETHCC Cannes in March).
 - Action: finalize and distribute the survey; consolidate responses and propose an agenda window.
 
 ### 5. Testing documentation
@@ -500,7 +500,7 @@ This creates tension with the current EIP spec, which mentions not adding system
 
 Both [@g11tech](https://x.com/g11tech) and [@kt2am1990](https://x.com/kt2am1990) agreed that adding the system contract bytecode to the witness for these cases would be fine. The remaining task is opening a PR and changing the spec to clarify this newly decided behavior.
 
-## Call #31: Febuary 24, 2025
+## Call #31: February 24, 2025
 
 [Agenda](https://github.com/ethereum/pm/issues/1322)
 
@@ -563,7 +563,7 @@ Reaching a milestone where multiple clients go through a complete conversion of 
 
 [@gballet](https://x.com/gballet) raised a point about a potential confusion between the data migration order in the [EIP](https://eips.ethereum.org/EIPS/eip-7748) and the preimage file, but the discussion will continue offline. This point may be resumed in further SIC calls, but currently, no action is needed.
 
-## Call #30: Febuary 10, 2025
+## Call #30: February 10, 2025
 
 [Agenda](https://github.com/ethereum/pm/issues/1263)
 
@@ -621,7 +621,7 @@ Regarding future stateless devnets:
 ### 3. Atomicity in gas charging
 
 [@gballet](https://x.com/gballet) explained a proposal from the geth team regarding how some operations in EIP-4762 should have other _atomicity_ semantics.
-The motivation from the geth team is simplifing the implementation in their codebase.
+The motivation from the geth team is simplifying the implementation in their codebase.
 
 The current way EIP-4762 works is that some operations that expect to add more than one leaf to the access events aren’t atomic:
 
@@ -744,7 +744,7 @@ Gajinder is currently drafting the EIP. Will have something to share soon.
 
 ### **3. Verkle Metrics**
 
-Guillaume shared an [updated document](https://www.notion.so/Verkle-measurements-123d9895554180e6ac17eddf76c692b6?pvs=21) which provides a helpful overview of latest Verkle metrics. This is data collected by replaying ~200k historical blocks (around the time of the Shanghai fork). While they don’t provide a perfect predicition for how things will look in the future, it does help give a solid approximation of what to expect.
+Guillaume shared an [updated document](https://www.notion.so/Verkle-measurements-123d9895554180e6ac17eddf76c692b6?pvs=21) which provides a helpful overview of latest Verkle metrics. This is data collected by replaying ~200k historical blocks (around the time of the Shanghai fork). While they don’t provide a perfect prediction for how things will look in the future, it does help give a solid approximation of what to expect.
 
 Few highlights below, and check out the doc for the full report.
 
@@ -785,7 +785,7 @@ Last up on this week’s call, a few quick points related to gas cost spec:
 
 ### **2. EIP-7702 in Verkle**
 
-We quickly went through a [PR from Guillaume](https://github.com/ethereum/EIPs/pull/8896) to update the stateless gas costs EIP in order to support changes coming in [7702](https://eips.ethereum.org/EIPS/eip-7702). (Current plan is for 7702 to be included in Pectra, & 7702 containts a new type of tx: `authorization_list`. Info that is used to update some accounts)
+We quickly went through a [PR from Guillaume](https://github.com/ethereum/EIPs/pull/8896) to update the stateless gas costs EIP in order to support changes coming in [7702](https://eips.ethereum.org/EIPS/eip-7702). (Current plan is for 7702 to be included in Pectra, & 7702 contains a new type of tx: `authorization_list`. Info that is used to update some accounts)
 
 TLDR is this updates the gas costs EIP so if you call these functions (`EXTCODESIZE`, `EXTCODEHASH` etc), then you also need to touch the `CODEHASH_LEAF_KEY`. Ping Guillaume with any comments/questions.
 
@@ -859,7 +859,7 @@ it’s safe to say we plan on doing a bit more of at least two things over the n
 
 (1) evaluate binary: invest meaningful bandwidth into exploring / benchmarking a binary tree structure, while collaborating closely with zk teams. Make sure we understand where we are today in terms of performance, hardware requirements (with which hash function etc.), and where things need to be in order to be viable on L1.
 
-(2) tree-agnostic development: continue building the infrastucture and tooling necessary for statelessness, but lean into a tree-agnostic approach to optimize for reusability. This will give us flexibility to land on the best solution, whether it’s Verkle, Binary, or anything else. In any case, much of what has already been built (e.g. for state migration) will be a valuable and necessary component since it’s unlikely we stick with the current MPT for long.
+(2) tree-agnostic development: continue building the infrastructure and tooling necessary for statelessness, but lean into a tree-agnostic approach to optimize for reusability. This will give us flexibility to land on the best solution, whether it’s Verkle, Binary, or anything else. In any case, much of what has already been built (e.g. for state migration) will be a valuable and necessary component since it’s unlikely we stick with the current MPT for long.
 
 If you are excited about making progress on statelessness and scaling the L1, you can join the conversation in our biweekly implementers call 🚀
 
@@ -869,7 +869,7 @@ Discussion around whether _not_ having deletions in Verkle will bloat the stat
 
 ### **5. Pectra Impact (7702, EOF, etc.)**
 
-Ignacio gave an overview of some work he’s done to better understand the potential impact of EOF on Verkle. He created a [draft PR](https://github.com/jsign/EIPs/pull/2) with the changes required. Guillaume also shared some thoughts on things we need to be mindful of with [7702](https://eips.ethereum.org/EIPS/eip-7702). Namely around making sure that when you add something to the witness, you add the contract that the operation is delegated to instead of the account itself (otherwise the witness wil be empty).
+Ignacio gave an overview of some work he’s done to better understand the potential impact of EOF on Verkle. He created a [draft PR](https://github.com/jsign/EIPs/pull/2) with the changes required. Guillaume also shared some thoughts on things we need to be mindful of with [7702](https://eips.ethereum.org/EIPS/eip-7702). Namely around making sure that when you add something to the witness, you add the contract that the operation is delegated to instead of the account itself (otherwise the witness will be empty).
 
 ### **6. Verkle Sync**
 

@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #42: September 22, 2025](#call-42-september-22-2025)
 - [Call #41: Aug 25, 2025](#call-41-august-25-2025)
 - [Call #40: Aug 11, 2025](#call-40-august-11-2025)
 - [Call #39: July 28, 2025](#call-39-july-28-2025)
@@ -24,11 +25,45 @@
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
 
+## Call #42: September 22, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1718)
+[Video recording](https://www.youtube.com/watch?v=9Rt3xL8OT2U)
+
+### Devnet Progress & Performance:
+
+Karim Taam released a new Docker image for the upcoming devnet and has improved transition implementation by pre-downloading preimages to a database, rather than a single RPC call per preimage resolution. Testing is currently underway.
+
+### Blobnet & Benchmarking Updates
+
+Carlos Perez shared progress on Blobnet syncing, including fixes for peering issues, and announced the readiness of the multi-opcode benchmarking PR, which will streamline future benchmarking efforts.
+
+### Ethereum State Analysis Insights
+
+Wei Han Ng presented a [detailed analysis of Ethereum mainnet state access patterns](). Key findings include that EOAs have longer activity spans than contracts, with 55% of contracts active for only one block and 80% of accounts active for less than a year. The analysis also showed a high concentration of contract deployments, with the top 100 bytecodes and factories accounting for significant percentages of all contracts, indicating widespread bytecode reuse.
+
+Based on the data, Wei Han Ng proposed several ideas:
+ * Re-evaluating state expiry periods, suggesting that keeping data for over a year might be sufficient.
+ * Implementing a temporary storage model where slots automatically clear after a set period.
+ * Making contract deployment cheaper for reused bytecodes through mechanisms like a same-block duplicate discount or a global code registry.
+ * Introducing progressive per-address storage pricing to disincentivize excessive slot spamming, though acknowledging potential drawbacks for successful contracts.
+
+Guillaume Ballet discussed the implications of removing storage slot deletions (where writing to zero no longer deletes a slot) on state bloat, noting that current data suggests a significant impact that would necessitate repricing.
+
+### Devnet Transition & Pre-image Distribution
+
+ * A new key computation format for the next testnet using SHA-256 hash was also discussed to simplify client implementation by eliminating the need for pre-image distribution. This was rejected, as is makes things more complex after all.
+ * The next devnet will not include a transition to facilitate Geth's participation due to slow merging. Future devnets with transitions will require a clear specification for pre-image downloading.
+
+### State Analyzer
+
+Plans were announced for a state analyzer panel on the East Pend Ops Lab website, providing a state dashboard with various metrics that will be regularly updated to track patterns.
+
 ## Call #41: August 25, 2025
 
 [Agenda](https://github.com/ethereum/pm/issues/1684)
 
-[Recording video](https://youtu.be/xxxxxxxxxxx)
+[Recording video](https://www.youtube.com/watch?v=GVFwMhiUueg)
 
 ### 1. Team updates
 
@@ -58,7 +93,7 @@
 
 [Agenda](https://github.com/ethereum/pm/issues/1672)
 
-[Recording video](https://youtu.be/xxxxxxxxxxx)
+[Recording video](https://www.youtube.com/watch?v=CrVLcOEfPhQ)
 
 ### 1. Team updates
 

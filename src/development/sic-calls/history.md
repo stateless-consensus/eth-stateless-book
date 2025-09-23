@@ -36,11 +36,11 @@ Karim Taam released a new Docker image for the upcoming devnet and has improved 
 
 ### Blobnet & Benchmarking Updates
 
-Carlos Perez shared progress on Blobnet syncing, including fixes for peering issues, and announced the readiness of the multi-opcode benchmarking PR, which will streamline future benchmarking efforts.
+Carlos Perez shared progress on Bloatnet syncing, including fixes for peering issues, and announced the readiness of the multi-opcode benchmarking PR, which will streamline future benchmarking efforts.
 
 ### Ethereum State Analysis Insights
 
-Wei Han Ng presented a [detailed analysis of Ethereum mainnet state access patterns](). Key findings include that EOAs have longer activity spans than contracts, with 55% of contracts active for only one block and 80% of accounts active for less than a year. The analysis also showed a high concentration of contract deployments, with the top 100 bytecodes and factories accounting for significant percentages of all contracts, indicating widespread bytecode reuse.
+Wei Han Ng presented a [detailed analysis of Ethereum mainnet state access patterns](https://ethereum-magicians.org/t/not-all-state-is-equal/25508). Key findings include that EOAs have longer activity spans than contracts, with 55% of contracts active for only one block and 80% of accounts active for less than a year. The analysis also showed a high concentration of contract deployments, with the top 100 bytecodes and factories accounting for significant percentages of all contracts, indicating widespread bytecode reuse.
 
 Based on the data, Wei Han Ng proposed several ideas:
  * Re-evaluating state expiry periods, suggesting that keeping data for over a year might be sufficient.
@@ -57,7 +57,7 @@ Guillaume Ballet discussed the implications of removing storage slot deletions (
 
 ### State Analyzer
 
-Plans were announced for a state analyzer panel on the East Pend Ops Lab website, providing a state dashboard with various metrics that will be regularly updated to track patterns.
+Plans were announced for a state analyzer panel on the EthPandaOps Lab website, providing a state dashboard with various metrics that will be regularly updated to track patterns.
 
 ## Call #41: August 25, 2025
 

@@ -33,7 +33,7 @@
 
 ### Team updates
 - [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)) is assisting [@CPerezz19](https://x.com/CPerezz19) in reactivating execution spec tests to be binary-tree compatible and proposed a new gas-accounting PR (EIP-8032) aimed at stemming state growth.
-- [@CPerezz19](https://x.com/CPerezz19) is working with [@gballet](https://x.com/gballet) on binary-tree test fixes (state diffs and transitions), has identified and fixed bugs in the binary-tree implementation, and continues BloatNet work while pushing benchmarks to EELS for integration with Camille’s tool from [@NethermindEth](https://x.com/NethermindEth).
+- [@CPerezz19](https://x.com/CPerezz19) is working with [@gballet](https://x.com/gballet) on binary-tree test fixes, has identified and fixed bugs in the binary-tree implementation, and continues BloatNet work while pushing benchmarks to EELS for integration with Kamil's tool from [@NethermindEth](https://x.com/NethermindEth).
 - Thomas Zamojski ([@HyperledgerBesu](https://x.com/HyperledgerBesu)) shared that [@kt2am1990](https://x.com/kt2am1990) is working on the transition and awaiting binary-tree test returns. Thomas has been focused on gas optimization and will return to statelessness, picking up the transition topic from Karim.
 - [Gabriel Rocheleau](https://x.com/gabrocheleau) ([EthereumJS](https://twitter.com/EFJavaScript)) shared that EthereumJS could consider supporting stateless clients for future testnet usages, but absence of execution witnesses & proofs on binary tree testnets makes this impossible for the time being.
 
@@ -51,10 +51,10 @@
 - Unblocked on merging PRs to EELS; submitted fixes on stop-contract handling and benchmarking.
 - Multi-opcode tests in place; key single-opcode tests focus on L1 scaling (SSTORE on the largest ERC-20s; SLOAD into empty/likely-empty slots).
 - Goal is to integrate with Kamil’s benchmarking tool from [@NethermindEth](https://x.com/NethermindEth); cross-team call scheduled. Stop contracts not specifiable across tests remains a major issue.
-- Syncing tests: collaboration with partners; clients like Reth and Erigon are actively debugging syncing/PD issues. Several benchmark runs executed; target is five clients in one pass to avoid heavy snapshot re-runs.
+- Syncing tests: collaboration with partners; clients like Reth and Erigon are actively debugging syncing issues. Several benchmark runs executed; target is five clients in one pass to avoid heavy snapshot re-runs.
 
 ### Findings on post-EIP6780 selfdestructs ([@ngweihan_eth](https://x.com/ngweihan_eth))
-- Around 2.7M unique self-destructed accounts (~1% of accounts; ~0.03% of storage slots); activity peaked shortly after Denkun and has since declined.
+- Around 2.7M unique self-destructed accounts (~1% of accounts; ~0.03% of storage slots); activity peaked shortly after Dencun and has since declined.
 - Small current footprint noted by [@ngweihan_eth](https://x.com/ngweihan_eth); [@gballet](https://x.com/gballet) flagged cumulative risks if zero-slot accounts persist.
 - Next steps: gather more precise frequency data to assess long-term effects and inform potential pruning/removal proposals.
 

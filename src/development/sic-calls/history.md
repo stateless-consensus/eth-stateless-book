@@ -50,7 +50,7 @@
 ### BloatNet updates ([@CPerezz19](https://x.com/CPerezz19))
 - Unblocked on merging PRs to EELS; submitted fixes on stop-contract handling and benchmarking.
 - Multi-opcode tests in place; key single-opcode tests focus on L1 scaling (SSTORE on the largest ERC-20s; SLOAD into empty/likely-empty slots).
-- Goal is to integrate with Camille’s benchmarking tool from [@NethermindEth](https://x.com/NethermindEth); cross-team call scheduled. Stop contracts not specifiable across tests remains a major issue.
+- Goal is to integrate with Kamil’s benchmarking tool from [@NethermindEth](https://x.com/NethermindEth); cross-team call scheduled. Stop contracts not specifiable across tests remains a major issue.
 - Syncing tests: collaboration with partners; clients like Reth and Erigon are actively debugging syncing/PD issues. Several benchmark runs executed; target is five clients in one pass to avoid heavy snapshot re-runs.
 
 ### Findings on post-EIP6780 selfdestructs ([@ngweihan_eth](https://x.com/ngweihan_eth))

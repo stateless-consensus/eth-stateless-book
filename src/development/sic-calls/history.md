@@ -29,7 +29,7 @@
 ## Call #43: October 06, 2025
 
 [Agenda](https://github.com/ethereum/pm/issues/1747)
-[Video recording](TBD)
+[Video recording](https://www.youtube.com/watch?v=W4K10M2eMHs)
 
 ### Team updates
 - [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)) is assisting [@CPerezz19](https://x.com/CPerezz19) in reactivating execution spec tests to be binary-tree compatible and proposed a new gas-accounting PR (EIP-8032) aimed at stemming state growth.

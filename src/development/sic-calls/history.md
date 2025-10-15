@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #43: October 06, 2025](#call-43-october-06-2025)
 - [Call #42: September 22, 2025](#call-42-september-22-2025)
 - [Call #41: Aug 25, 2025](#call-41-august-25-2025)
 - [Call #40: Aug 11, 2025](#call-40-august-11-2025)
@@ -24,6 +25,38 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #43: October 06, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1747)
+[Video recording](https://www.youtube.com/watch?v=W4K10M2eMHs)
+
+### Team updates
+- [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)) is assisting [@CPerezz19](https://x.com/CPerezz19) in reactivating execution spec tests to be binary-tree compatible and proposed a new gas-accounting PR (EIP-8032) aimed at stemming state growth.
+- [@CPerezz19](https://x.com/CPerezz19) is working with [@gballet](https://x.com/gballet) on binary-tree test fixes, has identified and fixed bugs in the binary-tree implementation, and continues BloatNet work while pushing benchmarks to EELS for integration with Kamil's tool from [@NethermindEth](https://x.com/NethermindEth).
+- Thomas Zamojski ([@HyperledgerBesu](https://x.com/HyperledgerBesu)) shared that [@kt2am1990](https://x.com/kt2am1990) is working on the transition and awaiting binary-tree test returns. Thomas has been focused on gas optimization and will return to statelessness, picking up the transition topic from Karim.
+- [Gabriel Rocheleau](https://x.com/gabrocheleau) ([EthereumJS](https://twitter.com/EFJavaScript)) shared that EthereumJS could consider supporting stateless clients for future testnet usages, but absence of execution witnesses & proofs on binary tree testnets makes this impossible for the time being.
+
+### Updates on binary trie t8n self-fixtures consumption progress. ([@CPerezz19](https://x.com/CPerezz19))
+- State diffs are the primary blocker; more than half of the 500+ tests pass when excluding state diffs.
+- Temporary removal of state-diff tests to simplify rebases and speed PR merges.
+- Fixture refactor to align vertical and binary trees; transition to EELS with a Python reimplementation to generate fixtures natively.
+- Test representation moving from separate allocs to a unified key–value list; adopt SHA256 for simpler key computation.
+
+### Discussion on code chunks inclusion in the tree ([@CPerezz19](https://x.com/CPerezz19))
+- Proposal to store code chunks separately and deduplicate across accounts, removing the preferential treatments of the first 128 chunks in the account leaf. 
+- Treat code and storage uniformly to simplify the binary-tree structure; decision postponed pending further research.
+
+### BloatNet updates ([@CPerezz19](https://x.com/CPerezz19))
+- Unblocked on merging PRs to EELS; submitted fixes on stop-contract handling and benchmarking.
+- Multi-opcode tests in place; key single-opcode tests focus on L1 scaling (SSTORE on the largest ERC-20s; SLOAD into empty/likely-empty slots).
+- Goal is to integrate with Kamil’s benchmarking tool from [@NethermindEth](https://x.com/NethermindEth); cross-team call scheduled. Stop contracts not specifiable across tests remains a major issue.
+- Syncing tests: collaboration with partners; clients like Reth and Erigon are actively debugging syncing issues. Several benchmark runs executed; target is five clients in one pass to avoid heavy snapshot re-runs.
+
+### Findings on post-EIP6780 selfdestructs ([@ngweihan_eth](https://x.com/ngweihan_eth))
+- Around 2.7M unique self-destructed accounts (~1% of accounts; ~0.03% of storage slots); activity peaked shortly after Dencun and has since declined.
+- Small current footprint noted by [@ngweihan_eth](https://x.com/ngweihan_eth); [@gballet](https://x.com/gballet) flagged cumulative risks if zero-slot accounts persist.
+- Next steps: gather more precise frequency data to assess long-term effects and inform potential pruning/removal proposals.
 
 ## Call #42: September 22, 2025
 

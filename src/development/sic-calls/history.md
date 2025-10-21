@@ -45,7 +45,7 @@
 
 - Guillaume presented his initial findings and research on state compression: explorations target ~20% state size reduction initially, with pathways up to ~80% via more granular expiry to improve DB performance and storage efficiency. 
 - Compression-based expiry: move old account/slot data out of DB into flat files. Replace expired values with pointers; drop internal trie nodes to improve I/O and reduce bloat. Writes to archived data reinsert into main state; thresholds proposed to balance recomputation cost. Serves as a gradual path toward potential in-protocol expiry.
-- Performance notes: even a 20% whole-account expiry yields notable DB speedups in client benchmarks; 80% leaf-level targets larger savings but requires more work.
+- Performance notes: even a 20% whole-account expiry yields notable DB speedups in client benchmarks; leaf-level expiry targets larger savings (80%) but requires more work.
 - Economic/fee alignment: if expiry becomes in-protocol, higher gas for writing to expired/archived storage (e.g., discussed alongside upcoming EIPs like 8037/8038) could incentivize efficient state usage. Even when out of protocol, builders may deprioritize transactions resurrecting expired state unless tipped appropriately.
 
 ## Call #43: October 06, 2025

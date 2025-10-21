@@ -30,7 +30,7 @@
 ## Call #44: October 20, 2025
 
 [Agenda](https://github.com/ethereum/pm/issues/1770)
-[Video recording](TBD)
+[Video recording](https://www.youtube.com/watch?v=FdBKB1d3Pek)
 
 ### Team updates
 

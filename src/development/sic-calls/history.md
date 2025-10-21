@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #44: October 20, 2025](#call-44-october-20-2025)
 - [Call #43: October 06, 2025](#call-43-october-06-2025)
 - [Call #42: September 22, 2025](#call-42-september-22-2025)
 - [Call #41: Aug 25, 2025](#call-41-august-25-2025)
@@ -25,6 +26,27 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #44: October 20, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1770)
+[Video recording](https://www.youtube.com/watch?v=FdBKB1d3Pek)
+
+### Team updates
+
+- [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)) and [@kt2am1990](https://x.com/kt2am1990) ([@HyperledgerBesu](https://x.com/HyperledgerBesu)) reported partial test success; some vectors fail due to a suspected RLP encoding discrepancy between Geth and Besu.  
+- [@kt2am1990](https://x.com/kt2am1990) ([@HyperledgerBesu](https://x.com/HyperledgerBesu)) is investigating problematic data dumps from Guillaume and will collaborate with Thomas Zamojski to accelerate resolution. Goal is to resolve Geth–Besu interoperability for binary-tree implementations.  
+- Also reported that [@jasoriatanishq](https://x.com/jasoriatanishq) ([@NethermindEth](https://x.com/NethermindEth)) had deprioritized binary-tree work pending these test results..
+- Mario Vega is leading the rebase of the weld, targeting completion within ~two weeks. This rebase is critical to integrate binary-tree support into the updated repo structure. Carlos will assist with plugging binary trees post-rebase, with support from Mario's team. Completion enables broader stateless test vectors and validation.
+- [@gabrocheleau](https://x.com/GabRocheleau) shared that ([EthereumJS](https://twitter.com/EFJavaScript))'s verkle support is deprecated and has been removed from the repo. Binary-tree support is maintained for testing. Gabriel is also drafting a state-expiry survey for wallet/app/provider teams on state management, requirements, costs and potential incentives. Draft to be shared soon. 
+- [@ngweihan_eth](https://x.com/ngweihan_eth) shared that he is researching and discussing in-protocol vs out-of-protocol state expiry: https://ethresear.ch/t/state-expiry-in-protocol-vs-out-of-protocol/23258. Also exploring contract-level state expiry (expiring storage of unused contracts). Estimated reduction: 50–60 GB (~20% of total storage). Approach favors client-side reclamation without immediate protocol changes; Wei Han plans to formalize an EIP and seek discussion.
+
+### Compression-based state expiry
+
+- Guillaume presented his initial findings and research on state compression: explorations target ~20% state size reduction initially, with pathways up to ~80% via more granular expiry to improve DB performance and storage efficiency. 
+- Compression-based expiry: move old account/slot data out of DB into flat files. Replace expired values with pointers; drop internal trie nodes to improve I/O and reduce bloat. Writes to archived data reinsert into main state; thresholds proposed to balance recomputation cost. Serves as a gradual path toward potential in-protocol expiry.
+- Performance notes: even a 20% whole-account expiry yields notable DB speedups in client benchmarks; leaf-level expiry targets larger savings (80%) but requires more work.
+- Economic/fee alignment: if expiry becomes in-protocol, higher gas for writing to expired/archived storage (e.g., discussed alongside upcoming EIPs like 8037/8038) could incentivize efficient state usage. Even when out of protocol, builders may deprioritize transactions resurrecting expired state unless tipped appropriately.
 
 ## Call #43: October 06, 2025
 

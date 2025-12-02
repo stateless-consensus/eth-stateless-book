@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #45: December 1, 2025](#call-45-december-1-2025)
 - [Call #44: October 20, 2025](#call-44-october-20-2025)
 - [Call #43: October 06, 2025](#call-43-october-06-2025)
 - [Call #42: September 22, 2025](#call-42-september-22-2025)
@@ -26,6 +27,29 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #45: December 1, 2025
+
+[Agenda](https://github.com/ethereum/pm/issues/1823)
+[Video recording](https://www.youtube.com/watch?v=14zM6024ZmY)
+
+### Team updates
+
+- [@CPerezz19](https://x.com/CPerezz19) ([@StatelessEth](https://x.com/StatelessEth)) is extending L1 scaling experiments by adding more scenarios to [EEST](https://github.com/ethereum/execution-spec-tests) and [spamoor](https://github.com/ethpandaops/spamoor) to bloat ERC20s for state/contract-size testing, and is building a state analyzer tool for the lab page. State tests are already running successfully on Nethermind, and benchmarks are being refactored to respect the 60M gas cap introduced in Fusaka.  
+- [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)) continues Binary Tree implementation work in Geth; an executable version exists, and he plans to resume coordination with Mario Vega on using the updated execution spec.  
+- Mario Vega (Eels) checked in with [@CPerezz19](https://x.com/CPerezz19) on `EEST` (no blockers, recent state tests passed on Nethermind), flagged the ongoing revamp of the `execute` command, and offered to coordinate on refactoring tests and benchmarks to comply with the 60M gas cap; Carlos is already updating benchmarks and awaiting review on the `spamoor` changes agreed with PK from EthPandaOps.  
+
+
+### CodeChunks inclusion in the binary-tree leaf
+
+- The current design stores the first 128 bytes of contract code directly in the Binary Tree leaf alongside basic account data, improving locality and immediate access. A proposal would move code chunks entirely out of the leaf into a separate structure to enable code deduplication and use the freed header space to increase inline storage slots from 64 to 192. 
+- [@gballet](https://x.com/gballet) highlighted downsides: most contracts have small code that fits in the header today, so externalizing code would usually add an extra node per account, growing the tree and increasing structural complexity. The dedup model may also be “attackable” via repeated deployments of identical code.  
+- Earlier constraints from Portal Network (which motivated merging code and account data for minimal download sets) are no longer active. The group agreed to treat the layout as re-open for discussion, but any change will depend on measurements comparing final tree size and overhead between the current and proposed designs; these measurements are planned before the next call.
+
+### Communication channels with app-layer and other teams
+
+- [@gabrocheleau](https://x.com/GabRocheleau) proposed creating a single, general Telegram group for external teams (app-layer, infra, tooling, etc.) instead of multiple fragmented channels, to centralize feedback on how teams use state and what trade-offs they can tolerate around state expiry and state economics.  
+- [@gballet](https://x.com/gballet) agreed a single channel would be easier to maintain. The plan is for Gabriel to first line up ~5–10 interested teams, then create the group and invite both stateless-core participants and external teams so the channel starts with a clear mandate and critical mass.
 
 ## Call #44: October 20, 2025
 

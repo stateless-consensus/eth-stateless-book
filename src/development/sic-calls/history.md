@@ -37,13 +37,13 @@
 
 - [@CPerezz19](https://x.com/CPerezz19) ([@StatelessEth](https://x.com/StatelessEth)) is extending L1 scaling experiments by adding more scenarios to [EEST](https://github.com/ethereum/execution-spec-tests) and [spamoor](https://github.com/ethpandaops/spamoor) to bloat ERC20s for state/contract-size testing, and is building a state analyzer tool for the lab page. State tests are already running successfully on Nethermind, and benchmarks are being refactored to respect the 60M gas cap introduced in Fusaka.  
 - [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)) continues Binary Tree implementation work in Geth; an executable version exists, and he plans to resume coordination with Mario Vega on using the updated execution spec.  
-- Mario Vega (Eels) checked in with [@CPerezz19](https://x.com/CPerezz19) on `EEST` (no blockers, recent state tests passed on Nethermind), flagged the ongoing revamp of the `execute` command, and offered to coordinate on refactoring tests and benchmarks to comply with the 60M gas cap; Carlos is already updating benchmarks and awaiting review on the `spamoor` changes agreed with PK from EthPandaOps.  
+- Mario Vega (EELS) checked in with [@CPerezz19](https://x.com/CPerezz19) on `EEST` (no blockers, recent state tests passed on Nethermind), flagged the ongoing revamp of the `execute` command, and offered to coordinate on refactoring tests and benchmarks to comply with the 60M gas cap; Carlos is already updating benchmarks and awaiting review on the `spamoor` changes agreed with PK from EthPandaOps.  
 
 
 ### CodeChunks inclusion in the binary-tree leaf
 
 - The current design stores the first 128 bytes of contract code directly in the Binary Tree leaf alongside basic account data, improving locality and immediate access. A proposal would move code chunks entirely out of the leaf into a separate structure to enable code deduplication and use the freed header space to increase inline storage slots from 64 to 192. 
-- [@gballet](https://x.com/gballet) highlighted downsides: most contracts have small code that fits in the header today, so externalizing code would usually add an extra node per account, growing the tree and increasing structural complexity. The dedup model may also be “attackable” via repeated deployments of identical code.  
+- [@gballet](https://x.com/gballet) highlighted downsides: most contracts have small code that fits in the header today, so externalizing code would usually add an extra node per account, growing the tree and increasing structural complexity.
 - Earlier constraints from Portal Network (which motivated merging code and account data for minimal download sets) are no longer active. The group agreed to treat the layout as re-open for discussion, but any change will depend on measurements comparing final tree size and overhead between the current and proposed designs; these measurements are planned before the next call.
 
 ### Communication channels with app-layer and other teams

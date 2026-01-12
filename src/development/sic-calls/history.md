@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #46: January 12, 2026](#call-46-january-12-2026)
 - [Call #45: December 1, 2025](#call-45-december-1-2025)
 - [Call #44: October 20, 2025](#call-44-october-20-2025)
 - [Call #43: October 06, 2025](#call-43-october-06-2025)
@@ -27,6 +28,67 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #46: January 12, 2026
+
+[Agenda](https://github.com/ethereum/pm/issues/1853)
+[Video recording](XXX)
+
+### New EIP proposal by Vitalik (User-Associated Storage, “UAS”)
+
+- Overview: associate contract storage with users to cut gas and enable user-scoped expiry. Storage for a (contract, user) pair can live in the user’s account header instead of the contract’s storage.
+- Presentation: [@vbuterin](https://x.com/VitalikButerin) walked through the UAS EIP. Estimated savings up to ~2,000 gas per tx on common paths.
+- Access model:
+  - Users can “promote” up to 16 privileged slots into their account header for faster access and simpler expiry.
+  - Contracts opt in via new opcodes (US Store / US Load). No ERC-20 standard change required, but token contracts must adopt the new ops.
+  - Anti-spam: users must explicitly set privileged user storage; contracts cannot self-privilege users.
+- Limits & layout:
+  - Per user: 16 privileged slots.
+  - Per contract: up to 256 user mappings.
+  - Backed by a binary-tree layout; discussion on shrinking page size from 8K → 4K/2K for DB performance.
+- Transition & compatibility:
+  - Works best with the binary tree; theoretically possible on MPT but header management is complex.
+- Rationale:
+  - Even without near-term state expiry, gas savings justify adoption.
+  - Groups user-related state to expire together later, curbing long-term bloat.
+
+### Team update
+
+- Benchmarks & code size limits:
+  - [@CPerezz19](https://x.com/CPerezz19) finalizing EIP-7907 benchmarks (code size limits / gas adjustments), targeting ETH Research + potential EthCC presentation. Resolved cache issues by resetting mainnet DB and using Geth dev mode.
+  - Formal partial-statefulness specs being integrated into execution tests to stress worst-case storage writes (e.g., EOA→non-empty transfers).
+  - [@gballet](https://x.com/gballet): raising contract code size needs protocol-level changes. Contracts ≳80 KB run into current tx gas ceilings. Options discussed:
+    1) Keep size limit; increase certain gas costs.
+    2) Temporarily raise tx gas limit (e.g., 20M).
+    3) Multidimensional gas pricing (unlikely on current roadmap).
+  - Goal: balance higher state-creation costs with a code-size increase to avoid blocking deployments while controlling bloat.
+  - Mario Vega (EELS) + [@CPerezz19](https://x.com/CPerezz19): prefer precomputed gas usage for deterministic tests; waiting on a PR that automates gas calc across tests before merging changes.
+- Org & roadmap:
+  - Damien from [Nethermind](https://x.com/Nethermind) stepping up in light of [@jasoriatanishq](https://x.com/jasoriatanishq) leaving Nethermind. 
+  - [@gballet](https://x.com/gballet) coordinating binary-tree adoption and roadmapping (including EIP-797 and code-size track).
+  - [@ngweihan_eth](https://x.com/ngweihan_eth) ([@StatelessEth](https://x.com/StatelessEth)) demoed the Event Ops lab page for state growth/expiry views [here](https://lab.ethpandaops.io/ethereum/execution/state-growth); expects backend fixes by week's end; feedback requested.
+
+### Proposal to use system contract for transition
+
+- Idea: store state-transition pointers in a system smart contract (consensus state) instead of off-chain DBs.
+- Effects:
+  - Pointers must be set before block-root calc.
+  - Simplifies reorgs as pointers naturally roll back with state.
+  - Snap sync benefits: pointers are fetched via standard state sync.
+  - Reads bypass EVM execution for these pointers to avoid overhead.
+- Status: partial prototype tied to EIP-8032; [@gballet](https://x.com/gballet) will continue after feedback from [Nethermind](https://x.com/Nethermind) and [Besu](https://x.com/HyperledgerBesu).
+
+### Draft EIP: Temporary Contract Storage
+
+- Concept presented by [@ngweihan_eth](https://x.com/ngweihan_eth): semi-persistent storage managed by a system contract that clears on a fixed cadence (e.g., ~6 months).
+- Interface: new TMP Store / TMP Load opcodes with gas similar to regular SSTORE/SLOAD.
+- Purpose: shift ephemeral data out of permanent storage, easing pruning and slowing long-term growth (does not shrink today’s state).
+- Client concerns: separate handling for reorgs and RPC, plus integration with the unified binary tree.
+- Open questions:
+  - Interval parameterization and gas modeling.
+  - App-level fit: balances likely poor candidates; event/ops data better.
+  - Implementation shape: two alternating trees to guarantee lifetime; a ~7-day cadence was noted as a natural baseline (aligns with optimistic rollup assumptions).
+- Next: validate app patterns and finalize clearing intervals/gas before advancing.
 
 ## Call #45: December 1, 2025
 

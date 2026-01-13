@@ -32,7 +32,7 @@
 ## Call #46: January 12, 2026
 
 [Agenda](https://github.com/ethereum/pm/issues/1853)
-[Video recording](XXX)
+[Video recording](https://www.youtube.com/watch?v=gytpMcdnUVM)
 
 ### New EIP proposal by Vitalik (User-Associated Storage, “UAS”)
 

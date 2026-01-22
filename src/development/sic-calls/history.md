@@ -40,8 +40,8 @@
 - Presentation: [@vbuterin](https://x.com/VitalikButerin) walked through the UAS EIP. Estimated savings up to ~2,000 gas per tx on common paths.
 - Access model:
   - Users can “promote” up to 16 privileged slots into their account header for faster access and simpler expiry.
-  - Contracts opt in via new opcodes (US Store / US Load). No ERC-20 standard change required, but token contracts must adopt the new ops.
-  - Anti-spam: users must explicitly set privileged user storage; contracts cannot self-privilege users.
+  - Contracts opt in via new opcodes (`USSTORE` / `USLLOAD`). No ERC-20 standard change required, but token contracts must adopt the new opcodes.
+  - Anti-spam: users must explicitly set privileged user storage; contracts cannot set their own storage as self-privileged in user accounts.
 - Limits & layout:
   - Per user: 16 privileged slots.
   - Per contract: up to 256 user mappings.
@@ -57,12 +57,12 @@
 - Benchmarks & code size limits:
   - [@CPerezz19](https://x.com/CPerezz19) finalizing EIP-7907 benchmarks (code size limits / gas adjustments), targeting ETH Research + potential EthCC presentation. Resolved cache issues by resetting mainnet DB and using Geth dev mode.
   - Formal partial-statefulness specs being integrated into execution tests to stress worst-case storage writes (e.g., EOA→non-empty transfers).
-  - [@gballet](https://x.com/gballet): raising contract code size needs protocol-level changes. Contracts ≳80 KB run into current tx gas ceilings. Options discussed:
+  - [@gballet](https://x.com/gballet) + [@CPerezz19](https://x.com/CPerezz19) +[@vbuterin](https://x.com/VitalikButerin): raising contract code size needs protocol-level changes. Contracts ≳80 KB run into current tx gas ceilings. Options discussed:
     1) Keep size limit; increase certain gas costs.
     2) Temporarily raise tx gas limit (e.g., 20M).
     3) Multidimensional gas pricing (unlikely on current roadmap).
   - Goal: balance higher state-creation costs with a code-size increase to avoid blocking deployments while controlling bloat.
-  - Mario Vega (EELS) + [@CPerezz19](https://x.com/CPerezz19): prefer precomputed gas usage for deterministic tests; waiting on a PR that automates gas calc across tests before merging changes.
+  - [Mario Vega](https://x.com/elbuenmayini) (EELS) + [@CPerezz19](https://x.com/CPerezz19): prefer precomputed gas usage for deterministic tests; waiting on a PR that automates gas calc across tests before merging changes.
 - Org & roadmap:
   - Damien from [Nethermind](https://x.com/Nethermind) stepping up in light of [@jasoriatanishq](https://x.com/jasoriatanishq) leaving Nethermind. 
   - [@gballet](https://x.com/gballet) coordinating binary-tree adoption and roadmapping (including EIP-797 and code-size track).

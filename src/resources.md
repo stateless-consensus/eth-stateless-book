@@ -51,7 +51,7 @@ https://ethereum-magicians.org/t/not-all-state-is-equal/25508/3
 https://ethresear.ch/t/data-driven-analysis-on-eip-7907/23850
 https://ethresear.ch/t/a-small-step-towards-data-driven-protocol-decisions-unified-slowblock-metrics-across-clients/23907
 
-### state gas costs
+### State gas costs
 
 https://ethereum-magicians.org/t/the-case-for-eip-8032-in-glamsterdam-tree-depth-based-storage-gas-pricing/25619
 https://ethereum-magicians.org/t/eip-8058-contract-bytecode-deduplication-discount/25933
@@ -84,7 +84,7 @@ https://ethresear.ch/t/a-short-note-on-post-quantum-verkle-explorations/22001
 - [EIP-8038](https://eips.ethereum.org/EIPS/eip-8038), State-access gas cost update
 - [EIP-8125](https://eips.ethereum.org/EIPS/eip-8125), Temporary Contract Storage
 
-#### Abandonned
+#### Proposed, but not actively championned
 
 - [EIP-2584](https://eips.ethereum.org/EIPS/eip-2584), Trie format transition with overlay trees
 - [EIP-2926](https://eips.ethereum.org/EIPS/eip-2926), MPT-based code chunking

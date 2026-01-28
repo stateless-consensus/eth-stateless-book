@@ -56,6 +56,8 @@ https://ethresear.ch/t/a-small-step-towards-data-driven-protocol-decisions-unifi
 https://ethereum-magicians.org/t/the-case-for-eip-8032-in-glamsterdam-tree-depth-based-storage-gas-pricing/25619
 https://ethereum-magicians.org/t/eip-8058-contract-bytecode-deduplication-discount/25933
 
+### Misc
+
 https://ethresear.ch/t/a-short-note-on-post-quantum-verkle-explorations/22001
 
 ### Advanced technical write-ups

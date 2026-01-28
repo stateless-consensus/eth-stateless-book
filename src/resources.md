@@ -39,22 +39,22 @@ Over the past years, many articles and talks have been made about stateless, mai
 
 ### State expiry
 
- - https://ethresear.ch/t/state-expiry-in-protocol-vs-out-of-protocol/23258
- - https://ethresear.ch/t/the-future-of-state-part-1-oopsie-a-new-type-of-snap-sync-based-wallet-lightclient/23395/1
- - https://ethresear.ch/t/the-future-of-state-part-2-beyond-the-myth-of-partial-statefulness-the-reality-of-zkevms/23396/1
- - https://ethresear.ch/t/compression-based-state-expiry/23443
+ - [https://ethresear.ch/t/state-expiry-in-protocol-vs-out-of-protocol/23258](https://ethresear.ch/t/state-expiry-in-protocol-vs-out-of-protocol/23258)
+ - [https://ethresear.ch/t/the-future-of-state-part-1-oopsie-a-new-type-of-snap-sync-based-wallet-lightclient/23395/1](https://ethresear.ch/t/the-future-of-state-part-1-oopsie-a-new-type-of-snap-sync-based-wallet-lightclient/23395/1)
+ - [https://ethresear.ch/t/the-future-of-state-part-2-beyond-the-myth-of-partial-statefulness-the-reality-of-zkevms/23396/1](https://ethresear.ch/t/the-future-of-state-part-2-beyond-the-myth-of-partial-statefulness-the-reality-of-zkevms/23396/1)
+ - [https://ethresear.ch/t/compression-based-state-expiry/23443](https://ethresear.ch/t/compression-based-state-expiry/23443)
 
 ### Analysis
 
- - https://ethresear.ch/t/ethereum-bytecode-and-code-chunk-analysis/22847
- - https://ethereum-magicians.org/t/not-all-state-is-equal/25508/3
- - https://ethresear.ch/t/data-driven-analysis-on-eip-7907/23850
- - https://ethresear.ch/t/a-small-step-towards-data-driven-protocol-decisions-unified-slowblock-metrics-across-clients/23907
+ - [https://ethresear.ch/t/ethereum-bytecode-and-code-chunk-analysis/22847](https://ethresear.ch/t/ethereum-bytecode-and-code-chunk-analysis/22847)
+ - [https://ethereum-magicians.org/t/not-all-state-is-equal/25508/3](https://ethereum-magicians.org/t/not-all-state-is-equal/25508/3)
+ - [https://ethresear.ch/t/data-driven-analysis-on-eip-7907/23850](https://ethresear.ch/t/data-driven-analysis-on-eip-7907/23850)
+ - [https://ethresear.ch/t/a-small-step-towards-data-driven-protocol-decisions-unified-slowblock-metrics-across-clients/23907](https://ethresear.ch/t/a-small-step-towards-data-driven-protocol-decisions-unified-slowblock-metrics-across-clients/23907)
 
 ### State gas costs
 
- - https://ethereum-magicians.org/t/the-case-for-eip-8032-in-glamsterdam-tree-depth-based-storage-gas-pricing/25619
- - https://ethereum-magicians.org/t/eip-8058-contract-bytecode-deduplication-discount/25933
+ - [https://ethereum-magicians.org/t/the-case-for-eip-8032-in-glamsterdam-tree-depth-based-storage-gas-pricing/25619](https://ethereum-magicians.org/t/the-case-for-eip-8032-in-glamsterdam-tree-depth-based-storage-gas-pricing/25619)
+ - [https://ethereum-magicians.org/t/eip-8058-contract-bytecode-deduplication-discount/25933](https://ethereum-magicians.org/t/eip-8058-contract-bytecode-deduplication-discount/25933)
 
 ### Misc
 

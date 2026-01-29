@@ -32,6 +32,9 @@
 
 ## Call #47: January 27, 2026
 
+[Agenda](https://github.com/ethereum/pm/issues/1873)  
+[Call Recording](https://www.youtube.com/watch?v=ih-9Pk2IdkQ)
+
 ### Team updates
 
 - [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)) reported progress on state expiry, with the resurrection implementation nearly complete and undergoing debugging. Code from Han for expiry is expected to merge this week. Guillaume also noted a potential roadblock with the test framework requiring a large codebase refactor, suggesting the alternative of producing and sharing blocks in dev mode to cover interrupts while giving the testing team more time to strategize.

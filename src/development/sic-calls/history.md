@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #47: January 27, 2026](#call-47-january-27-2026)
 - [Call #46: January 12, 2026](#call-46-january-12-2026)
 - [Call #45: December 1, 2025](#call-45-december-1-2025)
 - [Call #44: October 20, 2025](#call-44-october-20-2025)
@@ -28,6 +29,40 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #47: January 27, 2026
+
+### Team updates
+
+- [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)) reported progress on state expiry, with the resurrection implementation nearly complete and undergoing debugging. Code from Han for expiry is expected to merge this week. Guillaume also noted a potential roadblock with the test framework requiring a large codebase refactor, suggesting the alternative of producing and sharing blocks in dev mode to cover interrupts while giving the testing team more time to strategize.
+- Thomas Zamojski ([@HyperledgerBesu](https://x.com/HyperledgerBesu)) updated that the Besu team is focused on preimage acquisition and verifying the binary tree root hash by resurrecting Besu's dev mode to generate blocks locally and validate against Geth. The team is not yet ready for binary tree optimizations and is awaiting benchmarking information.
+
+### Roadmap updates and binary trees schedule
+
+- [@gballet](https://x.com/gballet) provided a brief roadmap update following a meeting with the Ethereum Foundation research team in Berlin. The main takeaway is that the research team supports scheduling binary trees for late 2027 or early 2028, potentially for the J* fork, and showed a good understanding of the reasoning for picking EIP-7612 style transition. These timelines are not yet official ACD decisions.
+- Benchmarking is necessary to confirm the binary tree's presence on the roadmap, especially to assess performance impact and I/O due to data written.
+- The team plans to use Geth's dev mode to produce and export blocks for sharing between clients for debugging and testing inter-client operability, potentially leading to a testnet.
+
+### Transition strategy and ecosystem engagement
+
+- The research team agreed with the proposed transition approach. A shadow fork is desired once preimage distribution issues are resolved. The plan involves a dev mode conversion first to ensure agreement between Besu and Geth, followed by a shadow fork similar to previous vertical testnets.
+- [@gballet](https://x.com/gballet) announced a crucial effort to engage the wider ecosystem—including L2s, DApps, and wallets—to gather feedback on the statelessness rollout and the tradeoffs involved. The plan is to conduct interviews and distribute a questionnaire to major players.
+
+### State expiry models
+
+- Two models were discussed: leaf-based expiry (e.g., EIP-7736 style) and epoch-based expiry.
+- **Leaf-based model:** the main challenge is resurrection UX, which involves passing a proof (Merkle or STARK-based) to revive expired data. Wallets might be expected to hold the data and handle proof provision, allowing higher transaction fees to cover resurrection cost and minimizing UX impact for non-censored users.
+- **Epoch-based model:** subsequent epochs have new trees and previous trees remain accessible with an updated resurrection bitmap. This avoids address space extension but requires keeping a hash of the bitmap for every epoch, causing block size to grow.
+- [@URozmej](https://x.com/URozmej) expressed concern about relying on third parties to store state, preferring a backup plan where old trees could be frozen and distributed via BitTorrent. [@gballet](https://x.com/gballet) countered that BitTorrent is unreliable and suggested a more robust, incentivized mechanism like rainbow staking.
+- [@CPerezz19](https://x.com/CPerezz19) raised the idea of viewing state expiry primarily as a mechanism for data reduction rather than focusing on a flawless revival mechanism, suggesting a change in user mindset where cold state data becomes the user's responsibility.
+
+### Address-based storage proposal
+
+- [@ngweihan_eth](https://x.com/ngweihan_eth) presented an early-stage idea inspired by Vitalik's User-Associated Storage concept: address-based storage. Based on binary trees, the proposal introduces a second tier of storage where per-user contract state (like token balances) moves into the user's account, namespaced by the contract address, to improve data locality.
+- Advantages: better I/O efficiency, lower gas costs, compatibility with proxy patterns, compiler friendliness, and improved compatibility with state expiry and partial stateless nodes.
+- Downsides: increased witness overhead for ZK-EVMs, added complexity for client developers, and applicability only to new contracts.
+- Migration of existing storage is not feasible due to the requirement of preimages for all storage. Individual contracts would need to perform manual migrations, possibly pausing their protocol.
+- [@URozmej](https://x.com/URozmej) asked whether the storage was bounded; [@ngweihan_eth](https://x.com/ngweihan_eth) clarified it reverted to an unbounded design. [@gballet](https://x.com/gballet) questioned whether a subtree was necessary, suggesting the new storage could reside at the same level as regular storage. [@CPerezz19](https://x.com/CPerezz19) argued the subtree preserves structure and facilitates easier reasoning about account storage.
 
 ## Call #46: January 12, 2026
 

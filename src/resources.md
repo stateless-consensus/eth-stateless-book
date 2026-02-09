@@ -37,6 +37,29 @@ Over the past years, many articles and talks have been made about stateless, mai
 - [Anatomy of a Verkle proof](https://ihagopian.com/posts/anatomy-of-a-verkle-proof) - same as above
 - [Stateless and Verkle Trees](https://www.youtube.com/watch?v=f7bEtX3Z57o) (video) - a dated presentation giving an overview of the stateless effort and Verkle Trees in particular
 
+### State expiry
+
+ - [https://ethresear.ch/t/state-expiry-in-protocol-vs-out-of-protocol/23258](https://ethresear.ch/t/state-expiry-in-protocol-vs-out-of-protocol/23258)
+ - [https://ethresear.ch/t/the-future-of-state-part-1-oopsie-a-new-type-of-snap-sync-based-wallet-lightclient/23395/1](https://ethresear.ch/t/the-future-of-state-part-1-oopsie-a-new-type-of-snap-sync-based-wallet-lightclient/23395/1)
+ - [https://ethresear.ch/t/the-future-of-state-part-2-beyond-the-myth-of-partial-statefulness-the-reality-of-zkevms/23396/1](https://ethresear.ch/t/the-future-of-state-part-2-beyond-the-myth-of-partial-statefulness-the-reality-of-zkevms/23396/1)
+ - [https://ethresear.ch/t/compression-based-state-expiry/23443](https://ethresear.ch/t/compression-based-state-expiry/23443)
+
+### Analysis
+
+ - [https://ethresear.ch/t/ethereum-bytecode-and-code-chunk-analysis/22847](https://ethresear.ch/t/ethereum-bytecode-and-code-chunk-analysis/22847)
+ - [https://ethereum-magicians.org/t/not-all-state-is-equal/25508/3](https://ethereum-magicians.org/t/not-all-state-is-equal/25508/3)
+ - [https://ethresear.ch/t/data-driven-analysis-on-eip-7907/23850](https://ethresear.ch/t/data-driven-analysis-on-eip-7907/23850)
+ - [https://ethresear.ch/t/a-small-step-towards-data-driven-protocol-decisions-unified-slowblock-metrics-across-clients/23907](https://ethresear.ch/t/a-small-step-towards-data-driven-protocol-decisions-unified-slowblock-metrics-across-clients/23907)
+
+### State gas costs
+
+ - [https://ethereum-magicians.org/t/the-case-for-eip-8032-in-glamsterdam-tree-depth-based-storage-gas-pricing/25619](https://ethereum-magicians.org/t/the-case-for-eip-8032-in-glamsterdam-tree-depth-based-storage-gas-pricing/25619)
+ - [https://ethereum-magicians.org/t/eip-8058-contract-bytecode-deduplication-discount/25933](https://ethereum-magicians.org/t/eip-8058-contract-bytecode-deduplication-discount/25933)
+
+### Misc
+
+ - https://ethresear.ch/t/a-short-note-on-post-quantum-verkle-explorations/22001
+
 ### Advanced technical write-ups
 
 - [Inner Product Argument - Dankrad Feist](https://dankradfeist.de/ethereum/2021/07/27/inner-product-arguments.html)
@@ -45,11 +68,31 @@ Over the past years, many articles and talks have been made about stateless, mai
 
 ### EIPs
 
-- [EIP-6800](https://eips.ethereum.org/EIPS/eip-6800), structure of a Verkle Tree
+#### Included
+
+- [EIP-2935](https://eips.ethereum.org/EIPS/eip-2935), save historical block hashes in the state
+- [EIP-6780](https://eips.ethereum.org/EIPS/eip-6780), deactivate SELFDESTRUCT
+
+#### Championned
+
 - [EIP-4762](https://eips.ethereum.org/EIPS/eip-4762), gas costs changes for Verkle Trees
-- [EIP-2935](https://eips.ethereum.org/EIPS/eip-2935) and [EIP-7709](https://eips.ethereum.org/EIPS/eip-7709), save historical block hashes in the state
+- [EIP-7709](https://eips.ethereum.org/EIPS/eip-7709), bypass the EVM to read block hashes in the state
 - [EIP-7612](https://eips.ethereum.org/EIPS/eip-7612) and [EIP-7748](https://eips.ethereum.org/EIPS/eip-7748), about the state tree conversion
 - [EIP-7864](https://eips.ethereum.org/EIPS/eip-7864), about the proposed scheme for Binary Trees
+- [EIP-8037](https://eips.ethereum.org/EIPS/eip-8037), State Creation Gas Cost Increase
+- [EIP-8038](https://eips.ethereum.org/EIPS/eip-8038), State-access gas cost update
+- [EIP-8125](https://eips.ethereum.org/EIPS/eip-8125), Temporary Contract Storage
+
+#### Proposed, but not actively championned
+
+- [EIP-2584](https://eips.ethereum.org/EIPS/eip-2584), Trie format transition with overlay trees
+- [EIP-2926](https://eips.ethereum.org/EIPS/eip-2926), MPT-based code chunking
+- [EIP-3102](https://eips.ethereum.org/EIPS/eip-3102), binary trees
+- [EIP-6800](https://eips.ethereum.org/EIPS/eip-6800), structure of a Verkle Tree
+- [EIP-7736](https://eips.ethereum.org/EIPS/eip-7736) (verkle) leaf-based state expiry
+- [EIP-7545](https://eips.ethereum.org/EIPS/eip-7545), proof verification precompile
+- [EIP-8032](https://eips.ethereum.org/EIPS/eip-8032), Size-Based Storage Gas Pricing
+- [EIP-8058](https://eips.ethereum.org/EIPS/eip-8058), Contract Bytecode Deduplication Discount
 
 ### Measurements & Metrics
 

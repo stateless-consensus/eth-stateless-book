@@ -3,6 +3,7 @@
 
 # SIC calls history
 
+- [Call #48: February 09, 2026](#call-48-february-09-2026)
 - [Call #47: January 27, 2026](#call-47-january-27-2026)
 - [Call #46: January 12, 2026](#call-46-january-12-2026)
 - [Call #45: December 1, 2025](#call-45-december-1-2025)
@@ -29,6 +30,63 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #48 February 09, 2026
+
+[Agenda](https://github.com/ethereum/pm/issues/1915)
+[Video recording](https://www.youtube.com/watch?v=4Yv2Jc6leQQ)
+
+## Team updates
+
+- [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)): merging transition code into Geth; identified a potential spec tweak affecting binary-tree handling that should be aligned before starting the testnet.
+- [@kt2am1990](https://x.com/kt2am1990) ([Besu](https://x.com/HyperledgerBesu)): updating the binary-tree branch to be current; aiming to have a Besu + Geth testnet running within ~1–2 weeks.
+- [@CPerezz19](https://x.com/CPerezz19):
+  - Enhanced the state actor library to support binary-tree bloating to measure worst-case performance and gas-limit behavior.
+  - Implemented partial-stateful nodes enabling snap sync of selected state segments; demo: syncing large targets (e.g., USDC-related accounts) from a 50+ GB database in ~30 minutes.
+  - Rebased on top of BAL Devnet 2 to test block processing and state root proofs under the binary-tree model (protocol correctness + performance validation).
+
+### Spec tweaks regarding transition using system contract for storing pointers (@gballet)
+
+- Background: tracking transition state via a system contract can create a circular dependency at the fork point, complicating bootstrapping (opening/reading the state tree) and risking error masking if both trees must be opened simultaneously.
+- Proposed tweak: adopt a one-block delay in transition activation:
+  - Fork block remains fully on the legacy MPT.
+  - Binary-tree writes begin on the following block.
+- Rationale:
+  - Avoids needing to open both trees at once.
+  - Aligns with the existing operational pattern of delaying conversion after activation.
+- Client feedback:
+  - [@kt2am1990](https://x.com/kt2am1990) preferred this over timestamp-based workarounds and committed to trying it in Besu.
+- Next: continue discussion; update the spec if this proves the best solution.
+
+### Presentation of ERC-8147 — Locality-Preserving Storage Layout for Binary Trie (@ngweihan_eth)
+
+- Concept presented by [@ngweihan_eth](https://x.com/ngweihan_eth): improve storage locality in the binary trie by adjusting compiler key derivation for mappings so related keys for the same address land on the same leaf page.
+- Properties:
+  - No new opcodes required; primarily a compiler change (lower developer burden).
+  - Improves spatial locality and expected DB/cache behavior.
+- Constraints:
+  - Supports up to 256 mapping “chunks”, with fallback behavior if exceeded; considered sufficient for current patterns but should be monitored.
+- Discussion:
+  - [@gabrocheleau](https://x.com/GabRocheleau) raised concerns about proxy patterns using explicit storage slots that could fall outside the assumed range; acknowledged as follow-up.
+  - [@gballet](https://x.com/gballet) confirmed the approach should generalize to mappings and arrays.
+
+### Binary Trees re-designs & performance considerations from teams (@CPerezz19)
+
+- Core question: unified binary tree vs domain-separated subtrees (accounts vs contract storage).
+- Domain separation arguments (raised by [@CPerezz19](https://x.com/CPerezz19) and others):
+  - Helps partial statefulness and archival/state-expiry tooling by distinguishing account vs contract storage in the DB.
+  - May improve caching strategies (e.g., keeping account trees hot in RAM) and speed up state-root computation.
+  - Can be implemented via key prefixes or separate trees; worst-case depth impact is small (≈ +1).
+- Counterpoints / prior feedback:
+  - [@gballet](https://x.com/gballet) relayed prior concerns from [@vbuterin](https://x.com/VitalikButerin): domain separation (esp. separating code/storage from account headers) may increase proof sizes and make some access patterns less efficient.
+- Outcome:
+  - No final decision; benchmark both models (witness sizes, root computation time, overall performance).
+  - [@CPerezz19](https://x.com/CPerezz19) to publish research/performance data to guide future design choices.
+
+### Stateless summit
+
+- [@gballet](https://x.com/gballet) announced a Stateless Summit scheduled for April 1 and encouraged participants to register.
+- Goal: align teams on specs, implementations, and open design decisions; share progress and coordinate next steps.
 
 ## Call #47: January 27, 2026
 

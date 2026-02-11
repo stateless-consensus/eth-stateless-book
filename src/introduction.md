@@ -53,7 +53,7 @@ By reducing the hardware requirements for validating nodes, it becomes feasible 
 
 Statelessness also opens the door to innovative features, including:
 
-- **State expiry**, which limits the growth of historical state data.
+- **State expiry**, which limits the size of the active state.
 - [**Rainbow staking**](https://ethresear.ch/t/unbundling-staking-towards-rainbow-staking/18683), which enhances flexibility in staking mechanisms by creating many niches for low-stake nodes to participate in the network’s security.
 - **Secure light clients**, which is the consequence of not having to trust a centralized authority when using the blockchain.
 

@@ -35,7 +35,7 @@ If we think carefully about how usual EVM code is executed in blocks, we can not
 
 In other words, state access during a block execution isn’t random.
 
-This is an optimization opportunity since if we group states frequently accessed together in the same tree branch, proving the whole state requires fewer tree branches, making the state-proof size smaller. This grouping is also convenient for future ideas such as spreading tree state into a separate network such as the [Portal Network](https://www.portal.network/#/).
+This is an optimization opportunity since if we group states frequently accessed together in the same tree branch, proving the whole state requires fewer tree branches, making the state-proof size smaller.
 
 The current proposal is creating groups of 256 leaves, which can be depicted in the following diagram:
 ![image.png](assets/data-encoding-img-1.png)

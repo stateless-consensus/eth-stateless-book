@@ -10,7 +10,7 @@
 
 Verkle Trees were the first tree design considered a viable solution for stateless Ethereum. The roots of this idea are in a [paper](https://math.mit.edu/research/highschool/primes/materials/2018/Kuszmaul.pdf) published by [John Kuszmaul](https://sites.google.com/view/johnkuszmaul). This idea superseded older Binary Tree approaches from years ago when SNARK proofs were still sci-fi technology.
 
-Due to advancements in SNARK proving systems performance and concerns about quantum risks, Verkle Trees might be superseded by [Binary Trees](binary-tree.md). This is still under discussion; stay tuned!
+Due to advancements in SNARK proving systems performance and concerns about quantum risks, Verkle Trees are increasingly likely to be superseded by [Binary Trees](binary-tree.md). While a final decision has not been made, the community is moving in that direction.
 
 ## Role of vector commitments in the design
 

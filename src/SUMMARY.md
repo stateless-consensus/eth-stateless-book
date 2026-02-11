@@ -18,6 +18,7 @@
   - [Stateless clients](./use-cases/stateless-clients.md)
 - [Resources](./resources.md)
 - [Development](./development/intro.md)
+  - [Active projects](./development/active-projects.md)
   - [Mainnet analysis](./development/mainnet-analysis/intro.md)
     - [Verkle replay](./development/mainnet-analysis/verkle-replay.md)
     - [Tree shape](./development/mainnet-analysis/tree-shape.md)

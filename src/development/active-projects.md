@@ -6,7 +6,6 @@ This page provides an overview of the projects currently being worked on by the 
 
 Migration of Ethereum's state tree from the Merkle Patricia Trie to a binary hash tree. The binary tree (arity 2) produces significantly smaller state proofs, compatible with STARK compression. Implementation is underway in Geth and Besu, with a cross-client testnet expected shortly. EF research supports deployment for late 2027 / early 2028. A spec tweak is under discussion regarding the transition activation (one-block delay to avoid circular dependencies).
 
-## State Transition (MPT to Binary Tree)
 
 The conversion mechanism from the existing tree to the binary tree. Uses a system contract to store transition pointers, which simplifies reorgs and snap sync. Preimage distribution (needed to recompute keys in the new tree) is a major prerequisite. The transition strategy follows the [EIP-7612](../state-conversion/eip-7612.md) model.
 
@@ -24,7 +23,7 @@ Study of the impact of increasing the maximum contract code size, coupled with g
 
 ## Compression-based State Expiry
 
-An approach to state expiry through compression: old data is moved out of the active database into flat files, replaced by pointers. Corresponding internal trie nodes are removed to improve I/O. Preliminary results show ~20% reduction via whole-account expiry, up to ~80% with leaf-level expiry. Serves as a gradual path toward in-protocol expiry.
+An approach to state expiry through compression: old data is moved out of the active database into flat files, replaced by pointers. Corresponding internal trie nodes are removed to improve I/O.
 
 ## State Expiry Research
 

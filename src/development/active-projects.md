@@ -17,10 +17,6 @@ Harmonizes and increases the cost of state creation operations (contract deploym
 
 Increases the gas cost of state-access operations (SSTORE, SLOAD, CALL, BALANCE, EXT* opcodes) to reflect Ethereum's larger state and the resulting slowdown. State access costs haven't been updated since EIP-2929 (Berlin, 2021), while the state has grown significantly. Also fixes the underpriced EXTCODESIZE and EXTCODECOPY operations, which require two database reads but were priced the same as single-read operations.
 
-## EIP-7907: Code Size Limits
-
-Study of the impact of increasing the maximum contract code size, coupled with gas adjustments. Contracts larger than ~80 KB currently hit the per-transaction gas ceiling. Benchmarks measure the effect on client performance to guide the ACD decision.
-
 ## Compression-based State Expiry
 
 An approach to state expiry through compression: old data is moved out of the active database into flat files, replaced by pointers. Corresponding internal trie nodes are removed to improve I/O.
@@ -40,10 +36,6 @@ A dedicated test network for stress-testing Ethereum's performance under state g
 ## Cross-Client Execution Metrics
 
 A specification for standardized execution metrics across Ethereum clients. Enables objective performance comparison and bottleneck identification, particularly in the context of L1 scaling and the gas limit increase.
-
-## User-Associated Storage (UAS)
-
-A proposal to associate contract storage directly with user accounts, namespaced by contract address. Estimated savings of ~2000 gas per transaction on common paths. Requires new opcodes (USSTORE/USLLOAD). Works with the binary tree and is compatible with state expiry (a user's data expires together).
 
 ## ERC-8147: Locality-Preserving Storage Layout
 

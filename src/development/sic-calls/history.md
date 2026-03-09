@@ -2,7 +2,7 @@
 <!-- markdownlint-disable MD049 -->
 
 # SIC calls history
-
+- [Call #49: March 09, 2026](#call-49-march-09-2026)
 - [Call #48: February 09, 2026](#call-48-february-09-2026)
 - [Call #47: January 27, 2026](#call-47-january-27-2026)
 - [Call #46: January 12, 2026](#call-46-january-12-2026)
@@ -31,12 +31,61 @@
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
 
+## Call #49: March 09, 2026
+
+[Agenda](https://github.com/ethereum/pm/issues/1919)
+[Video recording](TBD)
+
+### Team updates
+
+- Binary Tree implementation: [@gballet](https://x.com/gballet) fixed a major performance issue by stopping unnecessary full-tree recomputation and limiting work to the parts that actually changed.
+- The Binary Tree structure still needs some cleanup for clarity and maintainability, and discussions are ongoing on how best to revise it.
+- [@kt2am1990](https://x.com/kt2am1990) ([Besu](https://x.com/HyperledgerBesu)) is keeping the binary-tree implementation aligned with the fast-moving main branch and plans to spend time this week updating it.
+- The teams see these fixes as important groundwork for future Binary Tree work and overall stability.
+
+### Issue with binary-tree key computation function
+
+- [@gballet](https://x.com/gballet) identified a spec issue in the Binary Tree key computation flow around endian representation.
+- The problem is that the `treeIndex` starts from a naturally big-endian storage offset, is then serialized as little-endian before hashing, and is effectively interpreted back in the original order afterward.
+- This is less a performance issue than a readability and correctness issue: the extra conversion makes the logic harder to follow and easier to implement incorrectly across clients.
+- [@gballet](https://x.com/gballet) suggested simplifying the spec so the `treeIndex` stays in big-endian form throughout this step, removing the unnecessary flip.
+- One source of confusion is that the storage offset can overflow into a 33-byte value before being split into:
+  - a 32-byte `treeIndex`
+  - a 1-byte suffix
+- Guillaume noted this ambiguity already caused a real bug in Geth, which was fixed recently, and may be worth double-checking in other clients as well.
+- He plans to open a PR to update the spec.
+- More broadly, the discussion reinforced the need to make the Binary Tree structure easier to read and less error-prone across implementations.
+
+### Tiered State Write Pricing
+
+- [@ngweihan_eth](https://x.com/ngweihan_eth) presented a proposal to price writes based on how long a state has gone untouched, while leaving reads unchanged for predictability and compatibility.
+- Proposed tiers:
+  - Active: state untouched for less than 1 year
+  - Idle: state untouched for 1–2 years
+  - Dormant: state untouched for more than 2 years
+- The goal is to make writes to older state more expensive, discouraging long-term inactive state bloat and supporting storage tiering across faster and slower hardware.
+- In practice:
+  - active state could stay in fast storage
+  - idle state could move to slower but still efficient storage
+  - dormant state could move to cheaper, slower storage
+- A key challenge is freshness updates: automatically refreshing activity on reads is too complex, so a manual transaction to refresh state is seen as the simpler approach.
+- This could create UX pressure for users to periodically refresh important state, but avoids unpredictable gas behavior.
+- On compatibility, the group leaned toward evolving the current model rather than introducing entirely new storage structures, since large-scale contract migration would be difficult.
+- The current Merkle Patricia Trie remains a major bottleneck, so layering new storage forms on top would not fully solve the problem.
+- The group also discussed incentive effects:
+  - users may send transactions just before thresholds to keep state active
+  - one user may pay to reactivate dormant state while others benefit afterward
+- The view was that these trade-offs may be acceptable if the inactivity windows are long enough and the pricing is tuned carefully.
+- Next:
+  - [@ngweihan_eth](https://x.com/ngweihan_eth) invited feedback on the proposal
+  - the team will keep refining the pricing model while watching implementation complexity, UX impact, and incentives
+
 ## Call #48 February 09, 2026
 
 [Agenda](https://github.com/ethereum/pm/issues/1915)
 [Video recording](https://www.youtube.com/watch?v=4Yv2Jc6leQQ)
 
-## Team updates
+### Team updates
 
 - [@gballet](https://x.com/gballet) ([@go_ethereum](https://x.com/go_ethereum)): merging transition code into Geth; identified a potential spec tweak affecting binary-tree handling that should be aligned before starting the testnet.
 - [@kt2am1990](https://x.com/kt2am1990) ([Besu](https://x.com/HyperledgerBesu)): updating the binary-tree branch to be current; aiming to have a Besu + Geth testnet running within ~1–2 weeks.

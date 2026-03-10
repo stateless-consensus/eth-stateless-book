@@ -34,7 +34,7 @@
 ## Call #49: March 09, 2026
 
 [Agenda](https://github.com/ethereum/pm/issues/1919)
-[Video recording](TBD)
+[Video recording](https://youtu.be/kmqtWvmHojU)
 
 ### Team updates
 

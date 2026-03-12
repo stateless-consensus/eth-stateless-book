@@ -68,14 +68,24 @@
   - active state could stay in fast storage
   - idle state could move to slower but still efficient storage
   - dormant state could move to cheaper, slower storage
-- A key challenge is freshness updates: automatically refreshing activity on reads is too complex, so a manual transaction to refresh state is seen as the simpler approach.
-- This could create UX pressure for users to periodically refresh important state, but avoids unpredictable gas behavior.
-- On compatibility, the group leaned toward evolving the current model rather than introducing entirely new storage structures, since large-scale contract migration would be difficult.
-- The current Merkle Patricia Trie remains a major bottleneck, so layering new storage forms on top would not fully solve the problem.
-- The group also discussed incentive effects:
-  - users may send transactions just before thresholds to keep state active
-  - one user may pay to reactivate dormant state while others benefit afterward
-- The view was that these trade-offs may be acceptable if the inactivity windows are long enough and the pricing is tuned carefully.
+- A key implementation question was how “activity” should be refreshed:
+  - [@gballet](https://x.com/gballet) noted that automatically updating freshness on reads is too complex
+  - the simpler approach is to require an explicit transaction to refresh state activity
+- This creates a UX trade-off: users may need to manually refresh important state to avoid it becoming more expensive to update later.
+- The discussion also surfaced practical access concerns:
+  - dormant state cannot become so slow to access that it breaks normal usage
+  - more asynchronous access models may only make sense for deeper archival data, not ordinary dormant state
+- [@misilva73](https://x.com/misilva73) asked whether it would be better to introduce separate storage structures for active and dormant state instead of modifying the current tree.
+  - The response from [@ngweihan_eth](https://x.com/ngweihan_eth) and [@gballet](https://x.com/gballet) was that new storage forms may help in theory, but broad migration is difficult and existing contracts make disruptive redesigns hard to adopt
+  - the group leaned toward evolving the current model rather than introducing a parallel structure
+- Compatibility remained a central concern:
+  - existing contracts are hard to migrate
+  - the current [Merkle Patricia Trie](https://ethereum.org/en/developers/docs/data-structures-and-encoding/patricia-merkle-trie/) is still a core bottleneck
+  - simply layering new storage forms on top would not fully solve the underlying scalability problem
+- The group also discussed incentive and game-theory concerns:
+  - [@gabrocheleau](https://x.com/GabRocheleau) and [@ngweihan_eth](https://x.com/ngweihan_eth) noted that users may send transactions just before inactivity thresholds to keep state active
+  - multiple users writing to the same dormant state could create fairness issues where one user pays the reactivation cost and others benefit afterward
+- The view was that these trade-offs may be acceptable if inactivity windows are long enough and pricing is tuned carefully.
 - Next:
   - [@ngweihan_eth](https://x.com/ngweihan_eth) invited feedback on the proposal
   - the team will keep refining the pricing model while watching implementation complexity, UX impact, and incentives

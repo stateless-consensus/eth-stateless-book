@@ -2,6 +2,7 @@
 <!-- markdownlint-disable MD049 -->
 
 # SIC calls history
+- [Call #51: May 04, 2026](#call-51-may-04-2026)
 - [Call #49: March 09, 2026](#call-49-march-09-2026)
 - [Call #48: February 09, 2026](#call-48-february-09-2026)
 - [Call #47: January 27, 2026](#call-47-january-27-2026)
@@ -30,6 +31,67 @@
 - [Call #23: August 26, 2024](#call-23-august-26-2024)
 - [Call #22: July 29, 2024](#call-22-july-29-2024)
 - [Call #21: July 15, 2024](#call-21-july-15-2024)
+
+## Call #51: May 04, 2026
+
+[Agenda](https://github.com/ethereum/pm/issues/2030)
+
+### Team updates
+
+- Binary Tree implementation: [@gballet](https://x.com/gballet) added an extra field in the Binary Tree to explicitly tag whether a leaf is an account, storage slot, or code.
+- This removes ambiguity from state dumps, makes the structure closer to the old MPT layout, and reduces maintenance overhead since calling code can treat the Binary Tree much more like the previous trie.
+- This also allows reuse of prior execution-spec-tests from 2024, helping accelerate testing and reducing divergence across implementations.
+- [@kt2am1990](https://x.com/kt2am1990) ([Besu](https://x.com/HyperledgerBesu)) coordinated with [@CPerezz19](https://x.com/CPerezz19) to align empty-block state roots between Besu and Geth for cleaner benchmarking.
+- Karim is refactoring the Besu binary-tree branch into a cleaner version designed for easier merging with main branches, while preparing support for parallel execution and BAL optimizations.
+- [@CPerezz19](https://x.com/CPerezz19) offered to add Besu binary-tree support into state actor tooling so Geth and Besu can generate identical databases for cross-client performance comparisons.
+- The team agreed that BALs (block-level access lists) should integrate cleanly with Binary Trees since they track modified leaves and do not depend on MPT-specific structure.
+
+### Interop recap
+
+- [@gballet](https://x.com/gballet) summarized recent discussions with [@vbuterin](https://x.com/VitalikButerin) and others around Validator-Only Partial Statefulness (VOPS).
+- There is broad agreement to avoid naive Unified Binary Trees (UBT), since validators still need enough intermediate state to validate balances, nonces, and transaction correctness.
+- The preferred direction is partial statefulness with domain separation:
+  - accounts
+  - code
+  - nullifiers
+  - storage
+- The current proposal uses a 2-bit tagging scheme, while Vitalik suggested expanding to 16 bits for future extensibility.
+- Recent Geth merges also support grouping internal nodes at depth 5–6, improving read/write performance by serializing grouped nodes.
+- To support [EIP-8141 - Frame Transactions](https://eips.ethereum.org/EIPS/eip-8141), the first 64 storage slots may be duplicated inside the account stem to improve access while preserving lightweight validator sync.
+- Snap sync could then focus mainly on account + code trees (optionally nullifiers) without requiring full storage sync for validators.
+- A hybrid fallback design was also discussed: keeping one branch as MPT and another as Binary Tree.
+  - [@gballet](https://x.com/gballet) sees this as a possible fallback if pure Binary Trees cannot reach acceptable performance, though it adds significant complexity by maintaining two trees.
+  - [@gabrocheleau](https://x.com/GabRocheleau) noted this could also help future state expiry models where multiple trees coexist with rolling expiration.
+
+### 32 byte addresses (@gballet)
+
+- [@gballet](https://x.com/gballet) reviewed how Ethereum currently handles addresses inside the Binary Tree key hashing flow.
+- Ethereum addresses are 20 bytes, derived from hashed public keys and truncated, then stored with 12 leading zero bytes to align them to 32 bytes.
+- The system recently moved to big-endian ordering to avoid unnecessary byte-swapping inside the EVM and simplify processing.
+- One alternative considered was hashing the 20-byte address followed by 12 zeros and the slot separately, but the group preferred keeping the current approach for compatibility and implementation simplicity.
+- [Gottfried Herold](https://github.com/GottfriedHerold) pointed out that prepending 12 zero bytes nearly doubles hashing cost by crossing the 512-bit internal hash block boundary.
+- He argued the padding gives no cryptographic benefit since hash functions already encode input length, making the zeros mostly unnecessary overhead.
+- Guillaume noted the padding was originally chosen partly to help ZK-VM implementers expecting 32-byte alignment.
+- The team will gather more feedback from ZK-VM teams and evaluate implications for Poseidon hashing before deciding whether changes are worthwhile.
+
+### Update on 8188 prototype (@ngweihan_eth)
+
+- [@ngweihan_eth](https://x.com/ngweihan_eth) presented progress on the [EIP-8188](https://eips.ethereum.org/EIPS/eip-8188) prototype for state tiering using metadata that tracks last write times.
+- The prototype adds 4 bytes of metadata to accounts and storage slots, tracking writes only (not reads) to avoid gas overhead and UX complexity.
+- This lets clients distinguish active vs inactive state and move older trie nodes out of PebbleDB into flat-file storage.
+- In testing:
+  - over 80% of trie nodes were moved to inactive flat files
+  - active trie size dropped to ~32 GB, small enough to fit in memory
+  - metadata overhead was only a few hundred MB
+- The goal is to improve performance immediately by shrinking the hot database, even before full state expiry mechanisms exist.
+- Han plans to present benchmarking results at the next ACD in two weeks.
+- A major discussion focused on whether reads should also refresh metadata:
+  - [Milos Stankovic](https://github.com/) raised concerns that some state is read often but rarely written, which could incorrectly mark it as inactive
+  - Han and Guillaume argued that updating metadata on reads would introduce too many extra writes and gas costs
+- One compromise discussed:
+  - the first read in an epoch could trigger a metadata write, balancing correctness with cost
+- [@kt2am1990](https://x.com/kt2am1990) suggested a dedicated opcode to explicitly refresh metadata on reads, while Gottfried suggested cheaper unchanged-value writes might achieve the same effect without new opcodes.
+- The team agreed to continue exploring these tradeoffs with both client teams and EVM developers before finalizing the model.
 
 ## Call #49: March 09, 2026
 

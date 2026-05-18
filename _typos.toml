@@ -3,3 +3,4 @@ extend-exclude = ["*.excalidraw"]
 
 [default.extend-words]
 ETHCC = "ETHCC"
+BAL = "BAL"

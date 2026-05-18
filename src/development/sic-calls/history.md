@@ -39,7 +39,7 @@
 ### Team updates
 
 - Binary Tree implementation: [@gballet](https://x.com/gballet) added an extra field in the Binary Tree to explicitly tag whether a leaf is an account, storage slot, or code.
-- This removes ambiguity from state dumps, makes the structure closer to the old MPT layout, and reduces maintenance overhead since calling code can treat the Binary Tree much more like the previous trie.
+- This removes ambiguity encountered in `evm t8n`'s state dumps, by making them match that of the old MPT layout. This reduces maintenance overhead on the execution specs side, since calling code can treat the Binary Tree much just like the previous trie.
 - This also allows reuse of prior execution-spec-tests from 2024, helping accelerate testing and reducing divergence across implementations.
 - [@kt2am1990](https://x.com/kt2am1990) ([Besu](https://x.com/HyperledgerBesu)) coordinated with [@CPerezz19](https://x.com/CPerezz19) to align empty-block state roots between Besu and Geth for cleaner benchmarking.
 - Karim is refactoring the Besu binary-tree branch into a cleaner version designed for easier merging with main branches, while preparing support for parallel execution and BAL optimizations.
@@ -60,14 +60,13 @@
 - To support [EIP-8141 - Frame Transactions](https://eips.ethereum.org/EIPS/eip-8141), the first 64 storage slots may be duplicated inside the account stem to improve access while preserving lightweight validator sync.
 - Snap sync could then focus mainly on account + code trees (optionally nullifiers) without requiring full storage sync for validators.
 - A hybrid fallback design was also discussed: keeping one branch as MPT and another as Binary Tree.
-  - [@gballet](https://x.com/gballet) sees this as a possible fallback if pure Binary Trees cannot reach acceptable performance, though it adds significant complexity by maintaining two trees.
   - [@gabrocheleau](https://x.com/GabRocheleau) noted this could also help future state expiry models where multiple trees coexist with rolling expiration.
 
 ### 32 byte addresses (@gballet)
 
 - [@gballet](https://x.com/gballet) reviewed how Ethereum currently handles addresses inside the Binary Tree key hashing flow.
 - Ethereum addresses are 20 bytes, derived from hashed public keys and truncated, then stored with 12 leading zero bytes to align them to 32 bytes.
-- The system recently moved to big-endian ordering to avoid unnecessary byte-swapping inside the EVM and simplify processing.
+- The spec was recently updated to use big-endian ordering to avoid unnecessary byte-swapping inside the EVM and simplify processing.
 - One alternative considered was hashing the 20-byte address followed by 12 zeros and the slot separately, but the group preferred keeping the current approach for compatibility and implementation simplicity.
 - [Gottfried Herold](https://github.com/GottfriedHerold) pointed out that prepending 12 zero bytes nearly doubles hashing cost by crossing the 512-bit internal hash block boundary.
 - He argued the padding gives no cryptographic benefit since hash functions already encode input length, making the zeros mostly unnecessary overhead.
